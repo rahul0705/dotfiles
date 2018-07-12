@@ -1,8 +1,15 @@
 - clean:
   - '~'
+- shell:
+  - [sh pre-install.sh, Running pre-installation script]
 - link:
+    ~/.zshrc:
+      force: true
+      path: zsh/zshrc
     ~/.gitconfig: git/gitconfig
+    ~/.gitconfig_user: git/gitconfig_user
     ~/.gitignore_global: git/gitignore_global
+    ~/.gitmessage: git/gitmessage
     #~/.vim: vim
     ~/.vimrc: vim/vimrc
 - shell:
