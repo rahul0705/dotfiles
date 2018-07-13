@@ -1,9 +1,9 @@
-# <type>(<scope>): <subject>
-#
-# <body>
-#
-# <footer>
-#
+#<branch> <type>(<scope>): <subject>
+
+#<body>
+
+#<footer>
+
 # ** TYPES **
 # feat (new feature)
 # fix (bug fix)
@@ -12,6 +12,9 @@
 # refactor (refactoring production code)
 # test (adding missing tests, refactoring tests; no production code change)
 # chore (updating grunt tasks etc; no production code change)
+#
+# ** FOOTERS **
+# Place any references or smart commits here
 
 # ** Funtip **
 # Work hard, play hard!  Consider prefixing your commit messages with a relevant emoji for
