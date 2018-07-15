@@ -2,7 +2,7 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 [submodule "oh-my-zsh/custom/plugins/zsh-syntax-hightlighting"]
-	path = oh-my-zsh/custom/plugins/zsh-syntax-hightlighting
+	path = oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "oh-my-zsh/custom/plugins/zsh-completions"]
 	path = oh-my-zsh/custom/plugins/zsh-completions
