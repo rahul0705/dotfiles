@@ -1,11 +1,17 @@
 - clean:
   - '~'
+  - '~/.oh-my-zsh/custom/'
+  - '~/.oh-my-zsh/custom/plugins/'
 - shell:
   - [sh pre-install.sh, Running pre-installation script]
 - link:
     ~/.zshrc:
       force: true
       path: zsh/zshrc
+    ~/.zshrc_local_after: zsh/zshrc_local_after
+    ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: oh-my-zsh/custom/plugins/zsh-autosuggestions
+    ~/.oh-my-zsh/custom/plugins/zsh-completions: oh-my-zsh/custom/plugins/zsh-completions
+    ~/.oh-my-zsh/custom/plugins/zsh-syntax-hightlighting: oh-my-zsh/custom/plugins/zsh-syntax-hightlighting
     ~/.gitconfig: git/gitconfig
     ~/.gitconfig_user: git/gitconfig_user
     ~/.gitignore_global: git/gitignore_global
