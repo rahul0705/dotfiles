@@ -19,4 +19,5 @@
     #~/.vim: vim
     ~/.vimrc: vim/vimrc
 - shell:
+  - [sh fonts/install.sh, Installing Powerline fonts]
   - [git submodule update --init --recursive, Installing submodules]
