@@ -1,6 +1,6 @@
 [submodule "dotbot"]
 	path = dotbot
-	url = https://github.com/anishathalye/dotbot
+	url = https://github.com/anishathalye/dotbot.git
 [submodule "oh-my-zsh/custom/plugins/zsh-syntax-hightlighting"]
 	path = oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
@@ -12,4 +12,7 @@
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule "fonts"]
 	path = fonts
-	url = https://github.com/powerline/fonts
+	url = https://github.com/powerline/fonts.git
+[submodule "oh-my-zsh/custom/themes/powerlevel9k"]
+	path = oh-my-zsh/custom/themes/powerlevel9k
+	url = https://github.com/bhilburn/powerlevel9k.git
