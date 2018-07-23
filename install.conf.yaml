@@ -3,6 +3,7 @@
   - '~/.oh-my-zsh/custom/'
   - '~/.oh-my-zsh/custom/plugins/'
 - shell:
+  - [git submodule update --init --recursive, Installing submodules]
   - [sh pre-install.sh, Running pre-installation script]
 - link:
     ~/.zshrc:
@@ -21,7 +22,6 @@
     ~/.vimrc: vim/vimrc
 - shell:
   - [sh fonts/install.sh, Installing Powerline fonts]
-  - [git submodule update --init --recursive, Installing submodules]
   - [if gem list -i "charlock_holmes" -nq "true" 2>/dev/null; then gem install --user-install charlock_holmes -- --with-icu-dir=/usr/local/opt/icu4c --with-cxxflags=\'-Wno-reserved-user-defined-literal -std=c++11\'; fi, Installing Charlock for Gollum]
   - [if gem list -i "pkg-config" -nq "true" 2>/dev/null; then gem install --user-install pkg-config; fi, Installing pkg-config for Gollum]
   - [if gem list -i "nokogiri" -nq "true" 2>/dev/null; then gem install --user-install nokogiri -- --use-system-libraries; fi, Installing nokogiri for Gollum]
