@@ -17,6 +17,7 @@ call vundle#begin()
 Bundle 'VundleVim/Vundle.vim'
 
 Plugin 'vimwiki/vimwiki'
+Plugin 'tpope/vim-fugitive'
 Plugin 'vim-airline/vim-airline'
 
 call vundle#end()
