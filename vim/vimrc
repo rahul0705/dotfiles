@@ -51,8 +51,5 @@ set hlsearch        " Highlight searches by default
 set ignorecase      " Ignore case when searching...
 set smartcase       " ...unless we type a capital
 
-" ================ Vimwiki ===========================
-
-set nocompatible    " Use Vim settings, rather then Vi settings
-syntax on           " Turn on syntax highlighting
-filetype plugin on  " Enable loading the plugin files for specific file types
+" ================ Custom Settings ========================
+so ~/.vim/settings.vim
