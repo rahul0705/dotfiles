@@ -23,8 +23,4 @@
 - shell:
   - [sh fonts/install.sh, Installing Powerline fonts]
   - [vim +PluginInstall +qall, Installing Vundle plugins]
-  - [if gem list -i "charlock_holmes" -nq "true" 2>/dev/null; then gem install --user-install charlock_holmes -- --with-icu-dir=/usr/local/opt/icu4c --with-cxxflags=\'-Wno-reserved-user-defined-literal -std=c++11\'; fi, Installing Charlock for Gollum]
-  - [if gem list -i "pkg-config" -nq "true" 2>/dev/null; then gem install --user-install pkg-config; fi, Installing pkg-config for Gollum]
-  - [if gem list -i "nokogiri" -nq "true" 2>/dev/null; then gem install --user-install nokogiri -- --use-system-libraries; fi, Installing nokogiri for Gollum]
-  - [if gem list -i "gollum" -nq "true" 2>/dev/null; then gem install --user-install gollum; fi, Installing Gollum]
   - [echo "Set font to 'Source Code Pro for Powerline'"]
