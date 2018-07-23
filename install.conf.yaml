@@ -26,3 +26,4 @@
   - [if gem list -i "pkg-config" -nq "true" 2>/dev/null; then gem install --user-install pkg-config; fi, Installing pkg-config for Gollum]
   - [if gem list -i "nokogiri" -nq "true" 2>/dev/null; then gem install --user-install nokogiri -- --use-system-libraries; fi, Installing nokogiri for Gollum]
   - [if gem list -i "gollum" -nq "true" 2>/dev/null; then gem install --user-install gollum; fi, Installing Gollum]
+  - [echo "Set font to 'Source Code Pro for Powerline'"]
