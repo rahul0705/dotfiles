@@ -14,9 +14,10 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " let Vundle manage Vundle (required)
-Bundle "VundleVim/Vundle.vim"
+Bundle 'VundleVim/Vundle.vim'
 
 Plugin 'vimwiki/vimwiki'
+Plugin 'vim-airline/vim-airline'
 
 call vundle#end()
 
