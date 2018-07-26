@@ -19,6 +19,7 @@ Bundle 'VundleVim/Vundle.vim'
 Plugin 'vimwiki/vimwiki'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-airline/vim-airline'
+Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 
 call vundle#end()
 
