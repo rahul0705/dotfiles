@@ -20,6 +20,7 @@ Plugin 'vimwiki/vimwiki'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-airline/vim-airline'
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+Plugin 'chriskempson/base16-vim'
 
 call vundle#end()
 
