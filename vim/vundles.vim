@@ -16,11 +16,22 @@ call vundle#begin()
 " let Vundle manage Vundle (required)
 Bundle 'VundleVim/Vundle.vim'
 
-Plugin 'vimwiki/vimwiki'
-Plugin 'tpope/vim-fugitive'
-Plugin 'vim-airline/vim-airline'
-Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+" Vim Theme
 Plugin 'chriskempson/base16-vim'
+
+" Vim status line
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+" Git integrations
+Plugin 'tpope/vim-fugitive'
+Plugin 'mhinz/vim-signify'
+
+" Personal Wiki
+Plugin 'vimwiki/vimwiki'
+
+" Utility
+Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 
 call vundle#end()
 
