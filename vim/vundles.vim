@@ -32,6 +32,7 @@ Plugin 'vimwiki/vimwiki'
 
 " Utility
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+Plugin 'edkolev/tmuxline.vim'
 
 call vundle#end()
 

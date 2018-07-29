@@ -3,7 +3,6 @@
   - '~/.oh-my-zsh/custom/'
   - '~/.oh-my-zsh/custom/plugins/'
 - shell:
-  - [git submodule update --init --recursive, Installing submodules]
   - [sh pre-install.sh, Running pre-installation script]
 - link:
     ~/.zshrc:
@@ -12,6 +11,7 @@
     ~/.zshrc_local_after: zsh/zshrc_local_after
     ~/.oh-my-zsh/custom/base16-shell_settings.zsh: oh-my-zsh/custom/base16-shell_settings.zsh
     ~/.oh-my-zsh/custom/powerlevel9k_settings.zsh: oh-my-zsh/custom/powerlevel9k_settings.zsh
+    ~/.oh-my-zsh/custom/vi-mode_settings.zsh: oh-my-zsh/custom/vi-mode_settings.zsh
     ~/.oh-my-zsh/custom/plugins/base16-shell: oh-my-zsh/custom/plugins/base16-shell
     ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: oh-my-zsh/custom/plugins/zsh-autosuggestions
     ~/.oh-my-zsh/custom/plugins/zsh-completions: oh-my-zsh/custom/plugins/zsh-completions
@@ -24,6 +24,7 @@
     ~/.vim: vim
     ~/.vimrc: vim/vimrc
 - shell:
+  - [git submodule update --init --recursive, Installing submodules]
   - [sh fonts/install.sh, Installing Powerline fonts]
   - [vim +PluginInstall +qall, Installing Vundle plugins]
   - [echo "Set font to 'Source Code Pro for Powerline'"]
