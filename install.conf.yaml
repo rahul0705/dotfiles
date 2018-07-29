@@ -5,6 +5,7 @@
 - shell:
   - [sh pre-install.sh, Running pre-installation script]
 - link:
+    ~/.base16-iterm2: base16-iterm2
     ~/.zshrc:
       force: true
       path: zsh/zshrc
@@ -25,6 +26,6 @@
     ~/.vimrc: vim/vimrc
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
-  - [sh fonts/install.sh, Installing Powerline fonts]
+  - [fonts/install.sh, Installing Nerd Fonts]
   - [vim +PluginInstall +qall, Installing Vundle plugins]
-  - [echo "Set font to 'Source Code Pro for Powerline'"]
+  - [echo "Set font to 'Sauce Code Pro Medium Nerd Font Complete'"]

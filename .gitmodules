@@ -12,7 +12,7 @@
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule "fonts"]
 	path = fonts
-	url = https://github.com/powerline/fonts.git
+	url = https://github.com/ryanoasis/nerd-fonts.git
 [submodule "oh-my-zsh/custom/themes/powerlevel9k"]
 	path = oh-my-zsh/custom/themes/powerlevel9k
 	url = https://github.com/bhilburn/powerlevel9k.git
@@ -22,3 +22,6 @@
 [submodule "oh-my-zsh/custom/plugins/base16-shell"]
 	path = oh-my-zsh/custom/plugins/base16-shell
 	url = https://github.com/chriskempson/base16-shell.git
+[submodule "base16-iterm2"]
+	path = base16-iterm2
+	url = https://github.com/martinlindhe/base16-iterm2.git
