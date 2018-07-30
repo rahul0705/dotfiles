@@ -32,6 +32,9 @@ Plugin 'vimwiki/vimwiki'
 
 " Utility
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'scrooloose/syntastic'
+Plugin 'pearofducks/ansible-vim'
 Plugin 'edkolev/tmuxline.vim'
 
 call vundle#end()
