@@ -1,5 +1,5 @@
 [submodule "dotbot"]
-	path = dotbot
+	path = meta/dotbot
 	url = https://github.com/anishathalye/dotbot.git
 [submodule "oh-my-zsh/custom/plugins/zsh-syntax-hightlighting"]
 	path = oh-my-zsh/custom/plugins/zsh-syntax-highlighting
