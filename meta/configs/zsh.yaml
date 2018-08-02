@@ -1,0 +1,5 @@
+- link:
+    ~/.zshrc:
+      force: true
+      path: zsh/zshrc
+    ~/.zshrc_local_after: zsh/zshrc_local_after

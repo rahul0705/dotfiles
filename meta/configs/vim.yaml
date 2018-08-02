@@ -1,0 +1,5 @@
+- link:
+    ~/.vim: vim
+    ~/.vimrc: vim/vimrc
+- shell:
+  - [vim +PluginInstall +qall, Installing Vundle plugins]

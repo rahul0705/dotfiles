@@ -1,0 +1,9 @@
+- link:
+    ~/.oh-my-zsh/custom/base16-shell_settings.zsh: oh-my-zsh/custom/base16-shell_settings.zsh
+    ~/.oh-my-zsh/custom/powerlevel9k_settings.zsh: oh-my-zsh/custom/powerlevel9k_settings.zsh
+    ~/.oh-my-zsh/custom/vi-mode_settings.zsh: oh-my-zsh/custom/vi-mode_settings.zsh
+    ~/.oh-my-zsh/custom/plugins/base16-shell: oh-my-zsh/custom/plugins/base16-shell
+    ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: oh-my-zsh/custom/plugins/zsh-autosuggestions
+    ~/.oh-my-zsh/custom/plugins/zsh-completions: oh-my-zsh/custom/plugins/zsh-completions
+    ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting: oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+    ~/.oh-my-zsh/custom/themes/powerlevel9k: oh-my-zsh/custom/themes/powerlevel9k
