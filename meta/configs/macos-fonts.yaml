@@ -1,0 +1,3 @@
+- shell:
+  - [brew tap homebrew/cask-fonts, Adding font casks to brew]
+  - [brew cask install font-hack-nerd-font, Installing Hack Nerd Fonts]
