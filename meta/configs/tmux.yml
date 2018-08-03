@@ -1,0 +1,4 @@
+- shell:
+  - [mkdir -p ~/.tmux, Creating tmux directory]
+- link:
+    ~/.tmux.conf: terminals/tmux/tmux.conf
