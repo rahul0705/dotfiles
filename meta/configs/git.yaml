@@ -1,5 +1,5 @@
 - link:
-    ~/.gitconfig: git/gitconfig
-    ~/.gitconfig_user: git/gitconfig_user
-    ~/.gitignore_global: git/gitignore_global
-    ~/.gitmessage: git/gitmessage
+    ~/.gitconfig: tools/vcs/git/gitconfig
+    ~/.gitconfig_user: tools/vcs/git/gitconfig_user
+    ~/.gitignore_global: tools/vcs/git/gitignore_global
+    ~/.gitmessage: tools/vcs/git/gitmessage
