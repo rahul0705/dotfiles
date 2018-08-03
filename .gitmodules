@@ -2,22 +2,22 @@
 	path = meta/dotbot
 	url = https://github.com/anishathalye/dotbot.git
 [submodule "oh-my-zsh/custom/plugins/zsh-syntax-hightlighting"]
-	path = oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+	path = shells/zsh/oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "oh-my-zsh/custom/plugins/zsh-completions"]
-	path = oh-my-zsh/custom/plugins/zsh-completions
+	path = shells/zsh/oh-my-zsh/custom/plugins/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions.git
 [submodule "oh-my-zsh/custom/plugins/zsh-autosuggestions"]
-	path = oh-my-zsh/custom/plugins/zsh-autosuggestions
+	path = shells/zsh/oh-my-zsh/custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule "oh-my-zsh/custom/themes/powerlevel9k"]
-	path = oh-my-zsh/custom/themes/powerlevel9k
+	path = shells/zsh/oh-my-zsh/custom/themes/powerlevel9k
 	url = https://github.com/bhilburn/powerlevel9k.git
 [submodule "vim/bundle/Vundle.vim"]
 	path = editors/vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim.git
 [submodule "oh-my-zsh/custom/plugins/base16-shell"]
-	path = oh-my-zsh/custom/plugins/base16-shell
+	path = shells/zsh/oh-my-zsh/custom/plugins/base16-shell
 	url = https://github.com/chriskempson/base16-shell.git
 [submodule "base16-iterm2"]
 	path = terminals/base16-iterm2

@@ -1,5 +1,5 @@
 - link:
     ~/.zshrc:
       force: true
-      path: zsh/zshrc
-    ~/.zshrc_local_after: zsh/zshrc_local_after
+      path: shells/zsh/zshrc
+    ~/.zshrc_local_after: shells/zsh/zshrc_local_after
