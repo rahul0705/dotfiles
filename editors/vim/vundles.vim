@@ -31,6 +31,10 @@ Plugin 'mhinz/vim-signify'
 Plugin 'vimwiki/vimwiki'
 
 " Utility
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'scrooloose/syntastic'
