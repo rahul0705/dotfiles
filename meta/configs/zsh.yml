@@ -2,4 +2,3 @@
     ~/.zshrc:
       force: true
       path: shells/zsh/zshrc
-    ~/.zshrc_local_after: shells/zsh/zshrc_local_after

@@ -55,7 +55,6 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   base16-shell
-  vi-mode
   thefuck
   git
   zsh-autosuggestions
@@ -93,6 +92,14 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Initialize completion
+autoload -U compinit && compinit
+
+# Add local ruby gems to path
+#if which ruby >/dev/null && which gem >/dev/null; then
+#    PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+#fi
 
 # Allow local customizations in the ~/.zshrc_local_after file
 if [ -f ~/.zshrc_local_after ]; then

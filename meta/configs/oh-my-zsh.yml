@@ -2,6 +2,8 @@
   - '~/.oh-my-zsh/custom/'
   - '~/.oh-my-zsh/custom/plugins/'
   - '~/.oh-my-zsh/custom/themes/'
+- shell:
+  - ['sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"', Installing Oh My Zsh]
 - link:
     ~/.oh-my-zsh/custom/base16-shell_settings.zsh: shells/zsh/oh-my-zsh/custom/base16-shell_settings.zsh
     ~/.oh-my-zsh/custom/powerlevel9k_settings.zsh: shells/zsh/oh-my-zsh/custom/powerlevel9k_settings.zsh
