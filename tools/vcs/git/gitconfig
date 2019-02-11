@@ -1,6 +1,6 @@
-# Isolate user config
-[include]
-  path = .gitconfig_user
+[user]
+  name = Rahul Mohandas
+  email = rahul0705@gmail.com
 
 [core]
   editor = vim
@@ -28,3 +28,7 @@
   # via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
   snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
   snapshots = !git stash list --grep snapshot
+
+# Override using local config
+[include]
+  path = .gitconfig_local
