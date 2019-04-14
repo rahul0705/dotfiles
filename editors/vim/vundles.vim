@@ -30,6 +30,9 @@ Plugin 'mhinz/vim-signify'
 " Personal Wiki
 Plugin 'vimwiki/vimwiki'
 
+" Tmux Configuration
+Plugin 'tmux-plugins/vim-tmux'
+
 " Utility
 Plugin 'andreshazard/vim-logreview'
 Plugin 'godlygeek/tabular'
