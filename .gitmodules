@@ -22,3 +22,6 @@
 [submodule "base16-iterm2"]
 	path = terminals/base16-iterm2
 	url = https://github.com/martinlindhe/base16-iterm2.git
+[submodule "terminals/tmux/plugins/tpm"]
+	path = terminals/tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
