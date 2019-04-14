@@ -4,7 +4,7 @@ let airline#extensions#tmuxline#snapshot_file = '~/.tmux/tmux-status.conf'
 let g:tmuxline_preset = {
       \'a'    : '#S',
       \'b'    : '#W',
-      \'c'    : '#H',
+      \'c'    : '#{prefix_highlight}',
       \'win'  : '#I #W',
       \'cwin' : '#I #W',
       \'x'    : '%a',
