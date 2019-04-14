@@ -31,6 +31,7 @@ Plugin 'mhinz/vim-signify'
 Plugin 'vimwiki/vimwiki'
 
 " Utility
+Plugin 'andreshazard/vim-logreview'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'ntpeters/vim-better-whitespace'
