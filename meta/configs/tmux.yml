@@ -2,4 +2,4 @@
     ~/.tmux: terminals/tmux
     ~/.tmux.conf: terminals/tmux/tmux.conf
 - shell:
-  - [~/.tmux/plugins/tpm/bin/install_plugins, Installing Tmux plugins]
+  - [tmux new-session -d "sleep 1"; sleep 0.1; ~/.tmux/plugins/tpm/bin/install_plugins, Installing Tmux plugins]
