@@ -1,4 +1,5 @@
-- shell:
-  - [mkdir -p ~/.tmux, Creating tmux directory]
 - link:
+    ~/.tmux: terminals/tmux
     ~/.tmux.conf: terminals/tmux/tmux.conf
+- shell:
+  - [~/.tmux/plugins/tpm/bin/install_plugins, Installing Tmux plugins]
