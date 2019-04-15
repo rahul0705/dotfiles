@@ -34,15 +34,17 @@ au BufNewFile,BufRead *.vundle set filetype=vim
 " ================ Persistent Undo ==================
 " Keep undo history across sessions, by storing in file.
 " Only works all the time.
-if has('persistent_undo') && isdirectory(expand('~').'/.vim/backups')
-  silent !mkdir ~/.vim/backups > /dev/null 2>&1
+if has('persistent_undo')
+  if !isdirectory(expand('~/.vim/backups'))
+    silent !mkdir ~/.vim/backups > /dev/null 2>&1
+  endif
   set undodir=~/.vim/backups
   set undofile
 endif
 
 " ================ Scrolling ========================
 
-set scrolloff=8         "Start scrolling when we're 8 lines away from margins
+set scrolloff=8         " Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
 
@@ -55,3 +57,7 @@ set smartcase       " ...unless we type a capital
 
 " ================ Custom Settings ========================
 source ~/.vim/settings.vim
+" Load local config last so it overrides all others
+if filereadable(expand("~/.vimrc_local"))
+  source ~/.vimrc_local
+endif
