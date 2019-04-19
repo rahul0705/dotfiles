@@ -101,7 +101,7 @@ autoload -U compinit && compinit
 #    PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 #fi
 
-# Allow local customizations in the ~/.zshrc_local_after file
-if [ -f ~/.zshrc_local_after ]; then
-    source ~/.zshrc_local_after
+# Allow local customizations in the ~/.zshrc_local file
+if [ -f ~/.zshrc_local ]; then
+    source ~/.zshrc_local
 fi
