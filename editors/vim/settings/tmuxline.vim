@@ -3,10 +3,10 @@ let airline#extensions#tmuxline#snapshot_file = '~/.tmux/tmux-status.conf'
 
 let g:tmuxline_preset = {
       \'a'    : '#S',
-      \'b'    : '#W',
+      \'b'    : ['#W', '#P'],
       \'c'    : '#{prefix_highlight}',
-      \'win'  : '#I #W',
-      \'cwin' : '#I #W',
+      \'win'  : ['#I', '#W'],
+      \'cwin' : ['#F', '#W'],
       \'x'    : '%a',
-      \'y'    : '#W %R',
+      \'y'    : '%R',
       \'z'    : '#H'}

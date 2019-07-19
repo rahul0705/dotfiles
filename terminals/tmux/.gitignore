@@ -1,2 +1,3 @@
 # Ignore vimline generated file
 tmux-status.conf
+resurrect
