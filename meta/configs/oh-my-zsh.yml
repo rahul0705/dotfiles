@@ -13,3 +13,4 @@
     ~/.oh-my-zsh/custom/plugins/zsh-completions: shells/zsh/oh-my-zsh/custom/plugins/zsh-completions
     ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting: shells/zsh/oh-my-zsh/custom/plugins/zsh-syntax-highlighting
     ~/.oh-my-zsh/custom/themes/powerlevel9k: shells/zsh/oh-my-zsh/custom/themes/powerlevel9k
+    ~/.oh-my-zsh/custom/themes/powerlevel10k: shells/zsh/oh-my-zsh/custom/themes/powerlevel10k

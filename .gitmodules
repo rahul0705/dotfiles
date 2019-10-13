@@ -25,3 +25,6 @@
 [submodule "terminals/tmux/plugins/tpm"]
 	path = terminals/tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule "shells/zsh/oh-my-zsh/custom/themes/powerlevel10k"]
+	path = shells/zsh/oh-my-zsh/custom/themes/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git
