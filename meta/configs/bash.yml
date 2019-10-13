@@ -1,0 +1,6 @@
+- clean:
+  - '~/.bashrc'
+- link:
+    ~/.bashrc:
+      force: true
+      path: shells/bash/bashrc
