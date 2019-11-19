@@ -7,7 +7,6 @@
 - link:
     ~/.oh-my-zsh/custom/base16-shell_settings.zsh: shells/zsh/oh-my-zsh/custom/base16-shell_settings.zsh
     ~/.oh-my-zsh/custom/powerlevel9k_settings.zsh: shells/zsh/oh-my-zsh/custom/powerlevel9k_settings.zsh
-    ~/.oh-my-zsh/custom/vi-mode_settings.zsh: shells/zsh/oh-my-zsh/custom/vi-mode_settings.zsh
     ~/.oh-my-zsh/custom/plugins/base16-shell: shells/zsh/oh-my-zsh/custom/plugins/base16-shell
     ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: shells/zsh/oh-my-zsh/custom/plugins/zsh-autosuggestions
     ~/.oh-my-zsh/custom/plugins/zsh-completions: shells/zsh/oh-my-zsh/custom/plugins/zsh-completions
