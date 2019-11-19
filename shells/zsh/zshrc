@@ -52,7 +52,7 @@ source $ZSH/oh-my-zsh.sh
 # Control f goes forward a word
 bindkey "^f" forward-word
 # Control g deletes a word
-bindkey "^g" backwards-kill-word
+bindkey "^g" backward-kill-word
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
