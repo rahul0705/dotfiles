@@ -1,0 +1,39 @@
+- clean:
+  - '~/.vscode'
+- vscode:
+    # Theme Support
+    golf1052.base16-generator:
+      status: install
+    # Git
+    eamodio.gitlens:
+      status: install
+    # Code formatter
+    esbenp.prettier-vscode:
+      status: install
+    # Spell Checker
+    streetsidesoftware.code-spell-checker:
+      status: install
+    # Autocomplete
+    VisualStudioExptTeam.vscodeintellicode:
+      status: install
+    # Remote development
+    ms-vscode-remote.vscode-remote-extensionpack:
+      status: install
+    # Ansible language support
+    vscoss.vscode-ansible:
+      status: install
+    # C++ language support
+    ms-vscode.cpptools:
+      status: install
+    # Python language support
+    ms-python.python:
+      status: install
+    # Go language support
+    ms-vscode.Go:
+      status: install
+    # Yaml support
+    redhat.vscode-yaml:
+      status: install
+    # Vagrant support
+    bbenoist.vagrant:
+      status: install
