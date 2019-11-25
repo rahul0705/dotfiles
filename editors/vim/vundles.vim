@@ -27,9 +27,6 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
 Plugin 'mhinz/vim-signify'
 
-" Personal Wiki
-Plugin 'vimwiki/vimwiki'
-
 " Tmux Configuration
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
