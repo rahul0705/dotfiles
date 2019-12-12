@@ -1,8 +1,8 @@
 {
   // Workbench
   "workbench.colorTheme": "Base16 Material Darker",
-  "workbench.list.horizontalScrolling": true,
-  "workbench.panel.defaultLocation": "right",
+  "workbench.list.horizontalScrolling": false,
+  "workbench.panel.defaultLocation": "bottom",
   "workbench.fontAliasing": "auto",
   "workbench.activityBar.visible": true,
   "workbench.startupEditor": "welcomePage",
@@ -24,7 +24,7 @@
   // Breadcrumbs
   "breadcrumbs.enabled": true,
   // Fonts
-  "editor.fontFamily": "Hack Nerd Font",
+  "editor.fontFamily": "'FuraCode Nerd Font', 'Hack Nerd Font'",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
   // Search
