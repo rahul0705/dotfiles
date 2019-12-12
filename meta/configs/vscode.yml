@@ -1,5 +1,5 @@
 - clean:
-  - '~/.vscode'
+    - "~/.vscode"
 - vscode:
     # Theme Support
     golf1052.base16-generator:

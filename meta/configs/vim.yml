@@ -1,8 +1,8 @@
 - clean:
-  - '~/.vim'
-  - '~/.vimrc'
+    - "~/.vim"
+    - "~/.vimrc"
 - link:
     ~/.vim: editors/vim
     ~/.vimrc: editors/vim/vimrc
 - shell:
-  - [vim +PluginInstall +qall, Installing Vundle plugins]
+    - [vim +PluginInstall +qall, Installing Vundle plugins]

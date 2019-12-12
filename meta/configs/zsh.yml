@@ -1,5 +1,5 @@
 - clean:
-  - '~/.zshrc'
+    - "~/.zshrc"
 - link:
     ~/.zshrc:
       force: true

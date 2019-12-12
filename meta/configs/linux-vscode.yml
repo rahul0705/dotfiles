@@ -1,4 +1,4 @@
 - clean:
-  - '~/.config/Code/User/settings.json'
+    - "~/.config/Code/User/settings.json"
 - link:
     ~/.config/Code/User/settings.json: editors/vscode/settings.json

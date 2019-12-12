@@ -1,5 +1,14 @@
 - shell:
-  - [mkdir -p $HOME/.local/share/fonts, Creating local fonts directory]
-  - ['curl -fLo "$HOME/.local/share/fonts/Hack Regular Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf', Installing Hack Nerd Fonts]
-  - ['curl -fLo "$HOME/.local/share/fonts/Fura Code Retina Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Retina/complete/Fura%20Code%20Retina%20Nerd%20Font%20Complete.ttf', Installing FuraCode Nerd Fonts]
-  - [command -v fc-cache >/dev/null 2>&1 && fc-cache -f -v || echo 'Skipping regenerating font cache', Regenerate font cache]
+    - [mkdir -p $HOME/.local/share/fonts, Creating local fonts directory]
+    - [
+        'curl -fLo "$HOME/.local/share/fonts/Hack Regular Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf',
+        Installing Hack Nerd Fonts,
+      ]
+    - [
+        'curl -fLo "$HOME/.local/share/fonts/Fura Code Retina Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Retina/complete/Fura%20Code%20Retina%20Nerd%20Font%20Complete.ttf',
+        Installing FuraCode Nerd Fonts,
+      ]
+    - [
+        command -v fc-cache >/dev/null 2>&1 && fc-cache -f -v || echo 'Skipping regenerating font cache',
+        Regenerate font cache,
+      ]

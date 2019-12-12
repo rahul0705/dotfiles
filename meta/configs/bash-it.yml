@@ -1,2 +1,12 @@
+- clean:
+    - "~/.bash-it/custom/"
+    - "~/.bash-it/custom/plugins/"
 - shell:
-        - ['git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it; ~/.bash_it/install.sh --silent', Installing Bash-it]
+    - [
+        "git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it; ~/.bash-it/install.sh --silent",
+        Installing Bash-it,
+      ]
+- link:
+    ~/.bash-it/custom/base16-shell.plugin.bash: shells/bash/bash-it/custom/base16-shell.plugin.bash
+    ~/.bash-it/custom/base16-shell.settings.bash: shells/bash/bash-it/custom/base16-shell.settings.bash
+    ~/.bash-it/custom/plugins/base16-shell: shells/bash/bash-it/custom/plugins/base16-shell

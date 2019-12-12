@@ -1,12 +1,15 @@
 - clean:
-  - '~/.oh-my-zsh/custom/'
-  - '~/.oh-my-zsh/custom/plugins/'
-  - '~/.oh-my-zsh/custom/themes/'
+    - "~/.oh-my-zsh/custom/"
+    - "~/.oh-my-zsh/custom/plugins/"
+    - "~/.oh-my-zsh/custom/themes/"
 - shell:
-  - ['if [ ! -d "$HOME/.oh-my-zsh" ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" --skip-chsh; else true; fi', Installing Oh My Zsh]
+    - [
+        'if [ ! -d "$HOME/.oh-my-zsh" ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" --skip-chsh; else true; fi',
+        Installing Oh My Zsh,
+      ]
 - link:
-    ~/.oh-my-zsh/custom/base16-shell_settings.zsh: shells/zsh/oh-my-zsh/custom/base16-shell_settings.zsh
-    ~/.oh-my-zsh/custom/powerlevel9k_settings.zsh: shells/zsh/oh-my-zsh/custom/powerlevel9k_settings.zsh
+    ~/.oh-my-zsh/custom/base16-shell.settings.zsh: shells/zsh/oh-my-zsh/custom/base16-shell.settings.zsh
+    ~/.oh-my-zsh/custom/powerlevel9k.settings.zsh: shells/zsh/oh-my-zsh/custom/powerlevel9k.settings.zsh
     ~/.oh-my-zsh/custom/plugins/base16-shell: shells/zsh/oh-my-zsh/custom/plugins/base16-shell
     ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: shells/zsh/oh-my-zsh/custom/plugins/zsh-autosuggestions
     ~/.oh-my-zsh/custom/plugins/zsh-completions: shells/zsh/oh-my-zsh/custom/plugins/zsh-completions

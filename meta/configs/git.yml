@@ -1,7 +1,7 @@
 - clean:
-  - '~/.gitconfig'
-  - '~/.gitignore_global'
-  - '~/.gitmessage'
+    - "~/.gitconfig"
+    - "~/.gitignore_global"
+    - "~/.gitmessage"
 - link:
     ~/.gitconfig: tools/vcs/git/gitconfig
     ~/.gitignore_global: tools/vcs/git/gitignore_global
