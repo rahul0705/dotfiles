@@ -2,7 +2,9 @@ linux-fonts
 git
 oh-my-zsh
 zsh
+bash-it
+bash
 vim
 tmux
 vscode
-macos-vscode
+linux-vscode
