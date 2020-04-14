@@ -5,7 +5,6 @@
     ~/.tmux: terminals/tmux
     ~/.tmux.conf: terminals/tmux/tmux.conf
 - shell:
-    - [
-        tmux new-session -d "sleep 1"; sleep 0.1; ~/.tmux/plugins/tpm/bin/install_plugins,
-        Installing Tmux plugins,
-      ]
+    - description: Installing Tmux plugins
+      command: tmux new-session -d "sleep 1"; sleep 0.1; ~/.tmux/plugins/tpm/bin/install_plugins
+      quiet: true

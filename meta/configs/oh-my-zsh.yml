@@ -3,10 +3,9 @@
     - "~/.oh-my-zsh/custom/plugins/"
     - "~/.oh-my-zsh/custom/themes/"
 - shell:
-    - [
-        'if [ ! -d "$HOME/.oh-my-zsh" ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" --skip-chsh; else true; fi',
-        Installing Oh My Zsh,
-      ]
+    - description: Installing Oh My Zsh
+      command: if [ ! -d "$HOME/.oh-my-zsh" ]; then sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" --skip-chsh; else true; fi
+      quiet: true
 - link:
     ~/.oh-my-zsh/custom/base16-shell.settings.zsh: shells/zsh/oh-my-zsh/custom/base16-shell.settings.zsh
     ~/.oh-my-zsh/custom/powerlevel9k.settings.zsh: shells/zsh/oh-my-zsh/custom/powerlevel9k.settings.zsh
