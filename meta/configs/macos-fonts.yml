@@ -1,7 +1,5 @@
-- shell:
-    - [brew tap homebrew/cask-fonts, Adding font casks to brew]
-    - [brew cask install font-hack-nerd-font, Installing Hack Nerd Fonts]
-    - [
-        brew cask install font-firacode-nerd-font,
-        Installing FuraCode Nerd Fonts,
-      ]
+- tap:
+    - homebrew/cask-fonts
+- cask:
+    - font-hack-nerd-font
+    - font-firacode-nerd-font

@@ -34,3 +34,6 @@
 [submodule "shells/bash/bash-it/custom/plugins/base16-shell"]
 	path = shells/bash/bash-it/custom/plugins/base16-shell
 	url = https://github.com/chriskempson/base16-shell.git
+[submodule "meta/dotbot-brew"]
+	path = meta/dotbot-brew
+	url = https://github.com/d12frosted/dotbot-brew.git
