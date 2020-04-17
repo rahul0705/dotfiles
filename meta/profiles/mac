@@ -8,6 +8,7 @@ homebrew
 macos/fonts
 macos/web-browser
 macos/social
+macos/utilities
 macos/docker
 macos/terminal
 tmux
