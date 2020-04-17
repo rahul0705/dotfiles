@@ -4,12 +4,13 @@ oh-my-zsh
 zsh
 bash-it
 bash
-tmux
 homebrew
 macos/fonts
 macos/web-browser
 macos/social
 macos/docker
+macos/terminal
+tmux
 macos/vscode
 vscode
 base16-iterm2
