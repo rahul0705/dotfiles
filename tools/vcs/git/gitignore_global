@@ -1,5 +1,38 @@
-# macOS https://github.com/github/gitignore/blob/master/Global/macOS.gitignore
-# ----------------------------------------------------------------------------
+
+# Created by https://www.toptal.com/developers/gitignore/api/macos,windows,linux,git,vscode,vim
+# Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,linux,git,vscode,vim
+
+### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+*.orig
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
+
+### Linux ###
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
+
+### macOS ###
 # General
 .DS_Store
 .AppleDouble
@@ -27,10 +60,38 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Windows https://github.com/github/gitignore/blob/master/Global/Windows.gitignore
-# --------------------------------------------------------------------------------
+### Vim ###
+# Swap
+[._]*.s[a-v][a-z]
+!*.svg  # comment out if you don't need vector files
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+Sessionx.vim
+
+# Temporary
+.netrwhist
+# Auto-generated tag files
+tags
+# Persistent undo
+[._]*.un~
+
+### vscode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
+Thumbs.db:encryptable
 ehthumbs.db
 ehthumbs_vista.db
 
@@ -53,41 +114,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# Tags https://github.com/github/gitignore/blob/master/Global/Tags.gitignore
-# --------------------------------------------------------------------------
-# Ignore tags created by etags, ctags, gtags (GNU global) and cscope
-TAGS
-.TAGS
-!TAGS/
-tags
-.tags
-!tags/
-gtags.files
-GTAGS
-GRTAGS
-GPATH
-GSYMS
-cscope.files
-cscope.out
-cscope.in.out
-cscope.po.out
-
-# Vim https://github.com/github/gitignore/blob/master/Global/Vim.gitignore
-# ------------------------------------------------------------------------
-# Swap
-[._]*.s[a-v][a-z]
-[._]*.sw[a-p]
-[._]s[a-rt-v][a-z]
-[._]ss[a-gi-z]
-[._]sw[a-p]
-
-# Session
-Session.vim
-
-# Temporary
-.netrwhist
-*~
-# Auto-generated tag files
-tags
-# Persistent undo
-[._]*.un~
+# End of https://www.toptal.com/developers/gitignore/api/macos,windows,linux,git,vscode,vim
