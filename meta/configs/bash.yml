@@ -1,5 +1,5 @@
 - clean:
-    - "~/.bashrc"
+    - '~/.bashrc'
 - link:
     ~/.bashrc:
       force: true

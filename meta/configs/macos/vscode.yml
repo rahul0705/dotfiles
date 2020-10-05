@@ -1,6 +1,6 @@
 - cask:
     - visual-studio-code
 - clean:
-    - "~/Library/Application Support/Code/User/settings.json"
+    - '~/Library/Application Support/Code/User/settings.json'
 - link:
     ~/Library/Application Support/Code/User/settings.json: editors/vscode/settings.json

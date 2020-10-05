@@ -1,6 +1,6 @@
 - clean:
-    - "~/.vim"
-    - "~/.vimrc"
+    - '~/.vim'
+    - '~/.vimrc'
 - link:
     ~/.vim: editors/vim
     ~/.vimrc: editors/vim/vimrc

@@ -1,6 +1,6 @@
 - clean:
-    - "~/.bash-it/custom/"
-    - "~/.bash-it/custom/plugins/"
+    - '~/.bash-it/custom/'
+    - '~/.bash-it/custom/plugins/'
 - shell:
     - description: Installing Bash-it
       command: git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash-it; ~/.bash-it/install.sh --silent --no-modify-config

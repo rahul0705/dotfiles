@@ -1,6 +1,6 @@
 - clean:
-    - "~/.tmux"
-    - "~/.tmux.conf"
+    - '~/.tmux'
+    - '~/.tmux.conf'
 - link:
     ~/.tmux: terminals/tmux
     ~/.tmux.conf: terminals/tmux/tmux.conf
