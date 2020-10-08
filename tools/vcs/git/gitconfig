@@ -29,6 +29,9 @@
   snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
   snapshots = !git stash list --grep snapshot
 
+[push]
+  default = simple
+
 # Override using local config
 [include]
   path = .gitconfig_local
