@@ -87,5 +87,6 @@
   },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "gitlens.codeLens.scopes": ["containers", "blocks"]
 }
