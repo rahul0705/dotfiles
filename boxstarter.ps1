@@ -34,13 +34,9 @@ If (-Not (Test-Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization)) 
 }
 Set-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization -Name NoLockScreen -Type DWord -Value 1
 
-#--- Drivers ---
-choco install geforce-game-ready-driver
-
 #--- Tools ---
 choco install -y 7zip
 choco install -y hwmonitor
-choco install -y geforce-experience
 
 #--- Game Launcher ---
 choco install -y steam
@@ -53,6 +49,9 @@ choco install -y googlechrome
 choco install -y discord
 choco install -y streamlabs-obs
 choco install -y vscode
+
+#--- World of Warcraft ---
+choco install -y wowup
 
 #--- Privacy ---
 # Privacy: Let apps use my advertising ID: Disable
