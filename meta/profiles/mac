@@ -15,3 +15,5 @@ macos/terminal
 macos/vscode
 vscode
 base16-iterm2
+languages
+bundler
