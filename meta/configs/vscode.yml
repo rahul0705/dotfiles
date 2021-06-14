@@ -22,6 +22,9 @@
     # Spell Check
     ban.spellright:
       status: install
+    # Editorconfig
+    editorconfig.editorconfig:
+      status: install
     # Code Formatter
     esbenp.prettier-vscode:
       status: install

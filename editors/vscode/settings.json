@@ -8,7 +8,6 @@
   "workbench.startupEditor": "welcomePage",
   "workbench.iconTheme": "material-icon-theme",
   // Editor
-  "editor.tabSize": 2, // Make sure to update prettier.tabWidth
   "editor.useTabStops": true,
   "editor.gotoLocation.multiple": "goto",
   "editor.codeActionsOnSave": {
@@ -22,6 +21,7 @@
   "editor.suggestSelection": "first",
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   // Window
   "window.restoreWindows": "all",
   "window.newWindowDimensions": "maximized",
@@ -78,15 +78,5 @@
   // Explorer
   "explorer.confirmDelete": false,
   "explorer.openEditors.visible": 0,
-  // Prettier
-  "prettier.tabWidth": 2, // Make sure to update editor.tabSize
-  "prettier.printWidth": 120,
-  "prettier.singleQuote": true,
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "gitlens.codeLens.scopes": ["containers", "blocks"]
 }
