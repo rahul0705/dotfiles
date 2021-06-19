@@ -1,0 +1,46 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "docker-prune",
+      "command": "docker",
+      "args": ["image", "prune", "--force"],
+      "problemMatcher": []
+    },
+    {
+      "type": "docker-build",
+      "label": "docker-build",
+      "dockerBuild": {
+        "tag": "dotfiles:latest",
+        "dockerfile": "${workspaceFolder}/Dockerfile",
+        "context": "${workspaceFolder}",
+        "pull": true,
+        "customOptions": "--rm"
+      }
+    },
+    {
+      "type": "shell",
+      "label": "docker-run",
+      "dependsOn": ["docker-prune", "docker-build"],
+      "dependsOrder": "sequence",
+      "command": "docker",
+      "args": [
+        "run",
+        "--interactive",
+        "--tty",
+        "--name",
+        "dotfiles",
+        "--label",
+        "\"com.microsoft.created-by=visual-studio-code\"",
+        "--rm",
+        "--hostname",
+        "dotfiles",
+        "\"dotfiles:latest\""
+      ],
+      "problemMatcher": []
+    }
+  ]
+}
