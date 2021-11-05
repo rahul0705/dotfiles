@@ -1,4 +1,8 @@
 - shell:
+    - description: Create a sudo context
+      command: 'sudo ls /dev/null'
+      quiet: true
+      stdin: true
     - description: Installing Homebrew
       command: 'CI=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
       quiet: true

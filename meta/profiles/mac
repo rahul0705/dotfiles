@@ -1,5 +1,4 @@
 git
-tmux
 vim
 oh-my-zsh
 zsh
@@ -8,12 +7,9 @@ bash
 homebrew
 macos/fonts
 macos/web-browser
-macos/social
 macos/utilities
-macos/docker
 macos/terminal
+base16-iterm2
+tmux
 macos/vscode
 vscode
-base16-iterm2
-macos/languages
-macos/bundler

@@ -2,4 +2,4 @@
     - homebrew/cask-fonts
 - cask:
     - font-hack-nerd-font
-    - font-firacode-nerd-font
+    - font-fira-code-nerd-font

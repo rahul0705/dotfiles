@@ -1,9 +1,2 @@
-- brew:
-    - mas
 - cask:
-    - google-backup-and-sync
     - the-unarchiver
-- shell:
-    - description: Installing Spark Email
-      command: mas install 1176895641
-      quiet: true
