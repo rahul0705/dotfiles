@@ -6,7 +6,7 @@
       command: curl -fLo "$HOME/.local/share/fonts/Hack Regular Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf
       quiet: true
     - description: Installing FuraCode Nerd Fonts
-      command: curl -fLo "$HOME/.local/share/fonts/Fura Code Retina Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Retina/complete/Fura%20Code%20Retina%20Nerd%20Font%20Complete.ttf
+      command: curl -fLo "$HOME/.local/share/fonts/Fira Code Retina Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Retina/complete/Fira%20Code%20Retina%20Nerd%20Font%20Complete.ttf
       quiet: true
     - description: Regenerate font cache
       command: command -v fc-cache >/dev/null 2>&1 && fc-cache -f -v || echo 'Skipping regenerating font cache'
