@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/vim,git,linux,macos,windows,visualstudiocode,zsh
-# Edit at https://www.toptal.com/developers/gitignore?templates=vim,git,linux,macos,windows,visualstudiocode,zsh
+# Created by https://www.toptal.com/developers/gitignore/api/zsh,vim,git,linux,macos,windows,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=zsh,vim,git,linux,macos,windows,visualstudiocode
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
@@ -89,10 +89,16 @@ tags
 !.vscode/extensions.json
 *.code-workspace
 
+# Local History for Visual Studio Code
+.history/
+
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
 .ionide
+
+# Support for Project snippet scope
+!.vscode/*.code-snippets
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -150,4 +156,4 @@ zsdoc/data
 /tests/_output/*
 !/tests/_output/.gitkeep
 
-# End of https://www.toptal.com/developers/gitignore/api/vim,git,linux,macos,windows,visualstudiocode,zsh
+# End of https://www.toptal.com/developers/gitignore/api/zsh,vim,git,linux,macos,windows,visualstudiocode
