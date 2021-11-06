@@ -32,6 +32,9 @@
 [push]
   default = simple
 
+[pull]
+  rebase = true
+
 # Override using local config
 [include]
   path = .gitconfig_local
