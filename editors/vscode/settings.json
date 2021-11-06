@@ -78,5 +78,6 @@
   // Explorer
   "explorer.confirmDelete": false,
   "explorer.openEditors.visible": 0,
-  "gitlens.codeLens.scopes": ["containers", "blocks"]
+  "gitlens.codeLens.scopes": ["containers", "blocks"],
+  "git.autofetch": true
 }
