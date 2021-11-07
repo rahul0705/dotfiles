@@ -1,6 +1,6 @@
 # Allow local customizations in the ~/.zshrc_before_local file
-if [ -f ~/.zshrc_before_local ]; then
-    source ~/.zshrc_before_local
+if [ -f $HOME/.zshrc_before_local ]; then
+    source $HOME/.zshrc_before_local
 fi
 
 # If you come from bash you might have to change your $PATH.
@@ -83,7 +83,9 @@ bindkey "^g" backward-word
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Initialize completion
-autoload -U compinit && compinit
+fpath=($HOME/.zsh/completion $fpath)
+autoload -Uz compinit && compinit -i
+zstyle ':completion:*' menu select
 
 # Add local ruby gems to path
 #if which ruby >/dev/null && which gem >/dev/null; then
@@ -91,6 +93,6 @@ autoload -U compinit && compinit
 #fi
 
 # Allow local customizations in the ~/.zshrc_after_local file
-if [ -f ~/.zshrc_after_local ]; then
-    source ~/.zshrc_after_local
+if [ -f $HOME/.zshrc_after_local ]; then
+    source $HOME/.zshrc_after_local
 fi
