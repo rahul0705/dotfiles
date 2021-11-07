@@ -10,6 +10,9 @@
     # Gist Support
     vsls-contrib.gistfs:
       status: install
+    # Markdown Lint
+    DavidAnson.vscode-markdownlint:
+      status: install
     # Markdown Support
     yzhang.markdown-all-in-one:
       status: install
