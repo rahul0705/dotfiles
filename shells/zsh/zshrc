@@ -81,11 +81,11 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  base16-shell
-  git
-  zsh-autosuggestions
-  zsh-completions
-  zsh-syntax-highlighting
+    base16-shell
+    git
+    zsh-autosuggestions
+    zsh-completions
+    zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -104,9 +104,9 @@ bindkey "^g" backward-word
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
+#     export EDITOR='vim'
 # else
-#   export EDITOR='mvim'
+#     export EDITOR='mvim'
 # fi
 
 # Compilation flags
