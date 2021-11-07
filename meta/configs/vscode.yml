@@ -10,17 +10,11 @@
     # Gist Support
     vsls-contrib.gistfs:
       status: install
-    # Wikilinks Support
-    foam.foam-vscode:
-      status: install
     # Markdown Support
     yzhang.markdown-all-in-one:
       status: install
     # Image Paste Support
     mushan.vscode-paste-image:
-      status: install
-    # Spell Check
-    ban.spellright:
       status: install
     # Editorconfig
     editorconfig.editorconfig:
