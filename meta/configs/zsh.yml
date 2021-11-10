@@ -1,6 +1,13 @@
 - clean:
+    # - '~/.zshenv'
+    - '~/.zprofile'
     - '~/.zshrc'
+    # - '~/.zlogin'
+    # - '~/.zlogout'
 - link:
+    ~/.zprofile:
+      force: true
+      path: shells/zsh/zprofile
     ~/.zshrc:
       force: true
       path: shells/zsh/zshrc

@@ -1,0 +1,27 @@
+check_homebrew () {
+    local _os="$(uname)"
+
+    if [ "${_os}" = "Darwin" ]; then
+        local _homebrew_prefix
+        local _arch="$(uname -m)"
+
+        if [ "${_arch}" = "x86_64" ]; then
+            _homebrew_prefix="/usr/local"
+            eval "$(/usr/local/bin/brew shellenv)"
+        elif [ "${_arch}" = "arm64" ]; then
+            _homebrew_prefix="/opt/homebrew"
+            eval "$(/opt/homebrew/bin/brew shellenv)"
+        fi
+
+        if [ -f $_homebrew_prefix/bin/brew ]; then
+            eval "$($_homebrew_prefix/bin/brew shellenv)"
+
+            # Use the $HOMEBREW_PREFIX defined by the eval
+            fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
+        fi
+    fi
+}
+
+fpath=($HOME/.zsh/completion $fpath)
+
+check_homebrew

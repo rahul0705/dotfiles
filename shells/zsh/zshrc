@@ -124,9 +124,6 @@ bindkey "^g" backward-word
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Initialize completion
-fpath=($HOME/.zsh/completion $fpath)
-autoload -Uz compinit && compinit -i
 zstyle ':completion:*' menu select
 
 # Allow local customizations in the ~/.zshrc_after_local file
