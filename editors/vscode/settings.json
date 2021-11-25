@@ -9,12 +9,10 @@
     "workbench.iconTheme": "material-icon-theme",
     // Editor
     "editor.useTabStops": true,
-    "editor.gotoLocation.multiple": "goto",
     "editor.codeActionsOnSave": {
         "source.organizeImports": true
     },
     "editor.multiCursorModifier": "alt",
-    "editor.renderIndentGuides": true,
     "editor.snippetSuggestions": "top",
     "editor.cursorBlinking": "solid",
     "editor.lineNumbers": "on",
@@ -22,15 +20,15 @@
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    // Fonts
+    "editor.fontFamily": "'FiraCode Nerd Font', 'Hack Nerd Font'",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 14,
     // Window
     "window.restoreWindows": "all",
     "window.newWindowDimensions": "maximized",
     // Breadcrumbs
     "breadcrumbs.enabled": true,
-    // Fonts
-    "editor.fontFamily": "'FiraCode Nerd Font', 'Hack Nerd Font'",
-    "editor.fontLigatures": true,
-    "editor.fontSize": 14,
     // Search
     "search.smartCase": true,
     "search.exclude": {
@@ -78,6 +76,9 @@
     // Explorer
     "explorer.confirmDelete": false,
     "explorer.openEditors.visible": 0,
-    "gitlens.codeLens.scopes": ["containers", "blocks"],
-    "git.autofetch": true
+    // Git
+    "git.autofetch": true,
+    // Gitlens
+    "gitlens.codeLens.enabled": false,
+    "redhat.telemetry.enabled": true
 }

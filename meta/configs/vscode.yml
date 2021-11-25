@@ -4,6 +4,9 @@
     # Theme Support
     golf1052.base16-generator:
       status: install
+    # Theme Support
+    pkief.material-icon-theme:
+      status: install
     # Git Support
     eamodio.gitlens:
       status: install
