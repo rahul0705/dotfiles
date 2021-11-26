@@ -1,10 +1,19 @@
 - clean:
     - '~/.vscode'
 - vscode:
-    # Theme Support
+    # Editorconfig
+    editorconfig.editorconfig:
+      status: install
+    # Code Formatter
+    esbenp.prettier-vscode:
+      status: install
+    # Code Spell Checker
+    streetsidesoftware.code-spell-checker:
+      status: install
+    # Theme
     golf1052.base16-generator:
       status: install
-    # Theme Support
+    # Icons
     pkief.material-icon-theme:
       status: install
     # Git Support
@@ -22,23 +31,14 @@
     # Image Paste Support
     mushan.vscode-paste-image:
       status: install
-    # Editorconfig
-    editorconfig.editorconfig:
-      status: install
-    # Code Formatter
-    esbenp.prettier-vscode:
-      status: install
-    # Code Spell Checker
-    streetsidesoftware.code-spell-checker:
-      status: install
     # Autocomplete
     VisualStudioExptTeam.vscodeintellicode:
       status: install
     # Remote development
     ms-vscode-remote.vscode-remote-extensionpack:
       status: install
-    # Ansible language support
-    zbr.vscode-ansible:
+    # Docker
+    ms-azuretools.vscode-docker:
       status: install
     # C++ language support
     ms-vscode.cpptools:
