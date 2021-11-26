@@ -78,6 +78,8 @@
     "explorer.openEditors.visible": 0,
     // Git
     "git.autofetch": true,
+    "git.pruneOnFetch": true,
+    "git.rebaseWhenSync": true,
     // Gitlens
     "gitlens.codeLens.enabled": false,
     "redhat.telemetry.enabled": true
