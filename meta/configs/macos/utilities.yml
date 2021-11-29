@@ -1,7 +1,9 @@
 - brew:
     - mas
 - cask:
-    - the-unarchiver
+    - the-unarchiver # decompressing utility
+    - rectangle # Move and resize windows using keyboard shortcuts or snap areas
+    - alttab # Windows-like alt-tab
 - shell:
     - description: Installing Spark Email
       command: mas install 1176895641
