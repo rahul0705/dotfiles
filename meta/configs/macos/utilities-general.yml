@@ -1,0 +1,4 @@
+- cask:
+    - the-unarchiver # Decompressing utility
+    - rectangle # Move and resize windows using keyboard shortcuts or snap areas
+    - alt-tab # Windows-like alt-tab

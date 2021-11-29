@@ -9,7 +9,8 @@ macos/docker
 macos/languages
 macos/fonts
 macos/web-browser
-macos/utilities
+macos/utilities-general
+macos/utilities-personal
 macos/terminal
 base16-iterm2
 tmux
