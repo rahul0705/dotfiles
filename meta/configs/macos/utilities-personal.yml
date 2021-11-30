@@ -1,6 +1,7 @@
 - brew:
     - mas # CLI for the Mac App Store
 - cask:
+    - the-unarchiver # Decompressing utility
     - spotify # Music streaming
     - 1password # Password manager
 - shell:
