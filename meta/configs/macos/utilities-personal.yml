@@ -2,6 +2,7 @@
     - mas # CLI for the Mac App Store
 - cask:
     - the-unarchiver # Decompressing utility
+    - stats # shows mac stats
     - spotify # Music streaming
     - 1password # Password manager
 - shell:
