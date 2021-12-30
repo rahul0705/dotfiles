@@ -5,6 +5,7 @@
     - stats # shows mac stats
     - spotify # Music streaming
     - 1password # Password manager
+    - google-drive # Google Drive client
 - shell:
     - description: Installing Spark Email
       command: mas install 1176895641
