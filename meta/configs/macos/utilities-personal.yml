@@ -10,3 +10,6 @@
     - description: Installing Spark Email
       command: mas install 1176895641
       quiet: true
+    - description: Installing TickTick To-do list
+      command: mas install 966085870
+      quiet: true
