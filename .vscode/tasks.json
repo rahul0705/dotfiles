@@ -13,6 +13,10 @@
         {
             "type": "docker-build",
             "label": "docker-build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "dockerBuild": {
                 "tag": "dotfiles:latest",
                 "dockerfile": "${workspaceFolder}/Dockerfile",
@@ -24,6 +28,10 @@
         {
             "type": "shell",
             "label": "docker-run",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
             "dependsOn": ["docker-prune", "docker-build"],
             "dependsOrder": "sequence",
             "command": "docker",
