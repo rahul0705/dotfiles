@@ -1,5 +1,6 @@
 - brew:
     - mas # CLI for the Mac App Store
+    - youtube-dl # command line video downloader
 - cask:
     - the-unarchiver # Decompressing utility
     - stats # shows mac stats
