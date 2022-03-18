@@ -10,6 +10,9 @@
     # Code Spell Checker
     streetsidesoftware.code-spell-checker:
       status: install
+    # Show errors in the editor
+    usernamehw.errorlens:
+      status: install
     # Theme
     golf1052.base16-generator:
       status: install
