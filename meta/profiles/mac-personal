@@ -6,6 +6,7 @@ bash-it
 bash
 homebrew
 macos/docker
+macos/bundler
 macos/languages
 macos/fonts
 macos/web-browser
