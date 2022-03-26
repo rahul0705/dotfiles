@@ -8,3 +8,5 @@
     - description: Installing Vundle plugins
       command: vim +PluginInstall +qall
       quiet: false
+      stdout: true
+      stderr: true
