@@ -46,6 +46,13 @@ jobs:
   macos-development:
     runs-on: macos-latest
     steps:
+      - name: List installed software versions
+        run: |
+          git --version # git
+          vim --version # vim/vundle
+          zsh --version # zsh/oh-my-zsh
+          bash --version # bash/bash-it
+          bc --version # used in tmux version checking
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup test directory
