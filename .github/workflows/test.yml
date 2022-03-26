@@ -53,4 +53,4 @@ jobs:
           mkdir -p ~/dotfiles-install-dir
       - name: Install dotfiles
         run: |
-          HOME=~/dotfiles-install-dir ./install-profile development
+          HOME=~/dotfiles-install-dir ./install-profile mac-developer
