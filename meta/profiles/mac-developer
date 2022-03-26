@@ -1,5 +1,4 @@
 git
-vim
 oh-my-zsh
 zsh
 bash-it
@@ -11,5 +10,6 @@ macos/utilities-general
 macos/terminal
 base16-iterm2
 tmux
+vim
 macos/vscode
 vscode
