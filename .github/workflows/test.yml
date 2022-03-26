@@ -8,20 +8,38 @@ jobs:
   linux-development-server:
     runs-on: ubuntu-latest
     steps:
-      - run: |
+      - name: Install dependencies
+        run: |
           sudo apt-get install curl git bash zsh vim python3 tmux bc
-      - uses: actions/checkout@v3
-      - run: |
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup test directory
+        run: |
           mkdir -p ~/dotfiles-install-dir
-      - run: |
+      - name: Install dotfiles
+        run: |
           HOME=~/dotfiles-install-dir ./install-profile development
   linux-development-gui:
     runs-on: ubuntu-latest
     steps:
-      - run: |
+      - name: Install dependencies
+        run: |
           sudo apt-get install curl git bash zsh vim python3 tmux bc
-      - uses: actions/checkout@v3
-      - run: |
+          sudo apt install software-properties-common apt-transport-https wget
+      - name: Install Microsoft GPG
+        run: |
+          wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+      - name: Enable VSCode repository
+        run: |
+          sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+      - name: Install VSCode
+        run: |
+          sudo apt install code
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup test directory
+        run: |
           mkdir -p ~/dotfiles-install-dir
-      - run: |
+      - name: Install dotfiles
+        run: |
           HOME=~/dotfiles-install-dir ./install-profile linux-gui
