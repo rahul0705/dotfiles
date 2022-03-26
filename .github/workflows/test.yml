@@ -8,6 +8,15 @@ jobs:
   linux-development-server:
     runs-on: ubuntu-latest
     steps:
+      - name: List installed software versions
+        run: |
+          git --version # git
+          vim --version # vim/vundle
+          zsh --version # zsh/oh-my-zsh
+          bash --version # bash/bash-it
+          tmux -V # tmux
+          bc --version # used in tmux version checking
+          curl --version # used for downloading
       - name: Install dependencies
         run: |
           sudo apt-get install curl git bash zsh vim python3 tmux bc
@@ -22,6 +31,15 @@ jobs:
   linux-development-gui:
     runs-on: ubuntu-latest
     steps:
+      - name: List installed software versions
+        run: |
+          git --version # git
+          vim --version # vim/vundle
+          zsh --version # zsh/oh-my-zsh
+          bash --version # bash/bash-it
+          tmux -V # tmux
+          bc --version # used in tmux version checking
+          curl --version # used for downloading
       - name: Install dependencies
         run: |
           sudo apt-get install curl git bash zsh vim python3 tmux bc
@@ -53,6 +71,7 @@ jobs:
           zsh --version # zsh/oh-my-zsh
           bash --version # bash/bash-it
           bc --version # used in tmux version checking
+          curl --version # used for downloading
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup test directory

@@ -7,4 +7,4 @@
 - shell:
     - description: Installing Vundle plugins
       command: vim +PluginInstall +qall
-      quiet: true
+      quiet: false
