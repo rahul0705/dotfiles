@@ -7,8 +7,11 @@ on:
 jobs:
   linux-development-server:
     strategy:
+      fail-fast: false
       matrix:
         config:
+          - linux/fonts
+          - linux/vscode
           - bash
           - bash-it
           - git
@@ -23,6 +26,16 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get install curl git bash zsh vim python3 tmux bc
+          sudo apt install software-properties-common apt-transport-https wget
+      - name: Install Microsoft GPG
+        run: |
+          wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+      - name: Enable VSCode repository
+        run: |
+          sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+      - name: Install VSCode
+        run: |
+          sudo apt install code
       - name: List installed software versions
         run: |
           git --version # git
@@ -32,6 +45,7 @@ jobs:
           tmux -V # tmux
           bc --version # used in tmux version checking
           curl --version # used for downloading
+          code --version # VSCode
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup test directory
@@ -42,13 +56,27 @@ jobs:
           HOME=~/dotfiles-install-dir ./install-standalone ${{ matrix.config }}
   macos-development:
     strategy:
+      fail-fast: false
       matrix:
         config:
+          - macos/bundler
+          - macos/docker
+          - macos/fonts
+          - macos/gaming
+          - macos/languages
+          - macos/social
+          - macos/terminal
+          - macos/utilities-general
+          - macos/utilities-personal
+          - macos/vscode
+          - macos/web-browser
+          - base16-iterm2
           - bash
           - bash-it
           - git
           - homebrew
           - oh-my-zsh
+          - tmux
           - vim
           - vscode
           - zsh
