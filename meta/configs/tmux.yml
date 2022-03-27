@@ -6,5 +6,7 @@
     ~/.tmux.conf: terminals/tmux/tmux.conf
 - shell:
     - description: Installing Tmux plugins
-      command: ${HOME}/.tmux/plugins/tpm/bin/install_plugins
+      command: ~/.tmux/plugins/tpm/bin/install_plugins
       quiet: true
+      stdout: true
+      stderr: true
