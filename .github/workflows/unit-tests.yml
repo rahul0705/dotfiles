@@ -76,8 +76,8 @@ jobs:
           - git
           - homebrew
           - oh-my-zsh
-          - git macos/terminal tmux
-          - git macos/terminal tmux vim
+          # - macos/terminal tmux # TMUX is stuck in github actions
+          # - macos/terminal tmux vim # TMUX is stuck in github actions
           - macos/vscode vscode
           - zsh
     runs-on: macos-latest
