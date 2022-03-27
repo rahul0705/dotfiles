@@ -75,8 +75,8 @@ jobs:
           - git
           - homebrew
           - oh-my-zsh
-          - base16-iterm2 tmux
-          - base16-iterm2 tmux vim
+          - macos/terminal tmux
+          - macos/terminal tmux vim
           - macos/vscode vscode
           - zsh
     runs-on: macos-latest
