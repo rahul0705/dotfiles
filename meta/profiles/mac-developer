@@ -8,6 +8,7 @@ macos/fonts
 macos/utilities-general
 macos/terminal
 base16-iterm2
+tmux
 vim
 macos/vscode
 vscode
