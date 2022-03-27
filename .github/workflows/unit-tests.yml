@@ -5,7 +5,7 @@ on:
   schedule:
     - cron: '0 8 * * 6'
 jobs:
-  linux-development-server:
+  linux-tests:
     strategy:
       fail-fast: false
       matrix:
@@ -54,11 +54,12 @@ jobs:
       - name: Install dotfiles
         run: |
           HOME=~/dotfiles-install-dir ./install-standalone ${{ matrix.config }}
-  macos-development:
+  macos-tests:
     strategy:
       fail-fast: false
       matrix:
         config:
+          # - macos/app-store.yml # Disabled as it requires app store login
           - macos/bundler
           - macos/docker
           - macos/fonts

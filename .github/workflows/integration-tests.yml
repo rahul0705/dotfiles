@@ -1,34 +1,17 @@
-name: CI
+name: Integration Tests
 on:
   push:
   pull_request:
   schedule:
     - cron: '0 8 * * 6'
 jobs:
-  linux-development-server:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install dependencies
-        run: |
-          sudo apt-get install curl git bash zsh vim python3 tmux bc
-      - name: List installed software versions
-        run: |
-          git --version # git
-          vim --version # vim/vundle
-          zsh --version # zsh/oh-my-zsh
-          bash --version # bash/bash-it
-          tmux -V # tmux
-          bc --version # used in tmux version checking
-          curl --version # used for downloading
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup test directory
-        run: |
-          mkdir -p ~/dotfiles-install-dir
-      - name: Install dotfiles
-        run: |
-          HOME=~/dotfiles-install-dir ./install-profile development
-  linux-development-gui:
+  linux-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        profile:
+          - linux-developer
+          - linux-gui
     runs-on: ubuntu-latest
     steps:
       - name: Install dependencies
@@ -61,8 +44,13 @@ jobs:
           mkdir -p ~/dotfiles-install-dir
       - name: Install dotfiles
         run: |
-          HOME=~/dotfiles-install-dir ./install-profile linux-gui
-  macos-development:
+          HOME=~/dotfiles-install-dir ./install-profile ${{ matrix.profile }}
+  macos-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        profile:
+          - macos-developer
     runs-on: macos-latest
     steps:
       - name: List installed software versions
@@ -80,4 +68,4 @@ jobs:
           mkdir -p ~/dotfiles-install-dir
       - name: Install dotfiles
         run: |
-          HOME=~/dotfiles-install-dir ./install-profile mac-developer
+          HOME=~/dotfiles-install-dir ./install-profile ${{ matrix.profile }}
