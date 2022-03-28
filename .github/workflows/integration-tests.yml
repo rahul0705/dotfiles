@@ -61,6 +61,8 @@ jobs:
           bash --version # bash/bash-it
           bc --version # used in tmux version checking
           curl --version # used for downloading
+          brew --version # used for installing
+          brew list
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup test directory
@@ -69,3 +71,7 @@ jobs:
       - name: Install dotfiles
         run: |
           HOME=~/dotfiles-install-dir ./install-profile ${{ matrix.profile }}
+      - name: Post checkout
+        run: |
+          brew --version
+          brew list
