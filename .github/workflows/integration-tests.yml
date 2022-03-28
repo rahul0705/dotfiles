@@ -6,6 +6,7 @@ on:
     - cron: '0 8 * * 6'
 env:
   GIT_TERMINAL_PROMPT: 0
+  GIT_TRACE: 1
 jobs:
   linux-tests:
     strategy:
