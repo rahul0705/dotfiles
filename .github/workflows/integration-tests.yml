@@ -67,9 +67,6 @@ jobs:
           brew list
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup test directory
-        run: |
-          mkdir -p ~/dotfiles-install-dir
       - name: Install dotfiles
         run: |
-          HOME=~/dotfiles-install-dir ./install-profile ${{ matrix.profile }}
+          ./install-profile ${{ matrix.profile }}
