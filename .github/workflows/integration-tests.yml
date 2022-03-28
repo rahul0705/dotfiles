@@ -4,6 +4,8 @@ on:
   pull_request:
   schedule:
     - cron: '0 8 * * 6'
+env:
+  GIT_TERMINAL_PROMPT: 0
 jobs:
   linux-tests:
     strategy:
