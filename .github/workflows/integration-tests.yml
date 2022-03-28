@@ -50,7 +50,7 @@ jobs:
       fail-fast: false
       matrix:
         profile:
-          - mac-developer
+          - mac-test
     runs-on: macos-latest
     steps:
       - name: List installed software versions
