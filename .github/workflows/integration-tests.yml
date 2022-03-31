@@ -4,8 +4,6 @@ on:
   pull_request:
   schedule:
     - cron: '0 8 * * 6'
-env:
-  GIT_TERMINAL_PROMPT: 0
 jobs:
   linux-tests:
     strategy:
@@ -66,7 +64,7 @@ jobs:
           brew --version # used for installing
           brew list
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup test directory
         run: |
           mkdir -p ~/dotfiles-install-dir
