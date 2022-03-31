@@ -12,6 +12,7 @@ macos/fonts
 macos/web-browser
 macos/utilities-general
 macos/utilities-personal
+macos/app-store
 macos/terminal
 base16-iterm2
 tmux

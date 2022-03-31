@@ -1,0 +1,73 @@
+name: Integration Tests
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 8 * * 6'
+jobs:
+  linux-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        profile:
+          - linux-developer
+          - linux-gui
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get install curl git bash zsh vim python3 tmux bc
+          sudo apt install software-properties-common apt-transport-https wget
+      - name: Install Microsoft GPG
+        run: |
+          wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+      - name: Enable VSCode repository
+        run: |
+          sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+      - name: Install VSCode
+        run: |
+          sudo apt install code
+      - name: List installed software versions
+        run: |
+          git --version # git
+          vim --version # vim/vundle
+          zsh --version # zsh/oh-my-zsh
+          bash --version # bash/bash-it
+          tmux -V # tmux
+          bc --version # used in tmux version checking
+          curl --version # used for downloading
+          code --version # VSCode
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup test directory
+        run: |
+          mkdir -p ~/dotfiles-install-dir
+      - name: Install dotfiles
+        run: |
+          HOME=~/dotfiles-install-dir ./install-profile ${{ matrix.profile }}
+  macos-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        profile:
+          - mac-developer
+    runs-on: macos-latest
+    steps:
+      - name: List installed software versions
+        run: |
+          git --version # git
+          vim --version # vim/vundle
+          zsh --version # zsh/oh-my-zsh
+          bash --version # bash/bash-it
+          bc --version # used in tmux version checking
+          curl --version # used for downloading
+          brew --version # used for installing
+          brew list
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup test directory
+        run: |
+          mkdir -p ~/dotfiles-install-dir
+      - name: Install dotfiles
+        run: |
+          HOME=~/dotfiles-install-dir ./install-profile ${{ matrix.profile }}

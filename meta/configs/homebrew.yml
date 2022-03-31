@@ -4,6 +4,6 @@
       quiet: true
       stdin: true
     - description: Installing Homebrew
-      command: 'CI=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+      command: 'which -s brew || NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
       quiet: true
       stdin: true
