@@ -8,5 +8,3 @@
     - description: Installing Tmux plugins
       command: ~/.tmux/plugins/tpm/bin/install_plugins
       quiet: true
-      stdout: true
-      stderr: true
