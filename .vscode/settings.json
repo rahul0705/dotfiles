@@ -1,4 +1,4 @@
 {
-  "git.detectSubmodules": false,
-  "cSpell.words": ["dotfiles", "iterm", "mkdir", "unarchiver", "vundle"]
+    "git.detectSubmodules": false,
+    "cSpell.words": ["dotfiles", "iterm", "mkdir", "unarchiver", "vundle"]
 }

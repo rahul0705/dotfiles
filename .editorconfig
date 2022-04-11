@@ -12,3 +12,6 @@ indent_size = 2
 
 [*.yml]
 indent_size = 2
+
+[*/vscode/settings.json]
+indent_size = 2
