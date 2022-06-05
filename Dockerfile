@@ -10,7 +10,7 @@ RUN apk add --update-cache curl git bash zsh vim python3 tmux bc
 COPY . /root/.dotfiles
 
 # Run the installer for development
-RUN /root/.dotfiles/install-profile development
+RUN /root/.dotfiles/install-profile linux-developer
 
 # Run ZSH
 CMD zsh

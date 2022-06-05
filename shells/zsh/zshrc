@@ -1,6 +1,6 @@
 # Allow local customizations in the ~/.zshrc_before_local file
-if [ -f $HOME/.zshrc_before_local ]; then
-    source $HOME/.zshrc_before_local
+if [ -f "$HOME/.zshrc_before_local" ]; then
+    source "$HOME/.zshrc_before_local"
 fi
 
 # If you come from bash you might have to change your $PATH.
@@ -126,7 +126,11 @@ bindkey "^g" backward-word
 
 zstyle ':completion:*' menu select
 
+if [ -f $HOME/.cargo ]; then
+    source "$HOME/.cargo/env"
+fi
+
 # Allow local customizations in the ~/.zshrc_after_local file
-if [ -f $HOME/.zshrc_after_local ]; then
-    source $HOME/.zshrc_after_local
+if [ -f "$HOME/.zshrc_after_local" ]; then
+    source "$HOME/.zshrc_after_local"
 fi

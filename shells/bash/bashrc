@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Allow local customizations in the ~/.bashrc_before_local file
-if [ -f $HOME/.bashrc_before_local ]; then
-    source $HOME/.bashrc_before_local
+if [ -f "$HOME/.bashrc_before_local" ]; then
+    source "$HOME/.bashrc_before_local"
 fi
 # If not running interactively, don't do anything
 case $- in
@@ -62,9 +62,13 @@ export SCM_CHECK=true
 # export BASH_IT_RELOAD_LEGACY=1
 
 # Load Bash It
-source "$BASH_IT"/bash_it.sh
+source "$BASH_IT/bash_it.sh"
+
+if [ -f "$HOME/.cargo" ]; then
+    source "$HOME/.cargo/env"
+fi
 
 # Allow local customizations in the ~/.bashrc_after_local file
-if [ -f $HOME/.bashrc_after_local ]; then
-    source $HOME/.bashrc_after_local
+if [ -f "$HOME/.bashrc_after_local" ]; then
+    source "$HOME/.bashrc_after_local"
 fi

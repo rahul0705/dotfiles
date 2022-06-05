@@ -1,7 +1,12 @@
 - brew:
     - python3
     - go
-    - rust
+    - rustup-init
     - node
     - typescript
     - yarn
+
+- shell:
+    - description: Initialize rustup
+      command: rustup-init --no-modify-path -y
+      quiet: true
