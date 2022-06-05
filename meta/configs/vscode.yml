@@ -46,6 +46,9 @@
     # C++ language support
     ms-vscode.cpptools:
       status: install
+    # Rust language support
+    rust-lang.rust:
+      status: install
     # Python language support
     ms-python.python:
       status: install
@@ -54,6 +57,8 @@
       status: install
     # Yaml support
     redhat.vscode-yaml:
+      status: install
+    XadillaX.viml:
       status: install
     # Vagrant support
     bbenoist.vagrant:
