@@ -5,7 +5,7 @@
     - description: Installing Hack Nerd Fonts
       command: curl -fLo "$HOME/.local/share/fonts/Hack Regular Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf
       quiet: true
-    - description: Installing FuraCode Nerd Fonts
+    - description: Installing FiraCode Nerd Fonts
       command: curl -fLo "$HOME/.local/share/fonts/Fira Code Retina Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Retina/complete/Fira%20Code%20Retina%20Nerd%20Font%20Complete.ttf
       quiet: true
     - description: Regenerate font cache
