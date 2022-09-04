@@ -1,4 +1,6 @@
 {
+  // Telemetry
+  "telemetry.telemetryLevel": "off",
   // Workbench
   "workbench.colorTheme": "Base16 Material Darker",
   "workbench.list.horizontalScrolling": false,
@@ -14,9 +16,10 @@
   },
   "editor.multiCursorModifier": "alt",
   "editor.snippetSuggestions": "top",
+  "editor.stickyScroll.enabled": true,
   "editor.cursorBlinking": "solid",
   "editor.lineNumbers": "on",
-  "editor.suggestSelection": "first",
+  "editor.suggestSelection": "recentlyUsedByPrefix",
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -24,6 +27,8 @@
   "editor.fontFamily": "'FiraCode Nerd Font Mono', 'Hack Nerd Font Mono'",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
+  // Diff Editor
+  "diffEditor.ignoreTrimWhitespace": false,
   // Window
   "window.restoreWindows": "all",
   "window.newWindowDimensions": "maximized",
@@ -44,6 +49,10 @@
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.inheritEnv": false,
+  "terminal.integrated.scrollback": 100000,
+  "terminal.integrated.autoReplies": {
+    "[Oh My Zsh] Would you like to check for updates? [Y/n]": "Y\r"
+  },
   // Files
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
@@ -76,10 +85,13 @@
   // Explorer
   "explorer.confirmDelete": false,
   "explorer.openEditors.visible": 0,
+  "explorer.autoReveal": "focusNoScroll",
   // Git
   "git.autofetch": true,
+  "git.autoStash": true,
   "git.pruneOnFetch": true,
   "git.rebaseWhenSync": true,
+  "git.mergeEditor": true,
   // Gitlens
   "gitlens.codeLens.enabled": false,
   "redhat.telemetry.enabled": true
