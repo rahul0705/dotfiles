@@ -10,6 +10,8 @@
   "workbench.startupEditor": "welcomePage",
   "workbench.iconTheme": "material-icon-theme",
   // Editor
+  "editor.acceptSuggestionOnEnter": "smart",
+  "editor.suggest.preview": false, // Testing value
   "editor.useTabStops": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
@@ -27,6 +29,8 @@
   "editor.fontFamily": "'FiraCode Nerd Font Mono', 'Hack Nerd Font Mono'",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
+  // Emmet
+  "emmet.showExpandedAbbreviation": "never",
   // Diff Editor
   "diffEditor.ignoreTrimWhitespace": false,
   // Window
