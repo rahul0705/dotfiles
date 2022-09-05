@@ -71,6 +71,8 @@
     "**/yarn.lock": true,
     "**/node_modules": true,
     "**/npm-debug.log": true,
+    "**/*.js": { "when": "$(basename).ts" },
+    "**/**.js": { "when": "$(basename).tsx" },
     "**/.tox": true,
     "**/dist": true
   },
