@@ -2,6 +2,7 @@
     - mas # CLI for the Mac App Store
     - youtube-dl # command line video downloader
     - gallery-dl # command line gallery downloader
+    - aws-cdk # AWS CDK CLI
 - cask:
     - the-unarchiver # Decompressing utility
     - stats # shows mac stats
