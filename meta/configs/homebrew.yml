@@ -1,6 +1,6 @@
 - shell:
     - description: Create a sudo context
-      command: 'sudo ls /dev/null'
+      command: 'which -s brew || sudo ls /dev/null'
       quiet: true
       stdin: true
     - description: Installing Homebrew
