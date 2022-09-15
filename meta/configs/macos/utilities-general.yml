@@ -1,3 +1,4 @@
 - cask:
     - rectangle # Move and resize windows using keyboard shortcuts or snap areas
     - alt-tab # Windows-like alt-tab
+    - hiddenbar # Lets you hide items on the mac menu bar
