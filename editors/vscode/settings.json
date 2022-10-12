@@ -102,5 +102,7 @@
   "git.mergeEditor": true,
   // Gitlens
   "gitlens.codeLens.enabled": false,
+  // Base16
+  "base16.generator.activatedThemes": ["base16-material-darker"],
   "redhat.telemetry.enabled": true
 }
