@@ -2,5 +2,7 @@
     - visual-studio-code
 - clean:
     - '~/Library/Application Support/Code/User/settings.json'
+    - '~/Library/Application Support/Code/User/keybindings.json'
 - link:
     ~/Library/Application Support/Code/User/settings.json: editors/vscode/settings.json
+    ~/Library/Application Support/Code/User/keybindings.json: editors/vscode/keybindings.json

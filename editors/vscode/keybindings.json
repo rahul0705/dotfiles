@@ -1,0 +1,12 @@
+[
+  // Run test tasks
+  {
+    "key": "shift+cmd+i",
+    "command": "workbench.action.tasks.test"
+  },
+  // Run Task
+  {
+    "key": "shift+cmd+r",
+    "command": "workbench.action.tasks.runTask"
+  }
+]

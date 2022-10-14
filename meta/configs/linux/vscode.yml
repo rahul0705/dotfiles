@@ -1,4 +1,6 @@
 - clean:
     - '~/.config/Code/User/settings.json'
+    - '~/.config/Code/User/keybindings.json'
 - link:
     ~/.config/Code/User/settings.json: editors/vscode/settings.json
+    ~/.config/Code/User/keybindings.json: editors/vscode/keybindings.json
