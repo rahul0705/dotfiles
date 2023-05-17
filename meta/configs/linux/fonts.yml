@@ -3,10 +3,10 @@
       command: mkdir -p $HOME/.local/share/fonts
       quiet: true
     - description: Installing Hack Nerd Fonts
-      command: curl -fLo "$HOME/.local/share/fonts/Hack Regular Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf
+      command: curl -fLo "$HOME/.local/share/fonts/Hack.zip" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip && unzip -j "$HOME/.local/share/fonts/Hack.zip" *.ttf -d "$HOME/.local/share/fonts/" && rm "$HOME/.local/share/fonts/Hack.zip"
       quiet: true
     - description: Installing FiraCode Nerd Fonts
-      command: curl -fLo "$HOME/.local/share/fonts/Fira Code Retina Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Retina/complete/Fira%20Code%20Retina%20Nerd%20Font%20Complete.ttf
+      command: curl -fLo "$HOME/.local/share/fonts/FiraCode.zip" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip && unzip -j "$HOME/.local/share/fonts/FiraCode.zip" *.ttf -d "$HOME/.local/share/fonts/" && rm "$HOME/.local/share/fonts/FiraCode.zip"
       quiet: true
     - description: Regenerate font cache
       command: command -v fc-cache >/dev/null 2>&1 && fc-cache -f -v || echo 'Skipping regenerating font cache'
