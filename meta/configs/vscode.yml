@@ -47,7 +47,7 @@
     ms-vscode.cpptools:
       status: install
     # Rust language support
-    rust-lang.rust:
+    rust-lang.rust-analyzer:
       status: install
     # Python language support
     ms-python.python:
