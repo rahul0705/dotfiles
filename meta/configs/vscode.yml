@@ -53,7 +53,7 @@
     ms-python.python:
       status: install
     # Go language support
-    ms-vscode.Go:
+    golang.go:
       status: install
     # Yaml support
     redhat.vscode-yaml:
