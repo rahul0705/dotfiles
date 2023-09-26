@@ -2,3 +2,4 @@
     - rectangle # Move and resize windows using keyboard shortcuts or snap areas
     - alt-tab # Windows-like alt-tab
     - hiddenbar # Lets you hide items on the mac menu bar
+    - monitorcontrol # Lets you control your monitor OSD with your keyboard
