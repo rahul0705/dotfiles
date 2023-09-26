@@ -34,6 +34,7 @@
         "markdownlint",
         "mergetool",
         "mkdir",
+        "monitorcontrol",
         "msix",
         "mushan",
         "netrwhist",
