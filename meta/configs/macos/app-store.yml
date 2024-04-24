@@ -5,3 +5,6 @@
     - description: Installing TickTick To-do list
       command: mas install 966085870
       quiet: true
+    - description: Installing XCode
+      command: mas install 497799835
+      quiet: true
