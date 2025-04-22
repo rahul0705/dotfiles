@@ -1,0 +1,4 @@
+- clean:
+    - '~/.config/starship.toml'
+- link:
+    ~/.config/starship.toml: shells/config/starship.toml

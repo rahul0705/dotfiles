@@ -1,7 +1,9 @@
 linux/fonts
 git
+linux/starship
 oh-my-zsh
 zsh
+starship
 bash-it
 bash
 tmux

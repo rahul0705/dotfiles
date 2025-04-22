@@ -6,13 +6,15 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+# Set ZSH_THEME to blank so starship can load
+ZSH_THEME=""
 # Load powerlevel10k if zsh version will support it if not fall back to powerlevel9k
-if [ $(echo "$(echo $ZSH_VERSION | cut -d'.' -f -2) >= 5.1" | bc) -eq 1 ]
-then
-    ZSH_THEME="powerlevel10k/powerlevel10k"
-else
-    ZSH_THEME="powerlevel9k/powerlevel9k"
-fi
+# if [ $(echo "$(echo $ZSH_VERSION | cut -d'.' -f -2) >= 5.1" | bc) -eq 1 ]
+# then
+#     ZSH_THEME="powerlevel10k/powerlevel10k"
+# else
+#     ZSH_THEME="powerlevel9k/powerlevel9k"
+# fi
 
 # Auto update oh-my-zsh automatically without asking
 zstyle ':omz:update' mode auto
@@ -43,6 +45,9 @@ zstyle ':completion:*' menu select
 if [ -f "$HOME/.cargo/env" ]; then
     source "$HOME/.cargo/env"
 fi
+
+# Initialize starship for zsh
+eval "$(starship init zsh)"
 
 # Allow local customizations in the ~/.zshrc_after_local file
 if [ -f "$HOME/.zshrc_after_local" ]; then
