@@ -28,6 +28,7 @@ plugins=(
     zsh-autosuggestions
     zsh-completions
     zsh-syntax-highlighting
+    nvm
 )
 
 source $ZSH/oh-my-zsh.sh

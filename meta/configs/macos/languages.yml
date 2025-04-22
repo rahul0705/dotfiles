@@ -2,7 +2,7 @@
     - python3
     - go
     - rustup-init
-    - node
+    - nvm
     - typescript
     - yarn
 
