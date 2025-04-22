@@ -13,11 +13,13 @@ jobs:
         config:
           - linux/fonts
           - linux/vscode
-          - bash
+          - linux/starship
           - bash-it
+          - bash
           - git
           - homebrew
           - oh-my-zsh
+          - starship
           - tmux
           - tmux vim
           - vscode
@@ -65,18 +67,21 @@ jobs:
           - macos/docker
           - macos/fonts
           - macos/gaming
+          - macos/languages
           - macos/social
+          - macos/starship
           - macos/terminal
           - macos/utilities-general
           - macos/utilities-personal
           - macos/vscode
           - macos/web-browser
           - base16-iterm2
-          - bash
           - bash-it
+          - bash
           - git
           - homebrew
           - oh-my-zsh
+          - starship
           - macos/terminal tmux
           - macos/terminal tmux vim
           - macos/vscode vscode
