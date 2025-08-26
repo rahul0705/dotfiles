@@ -3,3 +3,4 @@
     - alt-tab # Windows-like alt-tab
     - hiddenbar # Lets you hide items on the mac menu bar
     - monitorcontrol # Lets you control your monitor OSD with your keyboard
+    - sensiblesidebuttons # Lets M4 and M5 work in MacOS
