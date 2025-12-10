@@ -10,3 +10,4 @@
     - google-drive # Google Drive client
     - notion # Notes
     - obs # Streaming
+    - tailscale # Overlay VPN network
