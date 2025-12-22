@@ -2,11 +2,10 @@
   // Telemetry
   "telemetry.telemetryLevel": "off",
   // Workbench
-  "workbench.colorTheme": "Base16 Material Darker",
+  "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.list.horizontalScrolling": false,
   "workbench.panel.defaultLocation": "bottom",
   "workbench.fontAliasing": "auto",
-  "workbench.activityBar.visible": true,
   "workbench.startupEditor": "welcomePage",
   "workbench.iconTheme": "material-icon-theme",
   // Editor
@@ -14,7 +13,7 @@
   "editor.suggest.preview": false, // Testing value
   "editor.useTabStops": true,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true
+    "source.organizeImports": "explicit"
   },
   "editor.multiCursorModifier": "alt",
   "editor.snippetSuggestions": "top",
