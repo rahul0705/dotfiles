@@ -16,6 +16,9 @@
     # Theme
     golf1052.base16-generator:
       status: install
+    # Theme
+    Catppuccin.catppuccin-vsc:
+      status: install
     # Icons
     pkief.material-icon-theme:
       status: install
