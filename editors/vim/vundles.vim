@@ -16,12 +16,8 @@ call vundle#begin()
 " let Vundle manage Vundle (required)
 Bundle 'VundleVim/Vundle.vim'
 
-" Vim Theme
-Plugin 'chriskempson/base16-vim'
-
 " Vim status line
 Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
 
 " Git integrations
 Plugin 'tpope/vim-fugitive'

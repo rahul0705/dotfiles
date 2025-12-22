@@ -37,3 +37,6 @@
 [submodule "terminals/ghostty/themes/catppuccin"]
 	path = terminals/ghostty/themes/catppuccin
 	url = https://github.com/catppuccin/ghostty.git
+[submodule "editors/vim/pack/catppuccin"]
+	path = editors/vim/pack/catppuccin
+	url = https://github.com/catppuccin/vim.git
