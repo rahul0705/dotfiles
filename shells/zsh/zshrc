@@ -23,7 +23,6 @@ zstyle ':omz:update' mode auto
 HIST_STAMPS="yyyy-mm-dd"
 
 plugins=(
-    base16-shell
     git
     zsh-autosuggestions
     zsh-completions
