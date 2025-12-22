@@ -15,12 +15,15 @@
       status: install
     # Theme
     golf1052.base16-generator:
-      status: install
+      status: uninstall
     # Theme
     Catppuccin.catppuccin-vsc:
       status: install
     # Icons
     pkief.material-icon-theme:
+      status: uninstall
+    # Icons
+    Catppuccin.catppuccin-vsc-icons:
       status: install
     # Git Support
     eamodio.gitlens:
