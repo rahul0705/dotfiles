@@ -24,6 +24,7 @@
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.semanticHighlighting.enabled": true,
   // Fonts
   "editor.fontFamily": "'FiraCode Nerd Font Mono', 'Hack Nerd Font Mono'",
   "editor.fontLigatures": true,
@@ -34,6 +35,7 @@
   "diffEditor.ignoreTrimWhitespace": false,
   // Window
   "window.restoreWindows": "all",
+  "window.titleBarStyle": "custom",
   "window.newWindowDimensions": "maximized",
   // Breadcrumbs
   "breadcrumbs.enabled": true,
@@ -49,6 +51,7 @@
     "**/.terraform": true
   },
   // Terminal
+  "terminal.integrated.minimumContrastRatio": 1,
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.fontSize": 14,
   "terminal.integrated.inheritEnv": false,
@@ -91,7 +94,6 @@
   "files.eol": "\n",
   // Explorer
   "explorer.confirmDelete": false,
-  "explorer.openEditors.visible": 0,
   "explorer.autoReveal": "focusNoScroll",
   // Git
   "git.autofetch": true,
