@@ -37,3 +37,6 @@
 [submodule "meta/dotbot-brew"]
 	path = meta/dotbot-brew
 	url = https://github.com/d12frosted/dotbot-brew.git
+[submodule "terminals/ghostty/themes/catppuccin"]
+	path = terminals/ghostty/themes/catppuccin
+	url = https://github.com/catppuccin/ghostty.git

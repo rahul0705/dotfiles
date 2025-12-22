@@ -1,5 +1,13 @@
+- clean:
+    - '~/.config/ghostty/'
 - brew:
     - tmux
 - cask:
     - iterm2
     - ghostty
+- link:
+    ~/.config/ghostty/config: terminals/ghostty/config
+    ~/.config/ghostty/themes/catppuccin-frappe.conf: terminals/ghostty/themes/catppuccin/themes/catppuccin-frappe.conf
+    ~/.config/ghostty/themes/catppuccin-latte.conf: terminals/ghostty/themes/catppuccin/themes/catppuccin-latte.conf
+    ~/.config/ghostty/themes/catppuccin-macchiato.conf: terminals/ghostty/themes/catppuccin/themes/catppuccin-macchiato.conf
+    ~/.config/ghostty/themes/catppuccin-mocha.conf: terminals/ghostty/themes/catppuccin/themes/catppuccin-mocha.conf
