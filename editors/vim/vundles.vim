@@ -16,9 +16,6 @@ call vundle#begin()
 " let Vundle manage Vundle (required)
 Bundle 'VundleVim/Vundle.vim'
 
-" Vim status line
-Plugin 'vim-airline/vim-airline'
-
 " Git integrations
 Plugin 'tpope/vim-fugitive'
 Plugin 'mhinz/vim-signify'

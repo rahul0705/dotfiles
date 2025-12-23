@@ -37,6 +37,9 @@
 [submodule "terminals/ghostty/themes/catppuccin"]
 	path = terminals/ghostty/themes/catppuccin
 	url = https://github.com/catppuccin/ghostty.git
-[submodule "editors/vim/pack/catppuccin/start"]
-	path = editors/vim/pack/catppuccin/start
+[submodule "editors/vim/pack/catppuccin/start/catppuccin"]
+	path = editors/vim/pack/catppuccin/start/catppuccin
 	url = https://github.com/catppuccin/vim.git
+[submodule "editors/vim/pack/vim-airline/start/vim-airline"]
+	path = editors/vim/pack/vim-airline/start/vim-airline
+	url = https://github.com/vim-airline/vim-airline
