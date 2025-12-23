@@ -1,3 +1,3 @@
-colorscheme catppuccin-mocha
+colorscheme catppuccin_mocha
 
 let g:airline_theme = 'catppuccin_mocha'
