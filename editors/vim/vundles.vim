@@ -24,7 +24,6 @@ Plugin 'tmux-plugins/vim-tmux'
 Plugin 'tmux-plugins/vim-tmux-focus-events'
 
 " Utility
-Plugin 'editorconfig/editorconfig-vim'
 Plugin 'andreshazard/vim-logreview'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'

@@ -46,3 +46,6 @@
 [submodule "editors/vim/pack/tpope/start/fugitive"]
 	path = editors/vim/pack/tpope/start/fugitive
 	url = https://tpope.io/vim/fugitive.git
+[submodule "editors/vim/pack/editorconfig/start/editorconfig-vim"]
+	path = editors/vim/pack/editorconfig/start/editorconfig-vim
+	url = https://github.com/editorconfig/editorconfig-vim.git
