@@ -17,7 +17,6 @@ call vundle#begin()
 Bundle 'VundleVim/Vundle.vim'
 
 " Git integrations
-Plugin 'tpope/vim-fugitive'
 Plugin 'mhinz/vim-signify'
 
 " Tmux Configuration

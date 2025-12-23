@@ -43,3 +43,6 @@
 [submodule "editors/vim/pack/vim-airline/start/vim-airline"]
 	path = editors/vim/pack/vim-airline/start/vim-airline
 	url = https://github.com/vim-airline/vim-airline
+[submodule "editors/vim/pack/tpope/start/fugitive"]
+	path = editors/vim/pack/tpope/start/fugitive
+	url = https://tpope.io/vim/fugitive.git
