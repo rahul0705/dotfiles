@@ -6,7 +6,8 @@ palette = 'catppuccin_mocha'
 format = """
 [](lavender)\
 $os\
-$username\
+([ ](bg:lavender)$username)\
+$hostname\
 [](fg:lavender bg:sapphire)\
 $directory\
 [](fg:sapphire bg:green)\
@@ -67,7 +68,12 @@ RedHatEnterprise = '󱄛'
 show_always = false
 style_user = 'bg:lavender fg:crust'
 style_root = 'bg:lavender fg:crust'
-format = '[ $user]($style)'
+format = '[$user]($style)'
+
+[hostname]
+ssh_symbol = '@'
+style = 'bg:lavender fg:crust'
+format = '[$ssh_symbol$hostname]($style)'
 
 [directory]
 style = 'bg:sapphire fg:crust'
