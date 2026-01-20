@@ -74,6 +74,7 @@ jobs:
           - macos/utilities-general
           - macos/utilities-personal
           - macos/vscode
+          - macos/zed
           - macos/web-browser
           - base16-iterm2
           - bash-it

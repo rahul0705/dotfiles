@@ -1,0 +1,6 @@
+- cask:
+    - zed
+- clean:
+    - '~/.config/zed/settings.json'
+- link:
+    ~/.config/zed/settings.json: editors/zed/settings.json

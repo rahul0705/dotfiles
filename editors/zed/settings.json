@@ -1,0 +1,13 @@
+{
+  "theme": "cave-light",
+  "tab_size": 2,
+  "preferred_line_length": 80,
+  "soft_wrap": "none",
+
+  "buffer_font_size": 14,
+  "buffer_font_family": "FiraCode Nerd Font Mono",
+
+  "autosave": "off",
+  "format_on_save": "on",
+  "vim_mode": false
+}
