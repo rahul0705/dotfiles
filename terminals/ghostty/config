@@ -1,1 +1,7 @@
+quit-after-last-window-closed = true
+quick-terminal-screen = mouse
+clipboard-read = allow
+clipboard-write = allow
+
 theme = catppuccin-mocha.conf
+font-family = FiraCode Nerd Font Mono
