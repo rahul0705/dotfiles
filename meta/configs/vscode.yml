@@ -14,14 +14,8 @@
     usernamehw.errorlens:
       status: install
     # Theme
-    golf1052.base16-generator:
-      status: uninstall
-    # Theme
     Catppuccin.catppuccin-vsc:
       status: install
-    # Icons
-    pkief.material-icon-theme:
-      status: uninstall
     # Icons
     Catppuccin.catppuccin-vsc-icons:
       status: install
@@ -41,7 +35,7 @@
     mushan.vscode-paste-image:
       status: install
     # Autocomplete
-    VisualStudioExptTeam.vscodeintellicode:
+    GitHub.copilot:
       status: install
     # Remote development
     ms-vscode-remote.vscode-remote-extensionpack:
