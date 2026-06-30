@@ -8,5 +8,5 @@
 
 - shell:
     - description: Initialize rustup
-      command: rustup --no-modify-path -y
+      command: rustup update
       quiet: true
