@@ -1,12 +1,12 @@
 - brew:
     - python3
     - go
-    - rustup-init
+    - rustup
     - nvm
     - typescript
     - yarn
 
 - shell:
     - description: Initialize rustup
-      command: rustup-init --no-modify-path -y
+      command: rustup --no-modify-path -y
       quiet: true
