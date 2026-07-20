@@ -4,7 +4,12 @@ on:
   pull_request:
   workflow_dispatch:
   schedule:
-    - cron: '0 8 * * 6'
+    - cron: "0 8 * * 6"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   linux-tests:
     strategy:
