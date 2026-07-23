@@ -31,8 +31,6 @@ jobs:
         include:
           - language: actions
             build-mode: none
-          - language: javascript-typescript
-            build-mode: none
 
     permissions:
       actions: read
