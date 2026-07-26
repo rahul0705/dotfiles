@@ -44,7 +44,7 @@ jobs:
           curl --version # used for downloading
           code --version # VSCode
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Setup test directory
         run: |
           mkdir -p ~/dotfiles-install-dir
@@ -70,7 +70,7 @@ jobs:
           brew --version # used for installing
           brew list
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Setup test directory
         run: |
           mkdir -p ~/dotfiles-install-dir
