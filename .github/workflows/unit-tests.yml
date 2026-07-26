@@ -6,6 +6,8 @@ on:
   schedule:
     - cron: "0 8 * * 6"
 
+permissions: {}
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -54,8 +56,10 @@ jobs:
           bc --version # used in tmux version checking
           curl --version # used for downloading
           code --version # VSCode
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
       - name: Setup test directory
         run: |
           mkdir -p ~/dotfiles-install-dir
@@ -102,8 +106,10 @@ jobs:
           bash --version # bash/bash-it
           bc --version # used in tmux version checking
           curl --version # used for downloading
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
       - name: Setup test directory
         run: |
           mkdir -p ~/dotfiles-install-dir
