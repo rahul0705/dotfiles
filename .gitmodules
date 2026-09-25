@@ -49,3 +49,6 @@
 [submodule "editors/vim/pack/editorconfig/start/editorconfig-vim"]
 	path = editors/vim/pack/editorconfig/start/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim.git
+[submodule "vendor/etch"]
+	path = vendor/etch
+	url = https://github.com/rm-industries/etch.git
