@@ -39,15 +39,15 @@ test_home=$(mktemp -d)
 HOME="$test_home" ./etch plan --profile developer
 HOME="$test_home" ./etch apply --profile developer
 HOME="$test_home" ./etch apply --profile developer
-python3 -S -m unittest discover -s tests -v
 ```
 
 This slice was checked on macOS 27.0, arm64, with Python 3.14.7 in temporary
-homes: read-only preview, first apply, unchanged second apply, regular-file
-conflict preservation, and the original Dotbot Git installation. The workflow
-also runs the Etch checks on Linux/macOS with Python 3.9 and 3.14; those results
-must be checked in CI before claiming that matrix is verified. This is Git-only
-evidence, not a full developer-profile installation.
+homes: read-only preview, first apply, unchanged second apply, and the original
+Dotbot Git installation. CI checks out this repository on Linux and macOS with
+Python 3.9 and 3.14, runs the same Etch commands, inspects the installed links
+and Git configuration, and confirms the second apply makes no changes. Those
+runner results must be checked before claiming the matrix is verified. This is
+Git-only evidence, not a full developer-profile installation.
 
 Subsequent review slices will cover tmux version selection, Starship installation
 and fact refresh, then the remaining modules, platform profiles and real platform
