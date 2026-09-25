@@ -24,8 +24,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - name: Initialize the pinned engine and tmux plugin manager
-        run: git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm
+      - name: Initialize the pinned engine and module assets
+        run: git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/vim/files
       - uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
         with:
           python-version: ${{ matrix.python }}
@@ -58,6 +58,8 @@ jobs:
           test ! -e "$HOME/.tmux"
           test ! -e "$HOME/.tmux.conf"
           test ! -e "$HOME/.config/starship.toml"
+          test ! -e "$HOME/.vim"
+          test ! -e "$HOME/.vimrc"
           if [[ "$RUNNER_OS" == Linux ]]; then
             grep -q 'DEFERRED' "$RUNNER_TEMP/etch-first-plan.log"
           fi
@@ -87,6 +89,15 @@ jobs:
           fi
           ./etch facts starship | tee "$RUNNER_TEMP/etch-starship-facts.log"
           grep -q 'starship.*version: VALUE' "$RUNNER_TEMP/etch-starship-facts.log"
+          test -L "$HOME/.vim"
+          test "$(readlink "$HOME/.vim")" = "$GITHUB_WORKSPACE/modules/vim/files"
+          test -L "$HOME/.vimrc"
+          test "$(readlink "$HOME/.vimrc")" = "$GITHUB_WORKSPACE/modules/vim/files/vimrc"
+          test "$(readlink "editors/vim")" = "../modules/vim/files"
+          for plugin in bundle/Vundle.vim pack/catppuccin/start/catppuccin pack/editorconfig/start/editorconfig-vim pack/tpope/start/fugitive pack/vim-airline/start/vim-airline; do
+            test -f "$HOME/.vim/$plugin/.git"
+          done
+          vim -Nu "$HOME/.vimrc" -n -es -c 'qall!'
 
           ./etch apply --profile developer | tee "$RUNNER_TEMP/etch-second-apply.log"
           if grep -Eq '^(CHANGED|FAILED|BLOCKED) ' "$RUNNER_TEMP/etch-second-apply.log"; then

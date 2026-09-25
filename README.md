@@ -3,13 +3,13 @@
 ## Etch migration (issue #81)
 
 The migration is being reviewed in small PRs targeting `dev`. The incremental
-Etch `developer` profile currently covers Git, tmux and Starship; it does not yet replace
+Etch `developer` profile currently covers Git, tmux, Starship and Vim; it does not yet replace
 the existing macOS/Linux Dotbot profiles.
 
 ```sh
 git clone --branch dev https://github.com/rahul0705/dotfiles.git
 cd dotfiles
-git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm
+git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/vim/files
 ./etch                              # preview only
 ./etch plan --profile developer -v
 ./etch doctor --profile developer
@@ -17,8 +17,7 @@ git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/t
 ./etch apply --profile developer     # established links should be skipped
 ```
 
-The tmux module is available after its PR lands on `dev`; before then, check
-out its feature branch. Python 3.9+, Git, and tmux are required. The launcher
+Python 3.9+, Git, tmux and Vim are required. The launcher
 uses the pinned Etch source with site packages disabled; no global Etch or
 Python package installation is needed. Homebrew and VS Code reference plugins
 are explicitly registered from that same pin, but these modules invoke neither.
@@ -46,15 +45,22 @@ third-party plugins are still installed separately with its existing
 not fetch them during apply.
 
 The Starship module owns `~/.config/starship.toml`. On macOS it uses the
-explicit Homebrew plugin to install the formula if missing; on Linux it uses a
-reviewed, checksummed Starship v1.26.0 installer and puts the binary in
-`~/.local/bin`. The installer refreshes the declared version fact so a missing
-Starship can activate its config link in the same apply. Linux shell startup
-must include `~/.local/bin` on `PATH` to run `starship init`; shell setup will
-be handled in a later slice. `shells/starship` remains a compatibility link
+explicit Homebrew plugin to install the formula if missing; on Linux it runs
+Starship's published installer into its default `/usr/local/bin` directory.
+Both installers refresh one PATH-based version fact so a missing Starship can
+activate its config link in the same apply. Shell setup will be handled in a
+later slice. `shells/starship` remains a compatibility link
 for Dotbot. As with tmux, an old symlink that resolves through this path is
 already satisfied to Etch; inspect and unlink that symlink before applying if
 you want Etch to recreate and own it directly.
+
+The Vim module owns `~/.vim` and `~/.vimrc`. Its five pinned plugin submodules
+live under `modules/vim/files` and must be initialized before Etch inspection.
+`editors/vim` remains a compatibility link for Dotbot and old home links. As
+with tmux, unlink an old `~/.vim` or `~/.vimrc` symlink that resolves through
+`editors/vim` before applying if you want Etch to recreate and own it directly.
+Vundle's separately downloaded plugins are not installed by Etch; after the
+module is linked, run `vim +PluginInstall +qall` when you want those plugins.
 
 To try this slice without changing your home:
 
@@ -67,12 +73,12 @@ HOME="$test_home" ./etch apply --profile developer
 
 The Git slice passed on macOS 27.0, arm64, with Python 3.14.7 in temporary
 homes, and its CI checks passed on Linux and macOS with Python 3.9 and 3.14.
-The expanded CI runs Etch with Git, tmux and Starship on those runners,
+The expanded CI runs Etch with Git, tmux, Starship and Vim on those runners,
 inspects their installed links and versions, and confirms the second apply
-makes no changes. Linux starts without a user-local Starship binary, checks
-the deferred config link in the initial plan, and installs the pinned release.
-It simulates tmux 2.0 to inspect the legacy selection; it does not run an old
-tmux binary or install third-party TPM plugins.
+makes no changes. Linux starts without Starship, checks the deferred config
+link in the initial plan, and installs the current release. It simulates tmux
+2.0 to inspect the legacy selection and starts Vim with the linked config; it
+does not run an old tmux binary or install third-party plugins.
 
 Subsequent review slices will cover the remaining modules, platform profiles
 and real platform evidence.
