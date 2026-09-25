@@ -14,7 +14,7 @@ git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/t
 ./etch                              # preview only
 ./etch plan --profile developer -v
 ./etch doctor --profile developer
-./etch apply --profile developer     # may prompt to install Homebrew on macOS
+./etch apply --profile developer --allow-sudo  # needed when Homebrew is absent
 if [ "$(uname -s)" = Darwin ]; then
   case "$(uname -m)" in
     arm64) brew_bin=/opt/homebrew/bin/brew ;;
@@ -32,9 +32,10 @@ Python package installation is needed. Homebrew and VS Code reference plugins
 are explicitly registered from that same pin; Starship and fonts use Homebrew
 on macOS.
 
-The Homebrew module runs only on macOS. If `brew` is missing, it runs Homebrew's
-upstream installer as the regular user with interactive input, allowing the
-installer to request confirmation and sudo access itself. On a
+The Homebrew module runs only on macOS. If `brew` is missing, an Etch-declared
+sudo action prompts for a password when needed, then Homebrew's upstream
+installer runs as the regular user with `NONINTERACTIVE=1` to skip its
+confirmation prompt. `--allow-sudo` is needed only for a new install. On a
 fresh macOS machine, the first developer apply skips package actions that
 cannot yet find `brew`. Load `brew shellenv` in the calling shell, then apply
 the developer profile again to install those packages. Existing Homebrew
