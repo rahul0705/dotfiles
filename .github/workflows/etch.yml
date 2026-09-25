@@ -12,24 +12,36 @@ permissions:
   contents: read
 
 jobs:
-  git-migration:
+  developer-migration:
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
         python: ['3.9', '3.14']
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - name: Initialize the pinned engine and reference plugins
-        run: git submodule update --init vendor/etch
+      - name: Initialize the pinned engine and tmux plugin manager
+        run: git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm
       - uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
         with:
           python-version: ${{ matrix.python }}
-      - name: Install and inspect the Git profile
+      - name: Make tmux available for version inspection
+        shell: bash
+        run: |
+          if ! command -v tmux >/dev/null; then
+            if [[ "$RUNNER_OS" == macOS ]]; then
+              brew install tmux
+            else
+              sudo apt-get update -qq
+              sudo apt-get install -y tmux
+            fi
+          fi
+          tmux -V
+      - name: Install and inspect the developer profile
         shell: bash
         env:
           HOME: ${{ runner.temp }}/etch-home
@@ -51,6 +63,14 @@ jobs:
             test "$(readlink "tools/vcs/git")" = "../../modules/git/files"
           done
           test "$(git config --file "$HOME/.gitconfig" --get core.editor)" = vim
+          test -L "$HOME/.tmux"
+          test "$(readlink "$HOME/.tmux")" = "$GITHUB_WORKSPACE/modules/tmux/files"
+          test -x "$HOME/.tmux/plugins/tpm/tpm"
+          test -L "$HOME/.tmux.conf"
+          test "$(readlink "$HOME/.tmux.conf")" = "$GITHUB_WORKSPACE/modules/tmux/files/tmux.conf"
+          grep -q 'set -g mouse on' "$HOME/.tmux.conf"
+          tmux -L etch-ci -f "$HOME/.tmux.conf" new-session -d -s etch-ci
+          tmux -L etch-ci kill-server
 
           ./etch apply --profile developer | tee "$RUNNER_TEMP/etch-second-apply.log"
           if grep -Eq '^(CHANGED|FAILED|BLOCKED) ' "$RUNNER_TEMP/etch-second-apply.log"; then
@@ -58,3 +78,21 @@ jobs:
             exit 1
           fi
           ./etch doctor --profile developer
+
+      - name: Inspect the tmux legacy branch with a simulated version
+        shell: bash
+        env:
+          HOME: ${{ runner.temp }}/etch-old-tmux-home
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME" "$RUNNER_TEMP/etch-fake-bin"
+          cat > "$RUNNER_TEMP/etch-fake-bin/tmux" <<'EOF'
+          #!/bin/sh
+          printf 'tmux 2.0\n'
+          EOF
+          chmod +x "$RUNNER_TEMP/etch-fake-bin/tmux"
+          export PATH="$RUNNER_TEMP/etch-fake-bin:$PATH"
+          ./etch plan tmux
+          ./etch apply tmux
+          test "$(readlink "$HOME/.tmux.conf")" = "$GITHUB_WORKSPACE/modules/tmux/files/tmux-legacy.conf"
+          grep -q 'mode-mouse on' "$HOME/.tmux.conf"

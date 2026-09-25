@@ -23,7 +23,7 @@
 	path = terminals/base16-iterm2
 	url = https://github.com/martinlindhe/base16-iterm2.git
 [submodule "terminals/tmux/plugins/tpm"]
-	path = terminals/tmux/plugins/tpm
+	path = modules/tmux/files/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
 [submodule "shells/zsh/oh-my-zsh/custom/themes/powerlevel10k"]
 	path = shells/zsh/oh-my-zsh/custom/themes/powerlevel10k

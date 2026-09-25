@@ -2,14 +2,14 @@
 
 ## Etch migration (issue #81)
 
-The migration is being reviewed in small PRs targeting `dev`. The first slice
-contains the Git module only; `developer` is an incremental Etch profile, not a
-replacement for the existing macOS/Linux Dotbot profiles yet.
+The migration is being reviewed in small PRs targeting `dev`. The incremental
+Etch `developer` profile currently covers Git and tmux; it does not yet replace
+the existing macOS/Linux Dotbot profiles.
 
 ```sh
 git clone --branch dev https://github.com/rahul0705/dotfiles.git
 cd dotfiles
-git submodule update --init vendor/etch
+git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm
 ./etch                              # preview only
 ./etch plan --profile developer -v
 ./etch doctor --profile developer
@@ -17,11 +17,11 @@ git submodule update --init vendor/etch
 ./etch apply --profile developer     # established links should be skipped
 ```
 
-These commands are available after the migration PR lands on `dev`; before then,
-check out its feature branch. Python 3.9+ and Git are required. The launcher uses
-the pinned Etch source with site packages disabled; no global Etch or Python
-package installation is needed. Homebrew and VS Code reference plugins are
-explicitly registered from that same pin, but this slice invokes neither tool.
+The tmux module is available after its PR lands on `dev`; before then, check
+out its feature branch. Python 3.9+, Git, and tmux are required. The launcher
+uses the pinned Etch source with site packages disabled; no global Etch or
+Python package installation is needed. Homebrew and VS Code reference plugins
+are explicitly registered from that same pin, but these modules invoke neither.
 
 The Git module owns `.gitconfig`, `.gitignore_global`, and `.gitmessage`.
 `tools/vcs/git` remains a compatibility link, so existing home links and Dotbot's
@@ -32,6 +32,19 @@ directories: review and back up those conflicts before applying. Broad Dotbot
 cleanup is not migrated; Etch must have ownership receipts before removing links.
 Machine-local receipts live in the ignored `.etch/` directory.
 
+The tmux module owns `~/.tmux` and selects `~/.tmux.conf` using the observed
+`tmux -V` version. Tmux 2.1 and newer use the modern mouse settings; older
+versions use the legacy settings. The pinned TPM checkout lives under the tmux
+module and must be initialized as shown above. `terminals/tmux` remains a
+compatibility link for existing Dotbot installations. Etch considers legacy
+links that resolve to the same files satisfied, so it leaves their literal
+targets untouched. To have Etch recreate and record ownership of those links,
+first inspect them with `ls -l ~/.tmux ~/.tmux.conf`, unlink only links that
+point to the legacy `terminals/tmux` path, then apply the tmux module. TPM's
+third-party plugins are still installed separately with its existing
+`~/.tmux/plugins/tpm/bin/install_plugins` command; the Etch tmux module does
+not fetch them during apply.
+
 To try this slice without changing your home:
 
 ```sh
@@ -41,17 +54,16 @@ HOME="$test_home" ./etch apply --profile developer
 HOME="$test_home" ./etch apply --profile developer
 ```
 
-This slice was checked on macOS 27.0, arm64, with Python 3.14.7 in temporary
-homes: read-only preview, first apply, unchanged second apply, and the original
-Dotbot Git installation. CI checks out this repository on Linux and macOS with
-Python 3.9 and 3.14, runs the same Etch commands, inspects the installed links
-and Git configuration, and confirms the second apply makes no changes. Those
-runner results must be checked before claiming the matrix is verified. This is
-Git-only evidence, not a full developer-profile installation.
+The Git slice passed on macOS 27.0, arm64, with Python 3.14.7 in temporary
+homes, and its CI checks passed on Linux and macOS with Python 3.9 and 3.14.
+The expanded CI runs Etch with Git and tmux on those runners, inspects the
+installed links and selected modern config, and confirms the second apply
+makes no changes. It simulates tmux 2.0 to inspect the legacy selection; it
+does not run an old tmux binary or install third-party TPM plugins.
 
-Subsequent review slices will cover tmux version selection, Starship installation
-and fact refresh, then the remaining modules, platform profiles and real platform
-evidence. Issue #81 stays open until those acceptance criteria are verified.
+Subsequent review slices will cover Starship installation and fact refresh,
+then the remaining modules, platform profiles and real platform evidence.
+Issue #81 stays open until those acceptance criteria are verified.
 
 ## Original Dotbot setup
 
