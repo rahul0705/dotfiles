@@ -36,8 +36,10 @@ jobs:
           set -euo pipefail
           python_bin=$(command -v python3)
           mkdir -p "$RUNNER_TEMP/etch-homebrew-home"
-          HOME="$RUNNER_TEMP/etch-homebrew-home" PATH=/usr/bin:/bin "$python_bin" -S vendor/etch/etch plan homebrew | tee "$RUNNER_TEMP/etch-homebrew-plan.log"
+          HOME="$RUNNER_TEMP/etch-homebrew-home" PATH=/usr/bin:/bin "$python_bin" -S vendor/etch/etch plan homebrew starship fonts | tee "$RUNNER_TEMP/etch-homebrew-plan.log"
           grep -q 'homebrew:action\[1\]: SKIP (condition false)' "$RUNNER_TEMP/etch-homebrew-plan.log"
+          grep -q 'starship:action\[1\]: SKIP (condition false)' "$RUNNER_TEMP/etch-homebrew-plan.log"
+          grep -q 'fonts:action\[2\]: SKIP (condition false)' "$RUNNER_TEMP/etch-homebrew-plan.log"
           HOME="$RUNNER_TEMP/etch-homebrew-home" ./etch apply homebrew
       - name: Make tmux available for version inspection
         shell: bash

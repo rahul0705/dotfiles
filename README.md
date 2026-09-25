@@ -11,19 +11,19 @@ macOS/Linux Dotbot profiles.
 git clone --branch dev https://github.com/rahul0705/dotfiles.git
 cd dotfiles
 git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting modules/oh-my-zsh/files/custom/themes/powerlevel9k modules/oh-my-zsh/files/custom/themes/powerlevel10k
+./etch                              # preview only
+./etch plan --profile developer -v
+./etch doctor --profile developer
+./etch apply --profile developer     # macOS may install Homebrew first
 if [ "$(uname -s)" = Darwin ]; then
-  ./etch apply homebrew
   case "$(uname -m)" in
     arm64) brew_bin=/opt/homebrew/bin/brew ;;
     *) brew_bin=/usr/local/bin/brew ;;
   esac
   eval "$("$brew_bin" shellenv)"
 fi
-./etch                              # preview only
-./etch plan --profile developer -v
-./etch doctor --profile developer
-./etch apply --profile developer
-./etch apply --profile developer     # established links should be skipped
+./etch apply --profile developer     # install deferred Homebrew packages
+./etch apply --profile developer     # established state should be skipped
 ```
 
 Python 3.9+, Git, tmux, and Zsh are required. The launcher
@@ -33,9 +33,10 @@ are explicitly registered from that same pin; Starship and fonts use Homebrew
 on macOS.
 
 The Homebrew module runs only on macOS. If `brew` is missing, it refreshes the
-sudo credential and runs Homebrew's upstream installer noninteractively. Load
-`brew shellenv` in the calling shell before applying the developer profile so
-the package actions can find a newly installed `brew`. Existing Homebrew
+sudo credential and runs Homebrew's upstream installer noninteractively. On a
+fresh macOS machine, the first developer apply skips package actions that
+cannot yet find `brew`. Load `brew shellenv` in the calling shell, then apply
+the developer profile again to install those packages. Existing Homebrew
 installations are left alone.
 
 The Git module owns `.gitconfig`, `.gitignore_global`, and `.gitmessage`.
@@ -93,13 +94,11 @@ consider old home links through those paths satisfied; inspect and unlink only
 those legacy links before applying if you want Etch to own direct links. Local
 before/after rc files remain supported.
 
-To try this slice without changing your home:
+To inspect the plan with a temporary home:
 
 ```sh
 test_home=$(mktemp -d)
 HOME="$test_home" ./etch plan --profile developer
-HOME="$test_home" ./etch apply --profile developer
-HOME="$test_home" ./etch apply --profile developer
 ```
 
 The Git slice passed on macOS 27.0, arm64, with Python 3.14.7 in temporary
