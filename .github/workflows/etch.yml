@@ -60,6 +60,7 @@ jobs:
           test ! -e "$HOME/.config/starship.toml"
           test ! -e "$HOME/.local/share/fonts/NerdFonts"
           test ! -e "$HOME/.bash-it"
+          test ! -e "$HOME/.bashrc"
           if [[ "$RUNNER_OS" == Linux ]]; then
             grep -q 'DEFERRED' "$RUNNER_TEMP/etch-first-plan.log"
           fi
@@ -98,7 +99,10 @@ jobs:
           fi
           test -f "$HOME/.bash-it/bash_it.sh"
           test -d "$HOME/.bash-it/enabled"
-          BASH_IT="$HOME/.bash-it" TERM=xterm bash --noprofile --norc -ic 'source "$BASH_IT/bash_it.sh"' > "$RUNNER_TEMP/etch-bash-it-startup.log" 2>&1
+          test -L "$HOME/.bashrc"
+          test "$(readlink "$HOME/.bashrc")" = "$GITHUB_WORKSPACE/modules/bash/files/bashrc"
+          test "$(readlink shells/bash/bashrc)" = "../../modules/bash/files/bashrc"
+          TERM=xterm bash --noprofile -ic 'test "$BASH_IT" = "$HOME/.bash-it"' > "$RUNNER_TEMP/etch-bash-it-startup.log" 2>&1
           if grep -q 'command not found' "$RUNNER_TEMP/etch-bash-it-startup.log"; then
             cat "$RUNNER_TEMP/etch-bash-it-startup.log" >&2
             exit 1
