@@ -85,9 +85,7 @@ jobs:
           test ! -e "$HOME/.oh-my-zsh"
           test ! -e "$HOME/.zprofile"
           test ! -e "$HOME/.zshrc"
-          if [[ "$RUNNER_OS" == Linux ]]; then
-            grep -q 'DEFERRED' "$RUNNER_TEMP/etch-first-plan.log"
-          fi
+          grep -q 'starship:action\[2\]: CHANGE' "$RUNNER_TEMP/etch-first-plan.log"
 
           ./etch apply --profile developer
           if [[ "$RUNNER_OS" == macOS ]]; then
