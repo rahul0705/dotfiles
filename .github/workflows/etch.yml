@@ -24,8 +24,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - name: Initialize the pinned engine and tmux plugin manager
-        run: git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm
+      - name: Initialize the pinned engine and shell plugins
+        run: git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting modules/oh-my-zsh/files/custom/themes/powerlevel9k modules/oh-my-zsh/files/custom/themes/powerlevel10k
       - uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
         with:
           python-version: ${{ matrix.python }}
@@ -41,6 +41,14 @@ jobs:
             fi
           fi
           tmux -V
+      - name: Make zsh available for startup inspection
+        shell: bash
+        run: |
+          if ! command -v zsh >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y zsh
+          fi
+          zsh --version
       - name: Install and inspect the developer profile
         shell: bash
         env:
@@ -61,6 +69,9 @@ jobs:
           test ! -e "$HOME/.local/share/fonts/NerdFonts"
           test ! -e "$HOME/.bash-it"
           test ! -e "$HOME/.bashrc"
+          test ! -e "$HOME/.oh-my-zsh"
+          test ! -e "$HOME/.zprofile"
+          test ! -e "$HOME/.zshrc"
           if [[ "$RUNNER_OS" == Linux ]]; then
             grep -q 'DEFERRED' "$RUNNER_TEMP/etch-first-plan.log"
           fi
@@ -107,6 +118,25 @@ jobs:
             cat "$RUNNER_TEMP/etch-bash-it-startup.log" >&2
             exit 1
           fi
+          test -f "$HOME/.oh-my-zsh/oh-my-zsh.sh"
+          test ! -e "$HOME/.zshrc.pre-oh-my-zsh"
+          test "$(readlink shells/zsh/oh-my-zsh)" = "../../modules/oh-my-zsh/files"
+          for name in zprofile zshrc; do
+            test -L "$HOME/.$name"
+            test "$(readlink "$HOME/.$name")" = "$GITHUB_WORKSPACE/modules/zsh/files/$name"
+            test "$(readlink "shells/zsh/$name")" = "../../modules/zsh/files/$name"
+          done
+          for name in zsh-autosuggestions zsh-completions zsh-syntax-highlighting; do
+            test "$(readlink "$HOME/.oh-my-zsh/custom/plugins/$name")" = "$GITHUB_WORKSPACE/modules/oh-my-zsh/files/custom/plugins/$name"
+          done
+          for name in powerlevel9k powerlevel10k; do
+            test "$(readlink "$HOME/.oh-my-zsh/custom/themes/$name")" = "$GITHUB_WORKSPACE/modules/oh-my-zsh/files/custom/themes/$name"
+          done
+          test "$(readlink "$HOME/.oh-my-zsh/custom/powerlevel9k.settings.zsh")" = "$GITHUB_WORKSPACE/modules/oh-my-zsh/files/custom/powerlevel9k.settings.zsh"
+          TERM=xterm zsh -lic 'test "$ZSH" = "$HOME/.oh-my-zsh" && command -v starship' > "$RUNNER_TEMP/etch-zsh-startup.log" 2>&1 || {
+            cat "$RUNNER_TEMP/etch-zsh-startup.log" >&2
+            exit 1
+          }
 
           ./etch apply --profile developer | tee "$RUNNER_TEMP/etch-second-apply.log"
           if grep -Eq '^(CHANGED|FAILED|BLOCKED) ' "$RUNNER_TEMP/etch-second-apply.log"; then

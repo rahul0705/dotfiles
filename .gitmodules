@@ -5,16 +5,16 @@
 	path = meta/dotbot-vscode
 	url = https://github.com/rahul0705/dotbot-vscode.git
 [submodule "oh-my-zsh/custom/plugins/zsh-syntax-hightlighting"]
-	path = shells/zsh/oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+	path = modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "oh-my-zsh/custom/plugins/zsh-completions"]
-	path = shells/zsh/oh-my-zsh/custom/plugins/zsh-completions
+	path = modules/oh-my-zsh/files/custom/plugins/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions.git
 [submodule "oh-my-zsh/custom/plugins/zsh-autosuggestions"]
-	path = shells/zsh/oh-my-zsh/custom/plugins/zsh-autosuggestions
+	path = modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule "oh-my-zsh/custom/themes/powerlevel9k"]
-	path = shells/zsh/oh-my-zsh/custom/themes/powerlevel9k
+	path = modules/oh-my-zsh/files/custom/themes/powerlevel9k
 	url = https://github.com/bhilburn/powerlevel9k.git
 [submodule "vim/bundle/Vundle.vim"]
 	path = editors/vim/bundle/Vundle.vim
@@ -26,7 +26,7 @@
 	path = modules/tmux/files/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
 [submodule "shells/zsh/oh-my-zsh/custom/themes/powerlevel10k"]
-	path = shells/zsh/oh-my-zsh/custom/themes/powerlevel10k
+	path = modules/oh-my-zsh/files/custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
 [submodule "shells/bash/bash-it/custom/plugins/base16-shell"]
 	path = shells/bash/bash-it/custom/plugins/base16-shell

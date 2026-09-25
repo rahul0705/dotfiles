@@ -3,13 +3,14 @@
 ## Etch migration (issue #81)
 
 The migration is being reviewed in small PRs targeting `dev`. The incremental
-Etch `developer` profile currently covers Git, tmux, Starship, Nerd Fonts and
-Bash-it and Bash; it does not yet replace the existing macOS/Linux Dotbot profiles.
+Etch `developer` profile currently covers Git, tmux, Starship, Nerd Fonts,
+Bash-it, Bash, Oh My Zsh, and Zsh; it does not yet replace the existing
+macOS/Linux Dotbot profiles.
 
 ```sh
 git clone --branch dev https://github.com/rahul0705/dotfiles.git
 cd dotfiles
-git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm
+git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting modules/oh-my-zsh/files/custom/themes/powerlevel9k modules/oh-my-zsh/files/custom/themes/powerlevel10k
 ./etch                              # preview only
 ./etch plan --profile developer -v
 ./etch doctor --profile developer
@@ -17,7 +18,7 @@ git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/t
 ./etch apply --profile developer     # established links should be skipped
 ```
 
-Python 3.9+, Git, and tmux are required. The launcher
+Python 3.9+, Git, tmux, and Zsh are required. The launcher
 uses the pinned Etch source with site packages disabled; no global Etch or
 Python package installation is needed. Homebrew and VS Code reference plugins
 are explicitly registered from that same pin; Starship and fonts use Homebrew
@@ -69,6 +70,15 @@ inspect and unlink that legacy link before applying. Local before/after rc
 files remain supported. Deprecated Base16 customization remains only in the
 original Dotbot tree and is not part of these modules.
 
+The Zsh module links `~/.zprofile` and `~/.zshrc` and starts Starship when
+available. The Oh My Zsh module requires Zsh, then runs the upstream installer
+noninteractively while preserving the linked rc file, and links the existing
+custom plugins and themes. `shells/zsh/zprofile`, `shells/zsh/zshrc`,
+and `shells/zsh/oh-my-zsh` remain compatibility links for Dotbot. Etch may
+consider old home links through those paths satisfied; inspect and unlink only
+those legacy links before applying if you want Etch to own direct links. Local
+before/after rc files remain supported.
+
 To try this slice without changing your home:
 
 ```sh
@@ -81,7 +91,7 @@ HOME="$test_home" ./etch apply --profile developer
 The Git slice passed on macOS 27.0, arm64, with Python 3.14.7 in temporary
 homes, and its CI checks passed on Linux and macOS with Python 3.9 and 3.14.
 The expanded CI runs Etch with Git, tmux, Starship, fonts and Bash-it on those
-runners, inspects their installed links, Bash startup, binaries and font packages, and confirms the
+runners, inspects their installed links, Bash and Zsh startup, binaries and font packages, and confirms the
 second apply makes no changes. Linux starts without Starship, checks the
 deferred config link in the initial plan, and installs the current release.
 It simulates tmux 2.0 to inspect the legacy selection; it does not run an old
