@@ -85,12 +85,19 @@ jobs:
           test ! -e "$HOME/.oh-my-zsh"
           test ! -e "$HOME/.zprofile"
           test ! -e "$HOME/.zshrc"
+          test ! -e "$HOME/.config/zed/settings.json"
           grep -q 'starship:action\[2\]: CHANGE' "$RUNNER_TEMP/etch-first-plan.log"
 
           ./etch apply --profile developer
           if [[ "$RUNNER_OS" == macOS ]]; then
             command -v brew
             brew --prefix
+            brew list --cask --versions zed
+            test -L "$HOME/.config/zed/settings.json"
+            test "$(readlink "$HOME/.config/zed/settings.json")" = "$GITHUB_WORKSPACE/modules/zed/files/settings.json"
+            test "$(readlink editors/zed)" = "../modules/zed/files"
+          else
+            test ! -e "$HOME/.config/zed/settings.json"
           fi
           for name in gitconfig gitignore_global gitmessage; do
             test -L "$HOME/.$name"
