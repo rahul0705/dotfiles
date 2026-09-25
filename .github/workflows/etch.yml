@@ -80,8 +80,8 @@ jobs:
           test -L "$HOME/.config/starship.toml"
           test "$(readlink "$HOME/.config/starship.toml")" = "$GITHUB_WORKSPACE/modules/starship/files/starship.toml"
           if [[ "$RUNNER_OS" == Linux ]]; then
-            test -x "$HOME/.local/bin/starship"
-            "$HOME/.local/bin/starship" --version
+            test -x /usr/local/bin/starship
+            /usr/local/bin/starship --version
           else
             starship --version
           fi
