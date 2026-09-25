@@ -3,13 +3,14 @@
 ## Etch migration (issue #81)
 
 The migration is being reviewed in small PRs targeting `dev`. The incremental
-Etch `developer` profile currently covers Git, tmux, Starship and Nerd Fonts; it does not yet replace
+Etch `developer` profile currently covers Git, tmux, Starship, Nerd Fonts and
+Bash-it; it does not yet replace
 the existing macOS/Linux Dotbot profiles.
 
 ```sh
 git clone --branch dev https://github.com/rahul0705/dotfiles.git
 cd dotfiles
-git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm
+git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/bash-it/files/plugins/base16-shell
 ./etch                              # preview only
 ./etch plan --profile developer -v
 ./etch doctor --profile developer
@@ -17,11 +18,11 @@ git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/t
 ./etch apply --profile developer     # established links should be skipped
 ```
 
-The tmux module is available after its PR lands on `dev`; before then, check
-out its feature branch. Python 3.9+, Git, and tmux are required. The launcher
+Python 3.9+, Git, and tmux are required. The launcher
 uses the pinned Etch source with site packages disabled; no global Etch or
 Python package installation is needed. Homebrew and VS Code reference plugins
-are explicitly registered from that same pin, but these modules invoke neither.
+are explicitly registered from that same pin; Starship and fonts use Homebrew
+on macOS.
 
 The Git module owns `.gitconfig`, `.gitignore_global`, and `.gitmessage`.
 `tools/vcs/git` remains a compatibility link, so existing home links and Dotbot's
@@ -60,6 +61,14 @@ Fonts' upstream installer for each font in the user font directory and refreshes
 the font cache; on macOS it installs the existing Homebrew font casks. Existing
 font files or installed casks are skipped on later applies.
 
+The Bash-it module clones Bash-it without changing `~/.bashrc`, then links the
+Base16 custom files and pinned plugin into its `custom` directory. Initialize
+the plugin submodule before Etch inspection as shown above. The old
+`shells/bash/bash-it/custom` path remains a compatibility link for Dotbot.
+Shell startup is not migrated yet; the existing Bash configuration is still
+managed separately. The Base16 helper is sourced in the current shell so its
+theme aliases are available when the Bash-it settings load.
+
 To try this slice without changing your home:
 
 ```sh
@@ -71,8 +80,8 @@ HOME="$test_home" ./etch apply --profile developer
 
 The Git slice passed on macOS 27.0, arm64, with Python 3.14.7 in temporary
 homes, and its CI checks passed on Linux and macOS with Python 3.9 and 3.14.
-The expanded CI runs Etch with Git, tmux, Starship and fonts on those runners,
-inspects their installed links, binaries and font packages, and confirms the
+The expanded CI runs Etch with Git, tmux, Starship, fonts and Bash-it on those
+runners, inspects their installed links, binaries and font packages, and confirms the
 second apply makes no changes. Linux starts without Starship, checks the
 deferred config link in the initial plan, and installs the current release.
 It simulates tmux 2.0 to inspect the legacy selection; it does not run an old
