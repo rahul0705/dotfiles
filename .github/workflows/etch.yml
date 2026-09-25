@@ -39,6 +39,7 @@ jobs:
           HOME="$RUNNER_TEMP/etch-homebrew-home" PATH=/usr/bin:/bin "$python_bin" -S vendor/etch/etch plan homebrew starship fonts | tee "$RUNNER_TEMP/etch-homebrew-plan.log"
           grep -q 'homebrew:action\[1\]: SKIP (condition false)' "$RUNNER_TEMP/etch-homebrew-plan.log"
           grep -q 'starship:action\[1\]: SKIP (condition false)' "$RUNNER_TEMP/etch-homebrew-plan.log"
+          grep -q 'starship:action\[2\]: CHANGE' "$RUNNER_TEMP/etch-homebrew-plan.log"
           grep -q 'fonts:action\[2\]: SKIP (condition false)' "$RUNNER_TEMP/etch-homebrew-plan.log"
           HOME="$RUNNER_TEMP/etch-homebrew-home" ./etch apply homebrew
       - name: Make tmux available for version inspection
@@ -115,8 +116,6 @@ jobs:
           else
             starship --version
           fi
-          ./etch facts starship | tee "$RUNNER_TEMP/etch-starship-facts.log"
-          grep -q 'starship.*version: VALUE' "$RUNNER_TEMP/etch-starship-facts.log"
           if [[ "$RUNNER_OS" == Linux ]]; then
             test -f "$HOME/.local/share/fonts/NerdFonts/HackNerdFont-Regular.ttf"
             test -f "$HOME/.local/share/fonts/NerdFonts/FiraCodeNerdFont-Regular.ttf"

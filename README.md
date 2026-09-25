@@ -64,9 +64,9 @@ not fetch them during apply.
 The Starship module owns `~/.config/starship.toml`. On macOS it uses the
 explicit Homebrew plugin to install the formula if missing; on Linux it runs
 Starship's published installer into the default `/usr/local/bin` directory.
-Both installers refresh a shared PATH-based version fact so a missing Starship
-can activate its config link in the same apply. Shell setup will be handled in
-a later slice. `shells/starship` remains a compatibility link
+The config link can be created before Starship is installed, so it needs no
+version gate. Shell setup will be handled in a later slice.
+`shells/starship` remains a compatibility link
 for Dotbot. As with tmux, an old symlink that resolves through this path is
 already satisfied to Etch; inspect and unlink that symlink before applying if
 you want Etch to recreate and own it directly.
