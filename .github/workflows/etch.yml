@@ -119,6 +119,7 @@ jobs:
             exit 1
           fi
           test -f "$HOME/.oh-my-zsh/oh-my-zsh.sh"
+          test ! -e "$HOME/.zshrc.pre-oh-my-zsh"
           test "$(readlink shells/zsh/oh-my-zsh)" = "../../modules/oh-my-zsh/files"
           for name in zprofile zshrc; do
             test -L "$HOME/.$name"

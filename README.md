@@ -70,10 +70,10 @@ inspect and unlink that legacy link before applying. Local before/after rc
 files remain supported. Deprecated Base16 customization remains only in the
 original Dotbot tree and is not part of these modules.
 
-The Oh My Zsh module clones Oh My Zsh without changing the login shell or
-generating a new rc file, then links the existing custom plugins and themes.
-The Zsh module links `~/.zprofile` and `~/.zshrc`; it requires Oh My Zsh and
-starts Starship when available. `shells/zsh/zprofile`, `shells/zsh/zshrc`,
+The Zsh module links `~/.zprofile` and `~/.zshrc` and starts Starship when
+available. The Oh My Zsh module requires Zsh, then runs the upstream installer
+noninteractively while preserving the linked rc file, and links the existing
+custom plugins and themes. `shells/zsh/zprofile`, `shells/zsh/zshrc`,
 and `shells/zsh/oh-my-zsh` remain compatibility links for Dotbot. Etch may
 consider old home links through those paths satisfied; inspect and unlink only
 those legacy links before applying if you want Etch to own direct links. Local
