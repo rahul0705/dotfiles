@@ -97,6 +97,7 @@ jobs:
             brew list --cask --versions font-fira-code-nerd-font
           fi
           test -f "$HOME/.bash-it/bash_it.sh"
+          test -d "$HOME/.bash-it/enabled"
           BASH_IT="$HOME/.bash-it" TERM=xterm bash --noprofile --norc -ic 'source "$BASH_IT/bash_it.sh"' > "$RUNNER_TEMP/etch-bash-it-startup.log" 2>&1
           if grep -q 'command not found' "$RUNNER_TEMP/etch-bash-it-startup.log"; then
             cat "$RUNNER_TEMP/etch-bash-it-startup.log" >&2
