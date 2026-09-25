@@ -3,14 +3,22 @@
 ## Etch migration (issue #81)
 
 The migration is being reviewed in small PRs targeting `dev`. The incremental
-Etch `developer` profile currently covers Git, tmux, Homebrew, Starship, Nerd
-Fonts, Bash-it, Bash, Oh My Zsh, and Zsh; it does not yet replace the existing
+Etch `developer` profile currently covers Git, tmux, Starship, Nerd Fonts,
+Bash-it, Bash, Oh My Zsh, and Zsh; it does not yet replace the existing
 macOS/Linux Dotbot profiles.
 
 ```sh
 git clone --branch dev https://github.com/rahul0705/dotfiles.git
 cd dotfiles
 git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting modules/oh-my-zsh/files/custom/themes/powerlevel9k modules/oh-my-zsh/files/custom/themes/powerlevel10k
+if [ "$(uname -s)" = Darwin ]; then
+  ./etch apply homebrew
+  case "$(uname -m)" in
+    arm64) brew_bin=/opt/homebrew/bin/brew ;;
+    *) brew_bin=/usr/local/bin/brew ;;
+  esac
+  eval "$("$brew_bin" shellenv)"
+fi
 ./etch                              # preview only
 ./etch plan --profile developer -v
 ./etch doctor --profile developer
@@ -25,10 +33,10 @@ are explicitly registered from that same pin; Starship and fonts use Homebrew
 on macOS.
 
 The Homebrew module runs only on macOS. If `brew` is missing, it refreshes the
-sudo credential and runs Homebrew's upstream installer noninteractively. The
-launcher includes the standard Homebrew bin directory for the machine's
-architecture so later package actions can find a newly installed `brew` in
-the same Etch apply. Existing Homebrew installations are left alone.
+sudo credential and runs Homebrew's upstream installer noninteractively. Load
+`brew shellenv` in the calling shell before applying the developer profile so
+the package actions can find a newly installed `brew`. Existing Homebrew
+installations are left alone.
 
 The Git module owns `.gitconfig`, `.gitignore_global`, and `.gitmessage`.
 `tools/vcs/git` remains a compatibility link, so existing home links and Dotbot's
