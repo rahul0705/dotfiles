@@ -52,9 +52,15 @@ jobs:
           python3 --version
           git --version
           ./etch
-          ./etch plan --profile developer -v
+          ./etch plan --profile developer -v | tee "$RUNNER_TEMP/etch-first-plan.log"
           ./etch doctor --profile developer
-          test -z "$(find "$HOME" -mindepth 1 -print -quit)"
+          test ! -e "$HOME/.gitconfig"
+          test ! -e "$HOME/.tmux"
+          test ! -e "$HOME/.tmux.conf"
+          test ! -e "$HOME/.config/starship.toml"
+          if [[ "$RUNNER_OS" == Linux ]]; then
+            grep -q 'DEFERRED' "$RUNNER_TEMP/etch-first-plan.log"
+          fi
 
           ./etch apply --profile developer
           for name in gitconfig gitignore_global gitmessage; do
@@ -71,6 +77,16 @@ jobs:
           grep -q 'set -g mouse on' "$HOME/.tmux.conf"
           tmux -L etch-ci -f "$HOME/.tmux.conf" new-session -d -s etch-ci
           tmux -L etch-ci kill-server
+          test -L "$HOME/.config/starship.toml"
+          test "$(readlink "$HOME/.config/starship.toml")" = "$GITHUB_WORKSPACE/modules/starship/files/starship.toml"
+          if [[ "$RUNNER_OS" == Linux ]]; then
+            test -x /usr/local/bin/starship
+            /usr/local/bin/starship --version
+          else
+            starship --version
+          fi
+          ./etch facts starship | tee "$RUNNER_TEMP/etch-starship-facts.log"
+          grep -q 'starship.*version: VALUE' "$RUNNER_TEMP/etch-starship-facts.log"
 
           ./etch apply --profile developer | tee "$RUNNER_TEMP/etch-second-apply.log"
           if grep -Eq '^(CHANGED|FAILED|BLOCKED) ' "$RUNNER_TEMP/etch-second-apply.log"; then

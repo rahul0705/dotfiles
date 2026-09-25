@@ -3,7 +3,7 @@
 ## Etch migration (issue #81)
 
 The migration is being reviewed in small PRs targeting `dev`. The incremental
-Etch `developer` profile currently covers Git and tmux; it does not yet replace
+Etch `developer` profile currently covers Git, tmux and Starship; it does not yet replace
 the existing macOS/Linux Dotbot profiles.
 
 ```sh
@@ -45,6 +45,17 @@ third-party plugins are still installed separately with its existing
 `~/.tmux/plugins/tpm/bin/install_plugins` command; the Etch tmux module does
 not fetch them during apply.
 
+The Starship module owns `~/.config/starship.toml`. On macOS it uses the
+explicit Homebrew plugin to install the formula if missing; on Linux it uses a
+reviewed, checksummed Starship v1.26.0 installer and puts the binary in
+`~/.local/bin`. The installer refreshes the declared version fact so a missing
+Starship can activate its config link in the same apply. Linux shell startup
+must include `~/.local/bin` on `PATH` to run `starship init`; shell setup will
+be handled in a later slice. `shells/starship` remains a compatibility link
+for Dotbot. As with tmux, an old symlink that resolves through this path is
+already satisfied to Etch; inspect and unlink that symlink before applying if
+you want Etch to recreate and own it directly.
+
 To try this slice without changing your home:
 
 ```sh
@@ -56,13 +67,15 @@ HOME="$test_home" ./etch apply --profile developer
 
 The Git slice passed on macOS 27.0, arm64, with Python 3.14.7 in temporary
 homes, and its CI checks passed on Linux and macOS with Python 3.9 and 3.14.
-The expanded CI runs Etch with Git and tmux on those runners, inspects the
-installed links and selected modern config, and confirms the second apply
-makes no changes. It simulates tmux 2.0 to inspect the legacy selection; it
-does not run an old tmux binary or install third-party TPM plugins.
+The expanded CI runs Etch with Git, tmux and Starship on those runners,
+inspects their installed links and versions, and confirms the second apply
+makes no changes. Linux starts without a user-local Starship binary, checks
+the deferred config link in the initial plan, and installs the pinned release.
+It simulates tmux 2.0 to inspect the legacy selection; it does not run an old
+tmux binary or install third-party TPM plugins.
 
-Subsequent review slices will cover Starship installation and fact refresh,
-then the remaining modules, platform profiles and real platform evidence.
+Subsequent review slices will cover the remaining modules, platform profiles
+and real platform evidence.
 Issue #81 stays open until those acceptance criteria are verified.
 
 ## Original Dotbot setup
