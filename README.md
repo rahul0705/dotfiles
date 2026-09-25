@@ -3,13 +3,14 @@
 ## Etch migration (issue #81)
 
 The migration is being reviewed in small PRs targeting `dev`. The incremental
-Etch `developer` profile currently covers Git, tmux, Starship, Nerd Fonts and
-Bash-it, Bash and Zsh; it does not yet replace the existing macOS/Linux Dotbot profiles.
+Etch `developer` profile currently covers Git, tmux, Starship, Nerd Fonts,
+Bash-it, Bash, Oh My Zsh, and Zsh; it does not yet replace the existing
+macOS/Linux Dotbot profiles.
 
 ```sh
 git clone --branch dev https://github.com/rahul0705/dotfiles.git
 cd dotfiles
-git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/zsh/files/oh-my-zsh/custom/plugins/zsh-autosuggestions modules/zsh/files/oh-my-zsh/custom/plugins/zsh-completions modules/zsh/files/oh-my-zsh/custom/plugins/zsh-syntax-highlighting modules/zsh/files/oh-my-zsh/custom/themes/powerlevel9k modules/zsh/files/oh-my-zsh/custom/themes/powerlevel10k
+git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting modules/oh-my-zsh/files/custom/themes/powerlevel9k modules/oh-my-zsh/files/custom/themes/powerlevel10k
 ./etch                              # preview only
 ./etch plan --profile developer -v
 ./etch doctor --profile developer
@@ -69,13 +70,14 @@ inspect and unlink that legacy link before applying. Local before/after rc
 files remain supported. Deprecated Base16 customization remains only in the
 original Dotbot tree and is not part of these modules.
 
-The Zsh module clones Oh My Zsh without changing the login shell or generating
-a new rc file, links the existing custom plugins and themes, then links
-`~/.zprofile` and `~/.zshrc`. It requires Starship, which the rc file starts.
-`shells/zsh/zprofile`, `shells/zsh/zshrc`, and `shells/zsh/oh-my-zsh` remain compatibility links for
-Dotbot. Etch may consider old home links through those paths satisfied; inspect
-and unlink only those legacy links before applying if you want Etch to own
-direct links. Local before/after rc files remain supported.
+The Oh My Zsh module clones Oh My Zsh without changing the login shell or
+generating a new rc file, then links the existing custom plugins and themes.
+The Zsh module links `~/.zprofile` and `~/.zshrc`; it requires Oh My Zsh and
+Starship, which the rc file starts. `shells/zsh/zprofile`, `shells/zsh/zshrc`,
+and `shells/zsh/oh-my-zsh` remain compatibility links for Dotbot. Etch may
+consider old home links through those paths satisfied; inspect and unlink only
+those legacy links before applying if you want Etch to own direct links. Local
+before/after rc files remain supported.
 
 To try this slice without changing your home:
 
