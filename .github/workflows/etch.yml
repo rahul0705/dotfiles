@@ -24,8 +24,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - name: Initialize the pinned engine and module assets
-        run: git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/bash-it/files/plugins/base16-shell
+      - name: Initialize the pinned engine and tmux plugin manager
+        run: git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm
       - uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
         with:
           python-version: ${{ matrix.python }}
@@ -97,16 +97,7 @@ jobs:
             brew list --cask --versions font-fira-code-nerd-font
           fi
           test -f "$HOME/.bash-it/bash_it.sh"
-          for file in base16-shell.plugin.bash base16-shell.settings.bash; do
-            test -L "$HOME/.bash-it/custom/$file"
-            test "$(readlink "$HOME/.bash-it/custom/$file")" = "$GITHUB_WORKSPACE/modules/bash-it/files/$file"
-            bash -n "$HOME/.bash-it/custom/$file"
-          done
-          test -L "$HOME/.bash-it/custom/plugins/base16-shell"
-          test "$(readlink "$HOME/.bash-it/custom/plugins/base16-shell")" = "$GITHUB_WORKSPACE/modules/bash-it/files/plugins/base16-shell"
-          test -f "$HOME/.bash-it/custom/plugins/base16-shell/.git"
-          test "$(readlink "shells/bash/bash-it/custom")" = "../../../modules/bash-it/files"
-          BASH_IT="$HOME/.bash-it" TERM=xterm bash --noprofile --norc -ic 'source "$BASH_IT/bash_it.sh"; type base16_material-darker >/dev/null' > "$RUNNER_TEMP/etch-bash-it-startup.log" 2>&1
+          BASH_IT="$HOME/.bash-it" TERM=xterm bash --noprofile --norc -ic 'source "$BASH_IT/bash_it.sh"' > "$RUNNER_TEMP/etch-bash-it-startup.log" 2>&1
           if grep -q 'command not found' "$RUNNER_TEMP/etch-bash-it-startup.log"; then
             cat "$RUNNER_TEMP/etch-bash-it-startup.log" >&2
             exit 1

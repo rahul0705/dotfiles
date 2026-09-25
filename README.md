@@ -4,13 +4,12 @@
 
 The migration is being reviewed in small PRs targeting `dev`. The incremental
 Etch `developer` profile currently covers Git, tmux, Starship, Nerd Fonts and
-Bash-it; it does not yet replace
-the existing macOS/Linux Dotbot profiles.
+Bash-it; it does not yet replace the existing macOS/Linux Dotbot profiles.
 
 ```sh
 git clone --branch dev https://github.com/rahul0705/dotfiles.git
 cd dotfiles
-git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/bash-it/files/plugins/base16-shell
+git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm
 ./etch                              # preview only
 ./etch plan --profile developer -v
 ./etch doctor --profile developer
@@ -61,13 +60,10 @@ Fonts' upstream installer for each font in the user font directory and refreshes
 the font cache; on macOS it installs the existing Homebrew font casks. Existing
 font files or installed casks are skipped on later applies.
 
-The Bash-it module clones Bash-it without changing `~/.bashrc`, then links the
-Base16 custom files and pinned plugin into its `custom` directory. Initialize
-the plugin submodule before Etch inspection as shown above. The old
-`shells/bash/bash-it/custom` path remains a compatibility link for Dotbot.
-Shell startup is not migrated yet; the existing Bash configuration is still
-managed separately. The Base16 helper is sourced in the current shell so its
-theme aliases are available when the Bash-it settings load.
+The Bash-it module clones Bash-it and runs its noninteractive setup without
+changing `~/.bashrc`. Shell startup is not migrated yet; the existing Bash
+configuration is still managed separately. Deprecated Base16 customization
+remains only in the original Dotbot tree and is not part of this Etch module.
 
 To try this slice without changing your home:
 
