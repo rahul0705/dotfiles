@@ -1,0 +1,32 @@
+name: Etch migration
+
+on:
+  push:
+    branches: [dev, 'codex/**']
+    paths: ['etch', 'defaults.conf', 'modules/**', 'profiles/**', 'tests/**', 'vendor/etch', '.gitmodules', '.github/workflows/etch.yml']
+  pull_request:
+    paths: ['etch', 'defaults.conf', 'modules/**', 'profiles/**', 'tests/**', 'vendor/etch', '.gitmodules', '.github/workflows/etch.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  git-migration:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ['3.9', '3.14']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Initialize the pinned engine and reference plugins
+        run: git submodule update --init vendor/etch
+      - uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Verify preview, portable Git assets, apply and repeat
+        run: python3 -S -m unittest discover -s tests -v

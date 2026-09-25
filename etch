@@ -1,0 +1,23 @@
+#!/bin/sh
+set -eu
+
+case "$0" in
+    */*) repo_dir=${0%/*} ;;
+    *) repo_dir=. ;;
+esac
+CDPATH= cd -- "$repo_dir"
+
+if ! command -v python3 >/dev/null 2>&1; then
+    echo 'Etch requires Python 3.9 or newer.' >&2
+    exit 1
+fi
+if [ ! -f vendor/etch/etch ]; then
+    echo 'Initialize Etch first: git submodule update --init vendor/etch' >&2
+    exit 1
+fi
+
+# Starting the launcher only previews the migrated developer profile.
+if [ "$#" -eq 0 ]; then
+    set -- plan --profile developer
+fi
+exec python3 -S vendor/etch/etch "$@"

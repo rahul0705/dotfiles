@@ -1,4 +1,59 @@
-# Dotfiles Template
+# Dotfiles
+
+## Etch migration (issue #81)
+
+The migration is being reviewed in small PRs targeting `dev`. The first slice
+contains the Git module only; `developer` is an incremental Etch profile, not a
+replacement for the existing macOS/Linux Dotbot profiles yet.
+
+```sh
+git clone --branch dev https://github.com/rahul0705/dotfiles.git
+cd dotfiles
+git submodule update --init vendor/etch
+./etch                              # preview only
+./etch plan --profile developer -v
+./etch doctor --profile developer
+./etch apply --profile developer
+./etch apply --profile developer     # established links should be skipped
+```
+
+These commands are available after the migration PR lands on `dev`; before then,
+check out its feature branch. Python 3.9+ and Git are required. The launcher uses
+the pinned Etch source with site packages disabled; no global Etch or Python
+package installation is needed. Homebrew and VS Code reference plugins are
+explicitly registered from that same pin, but this slice invokes neither tool.
+
+The Git module owns `.gitconfig`, `.gitignore_global`, and `.gitmessage`.
+`tools/vcs/git` remains a compatibility link, so existing home links and Dotbot's
+`install-profile` / `install-standalone git` continue to use the same files.
+Etch creates missing parent directories and may replace different symlinks,
+matching the old link defaults. It refuses to overwrite regular files or
+directories: review and back up those conflicts before applying. Broad Dotbot
+cleanup is not migrated; Etch must have ownership receipts before removing links.
+Machine-local receipts live in the ignored `.etch/` directory.
+
+To try this slice without changing your home:
+
+```sh
+test_home=$(mktemp -d)
+HOME="$test_home" ./etch plan --profile developer
+HOME="$test_home" ./etch apply --profile developer
+HOME="$test_home" ./etch apply --profile developer
+python3 -S -m unittest discover -s tests -v
+```
+
+This slice was checked on macOS 27.0, arm64, with Python 3.14.7 in temporary
+homes: read-only preview, first apply, unchanged second apply, regular-file
+conflict preservation, and the original Dotbot Git installation. The workflow
+also runs the Etch checks on Linux/macOS with Python 3.9 and 3.14; those results
+must be checked in CI before claiming that matrix is verified. This is Git-only
+evidence, not a full developer-profile installation.
+
+Subsequent review slices will cover tmux version selection, Starship installation
+and fact refresh, then the remaining modules, platform profiles and real platform
+evidence. Issue #81 stays open until those acceptance criteria are verified.
+
+## Original Dotbot setup
 
 This is a template repository for bootstrapping your dotfiles with [Dotbot][dotbot].
 
