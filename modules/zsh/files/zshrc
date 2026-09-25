@@ -46,8 +46,10 @@ if [ -f "$HOME/.cargo/env" ]; then
     source "$HOME/.cargo/env"
 fi
 
-# Initialize starship for zsh
-eval "$(starship init zsh)"
+# Initialize starship for zsh when installed
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi
 
 # Allow local customizations in the ~/.zshrc_after_local file
 if [ -f "$HOME/.zshrc_after_local" ]; then
