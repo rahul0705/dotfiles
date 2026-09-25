@@ -77,6 +77,11 @@ jobs:
           fi
 
           ./etch apply --profile developer
+          if [[ "$RUNNER_OS" == macOS ]]; then
+            command -v brew
+            brew --prefix
+            grep -q 'homebrew:action\[1\]: SKIP' "$RUNNER_TEMP/etch-first-plan.log"
+          fi
           for name in gitconfig gitignore_global gitmessage; do
             test -L "$HOME/.$name"
             test "$(readlink "$HOME/.$name")" = "$GITHUB_WORKSPACE/modules/git/files/$name"

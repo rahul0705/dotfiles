@@ -7,6 +7,14 @@ case "$0" in
 esac
 CDPATH= cd -- "$repo_dir"
 
+if [ "$(uname -s)" = Darwin ]; then
+    case "$(uname -m)" in
+        arm64) PATH="/opt/homebrew/bin:$PATH" ;;
+        x86_64) PATH="/usr/local/bin:$PATH" ;;
+    esac
+    export PATH
+fi
+
 if ! command -v python3 >/dev/null 2>&1; then
     echo 'Etch requires Python 3.9 or newer.' >&2
     exit 1

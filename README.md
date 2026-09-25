@@ -3,8 +3,8 @@
 ## Etch migration (issue #81)
 
 The migration is being reviewed in small PRs targeting `dev`. The incremental
-Etch `developer` profile currently covers Git, tmux, Starship, Nerd Fonts,
-Bash-it, Bash, Oh My Zsh, and Zsh; it does not yet replace the existing
+Etch `developer` profile currently covers Git, tmux, Homebrew, Starship, Nerd
+Fonts, Bash-it, Bash, Oh My Zsh, and Zsh; it does not yet replace the existing
 macOS/Linux Dotbot profiles.
 
 ```sh
@@ -23,6 +23,12 @@ uses the pinned Etch source with site packages disabled; no global Etch or
 Python package installation is needed. Homebrew and VS Code reference plugins
 are explicitly registered from that same pin; Starship and fonts use Homebrew
 on macOS.
+
+The Homebrew module runs only on macOS. If `brew` is missing, it refreshes the
+sudo credential and runs Homebrew's upstream installer noninteractively. The
+launcher includes the standard Homebrew bin directory for the machine's
+architecture so later package actions can find a newly installed `brew` in
+the same Etch apply. Existing Homebrew installations are left alone.
 
 The Git module owns `.gitconfig`, `.gitignore_global`, and `.gitmessage`.
 `tools/vcs/git` remains a compatibility link, so existing home links and Dotbot's
