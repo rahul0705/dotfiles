@@ -14,8 +14,16 @@ git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/t
 ./etch                              # preview only
 ./etch plan --profile developer -v
 ./etch doctor --profile developer
-./etch apply --profile developer
-./etch apply --profile developer     # established links should be skipped
+./etch apply --profile developer --allow-sudo  # needed when Homebrew is absent
+if [ "$(uname -s)" = Darwin ]; then
+  case "$(uname -m)" in
+    arm64) brew_bin=/opt/homebrew/bin/brew ;;
+    *) brew_bin=/usr/local/bin/brew ;;
+  esac
+  eval "$("$brew_bin" shellenv)"
+fi
+./etch apply --profile developer     # install deferred Homebrew packages
+./etch apply --profile developer     # established state should be skipped
 ```
 
 Python 3.9+, Git, tmux, and Zsh are required. The launcher
@@ -23,6 +31,15 @@ uses the pinned Etch source with site packages disabled; no global Etch or
 Python package installation is needed. Homebrew and VS Code reference plugins
 are explicitly registered from that same pin; Starship and fonts use Homebrew
 on macOS.
+
+The Homebrew module runs only on macOS. If `brew` is missing, an Etch-declared
+sudo action prompts for a password when needed, then Homebrew's upstream
+installer runs as the regular user with `NONINTERACTIVE=1` to skip its
+confirmation prompt. `--allow-sudo` is needed only for a new install. On a
+fresh macOS machine, the first developer apply skips package actions that
+cannot yet find `brew`. Load `brew shellenv` in the calling shell, then apply
+the developer profile again to install those packages. Existing Homebrew
+installations are left alone.
 
 The Git module owns `.gitconfig`, `.gitignore_global`, and `.gitmessage`.
 `tools/vcs/git` remains a compatibility link, so existing home links and Dotbot's
@@ -49,9 +66,9 @@ not fetch them during apply.
 The Starship module owns `~/.config/starship.toml`. On macOS it uses the
 explicit Homebrew plugin to install the formula if missing; on Linux it runs
 Starship's published installer into the default `/usr/local/bin` directory.
-Both installers refresh a shared PATH-based version fact so a missing Starship
-can activate its config link in the same apply. Shell setup will be handled in
-a later slice. `shells/starship` remains a compatibility link
+The config link can be created before Starship is installed, so it needs no
+version gate. Shell setup will be handled in a later slice.
+`shells/starship` remains a compatibility link
 for Dotbot. As with tmux, an old symlink that resolves through this path is
 already satisfied to Etch; inspect and unlink that symlink before applying if
 you want Etch to recreate and own it directly.
@@ -79,13 +96,11 @@ consider old home links through those paths satisfied; inspect and unlink only
 those legacy links before applying if you want Etch to own direct links. Local
 before/after rc files remain supported.
 
-To try this slice without changing your home:
+To inspect the plan with a temporary home:
 
 ```sh
 test_home=$(mktemp -d)
 HOME="$test_home" ./etch plan --profile developer
-HOME="$test_home" ./etch apply --profile developer
-HOME="$test_home" ./etch apply --profile developer
 ```
 
 The Git slice passed on macOS 27.0, arm64, with Python 3.14.7 in temporary

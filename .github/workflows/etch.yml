@@ -29,6 +29,19 @@ jobs:
       - uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
         with:
           python-version: ${{ matrix.python }}
+      - name: Inspect Homebrew bootstrap
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python_bin=$(command -v python3)
+          mkdir -p "$RUNNER_TEMP/etch-homebrew-home"
+          HOME="$RUNNER_TEMP/etch-homebrew-home" PATH=/usr/bin:/bin "$python_bin" -S vendor/etch/etch plan homebrew starship fonts | tee "$RUNNER_TEMP/etch-homebrew-plan.log"
+          grep -q 'homebrew:action\[1\]: SKIP (condition false)' "$RUNNER_TEMP/etch-homebrew-plan.log"
+          grep -q 'starship:action\[1\]: SKIP (condition false)' "$RUNNER_TEMP/etch-homebrew-plan.log"
+          grep -q 'starship:action\[2\]: CHANGE' "$RUNNER_TEMP/etch-homebrew-plan.log"
+          grep -q 'fonts:action\[2\]: SKIP (condition false)' "$RUNNER_TEMP/etch-homebrew-plan.log"
+          HOME="$RUNNER_TEMP/etch-homebrew-home" ./etch apply homebrew
       - name: Make tmux available for version inspection
         shell: bash
         run: |
@@ -72,11 +85,13 @@ jobs:
           test ! -e "$HOME/.oh-my-zsh"
           test ! -e "$HOME/.zprofile"
           test ! -e "$HOME/.zshrc"
-          if [[ "$RUNNER_OS" == Linux ]]; then
-            grep -q 'DEFERRED' "$RUNNER_TEMP/etch-first-plan.log"
-          fi
+          grep -q 'starship:action\[2\]: CHANGE' "$RUNNER_TEMP/etch-first-plan.log"
 
           ./etch apply --profile developer
+          if [[ "$RUNNER_OS" == macOS ]]; then
+            command -v brew
+            brew --prefix
+          fi
           for name in gitconfig gitignore_global gitmessage; do
             test -L "$HOME/.$name"
             test "$(readlink "$HOME/.$name")" = "$GITHUB_WORKSPACE/modules/git/files/$name"
@@ -99,8 +114,6 @@ jobs:
           else
             starship --version
           fi
-          ./etch facts starship | tee "$RUNNER_TEMP/etch-starship-facts.log"
-          grep -q 'starship.*version: VALUE' "$RUNNER_TEMP/etch-starship-facts.log"
           if [[ "$RUNNER_OS" == Linux ]]; then
             test -f "$HOME/.local/share/fonts/NerdFonts/HackNerdFont-Regular.ttf"
             test -f "$HOME/.local/share/fonts/NerdFonts/FiraCodeNerdFont-Regular.ttf"
