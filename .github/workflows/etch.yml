@@ -58,6 +58,7 @@ jobs:
           test ! -e "$HOME/.tmux"
           test ! -e "$HOME/.tmux.conf"
           test ! -e "$HOME/.config/starship.toml"
+          test ! -e "$HOME/.local/share/fonts/NerdFonts"
           if [[ "$RUNNER_OS" == Linux ]]; then
             grep -q 'DEFERRED' "$RUNNER_TEMP/etch-first-plan.log"
           fi
@@ -87,6 +88,13 @@ jobs:
           fi
           ./etch facts starship | tee "$RUNNER_TEMP/etch-starship-facts.log"
           grep -q 'starship.*version: VALUE' "$RUNNER_TEMP/etch-starship-facts.log"
+          if [[ "$RUNNER_OS" == Linux ]]; then
+            test -f "$HOME/.local/share/fonts/NerdFonts/HackNerdFont-Regular.ttf"
+            test -f "$HOME/.local/share/fonts/NerdFonts/FiraCodeNerdFont-Regular.ttf"
+          else
+            brew list --cask --versions font-hack-nerd-font
+            brew list --cask --versions font-fira-code-nerd-font
+          fi
 
           ./etch apply --profile developer | tee "$RUNNER_TEMP/etch-second-apply.log"
           if grep -Eq '^(CHANGED|FAILED|BLOCKED) ' "$RUNNER_TEMP/etch-second-apply.log"; then
