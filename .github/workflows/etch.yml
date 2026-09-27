@@ -98,6 +98,13 @@ jobs:
             brew list --cask --versions zed
             brew list --cask --versions ghostty
             brew list --formula --versions tmux
+            for formula in gh go nvm rustup uv node python; do
+              brew list --formula --versions "$formula"
+            done
+            brew list --cask --versions docker-desktop
+            if [[ "$(uname -m)" == arm64 ]]; then
+              brew list --cask --versions headroom
+            fi
             for cask in rectangle alt-tab monitorcontrol firefox google-chrome; do
               brew list --cask --versions "$cask"
             done
