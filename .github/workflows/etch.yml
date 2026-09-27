@@ -36,11 +36,11 @@ jobs:
           set -euo pipefail
           python_bin=$(command -v python3)
           mkdir -p "$RUNNER_TEMP/etch-homebrew-home"
-          HOME="$RUNNER_TEMP/etch-homebrew-home" PATH=/usr/bin:/bin "$python_bin" -S vendor/etch/etch plan homebrew starship fonts tmux ghostty macos-workstation | tee "$RUNNER_TEMP/etch-homebrew-plan.log"
-          grep -q 'homebrew:action\[1\]: SKIP (condition false)' "$RUNNER_TEMP/etch-homebrew-plan.log"
-          grep -q 'starship:action\[1\]: SKIP (condition false)' "$RUNNER_TEMP/etch-homebrew-plan.log"
-          grep -q 'starship:action\[2\]: CHANGE' "$RUNNER_TEMP/etch-homebrew-plan.log"
-          grep -q 'fonts:action\[2\]: SKIP (condition false)' "$RUNNER_TEMP/etch-homebrew-plan.log"
+          HOME="$RUNNER_TEMP/etch-homebrew-home" PATH=/usr/bin:/bin "$python_bin" -S vendor/etch/etch plan homebrew starship fonts tmux ghostty macos-workstation -v | tee "$RUNNER_TEMP/etch-homebrew-plan.log"
+          grep -q 'homebrew:action\[1\]: SKIP' "$RUNNER_TEMP/etch-homebrew-plan.log"
+          grep -q 'starship:action\[1\]: SKIP' "$RUNNER_TEMP/etch-homebrew-plan.log"
+          grep -Eq 'CHANGE .*\[starship:action\[2\]\]' "$RUNNER_TEMP/etch-homebrew-plan.log"
+          grep -q 'fonts:action\[2\]: SKIP' "$RUNNER_TEMP/etch-homebrew-plan.log"
           HOME="$RUNNER_TEMP/etch-homebrew-home" ./etch apply homebrew
       - name: Make tmux available for Linux version inspection
         shell: bash
@@ -89,7 +89,7 @@ jobs:
           test ! -e "$HOME/.zshrc"
           test ! -e "$HOME/.config/zed/settings.json"
           test ! -e "$HOME/.config/ghostty/config"
-          grep -q 'starship:action\[2\]: CHANGE' "$RUNNER_TEMP/etch-first-plan.log"
+          grep -Eq 'CHANGE .*\[starship:action\[2\]\]' "$RUNNER_TEMP/etch-first-plan.log"
 
           ./etch apply --profile developer
           if [[ "$RUNNER_OS" == macOS ]]; then
@@ -98,6 +98,10 @@ jobs:
             brew list --cask --versions zed
             brew list --cask --versions ghostty
             brew list --formula --versions tmux
+            for formula in gh go nvm rustup uv node python@3.14; do
+              brew list --formula --versions "$formula"
+            done
+            brew list --cask --versions docker-desktop
             for cask in rectangle alt-tab monitorcontrol firefox google-chrome; do
               brew list --cask --versions "$cask"
             done
@@ -176,7 +180,7 @@ jobs:
           }
 
           ./etch apply --profile developer | tee "$RUNNER_TEMP/etch-second-apply.log"
-          if grep -Eq '^(CHANGED|FAILED|BLOCKED) ' "$RUNNER_TEMP/etch-second-apply.log"; then
+          if grep -Eq '^[[:space:]]*(CHANGED|FAILED|BLOCKED)([[:space:]]|$)' "$RUNNER_TEMP/etch-second-apply.log"; then
             echo 'Second Etch apply changed state or failed.' >&2
             exit 1
           fi
