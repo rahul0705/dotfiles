@@ -3,7 +3,6 @@
 - brew:
     - tmux
 - cask:
-    - iterm2
     - ghostty
 - link:
     ~/.config/ghostty/config: terminals/ghostty/config
