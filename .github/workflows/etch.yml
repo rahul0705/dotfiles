@@ -195,7 +195,7 @@ jobs:
           EOF
           chmod +x "$RUNNER_TEMP/etch-fake-bin/tmux"
           export PATH="$RUNNER_TEMP/etch-fake-bin:$PATH"
-          ./etch plan tmux
-          ./etch apply tmux
+          ./etch plan homebrew tmux
+          ./etch apply homebrew tmux
           test "$(readlink "$HOME/.tmux.conf")" = "$GITHUB_WORKSPACE/modules/tmux/files/tmux-legacy.conf"
           grep -q 'mode-mouse on' "$HOME/.tmux.conf"
