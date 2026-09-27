@@ -102,6 +102,10 @@ jobs:
               brew list --formula --versions "$formula"
             done
             brew list --cask --versions docker-desktop
+            brew list --formula --versions mas
+            for cask in 1password stats spotify obsidian notion google-drive obs tailscale-app discord; do
+              brew list --cask --versions "$cask"
+            done
             for cask in rectangle alt-tab monitorcontrol firefox google-chrome; do
               brew list --cask --versions "$cask"
             done
