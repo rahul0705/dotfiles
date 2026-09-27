@@ -98,7 +98,7 @@ jobs:
             brew list --cask --versions zed
             brew list --cask --versions ghostty
             brew list --formula --versions tmux
-            for formula in gh go nvm rustup uv node python; do
+            for formula in gh go nvm rustup uv node python@3.14; do
               brew list --formula --versions "$formula"
             done
             brew list --cask --versions docker-desktop
