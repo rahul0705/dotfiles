@@ -19,7 +19,7 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         python: ['3.9', '3.14']
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -36,7 +36,7 @@ jobs:
           set -euo pipefail
           python_bin=$(command -v python3)
           mkdir -p "$RUNNER_TEMP/etch-homebrew-home"
-          HOME="$RUNNER_TEMP/etch-homebrew-home" PATH=/usr/bin:/bin "$python_bin" -S vendor/etch/etch plan homebrew starship fonts tmux ghostty | tee "$RUNNER_TEMP/etch-homebrew-plan.log"
+          HOME="$RUNNER_TEMP/etch-homebrew-home" PATH=/usr/bin:/bin "$python_bin" -S vendor/etch/etch plan homebrew starship fonts tmux ghostty macos-workstation | tee "$RUNNER_TEMP/etch-homebrew-plan.log"
           grep -q 'homebrew:action\[1\]: SKIP (condition false)' "$RUNNER_TEMP/etch-homebrew-plan.log"
           grep -q 'starship:action\[1\]: SKIP (condition false)' "$RUNNER_TEMP/etch-homebrew-plan.log"
           grep -q 'starship:action\[2\]: CHANGE' "$RUNNER_TEMP/etch-homebrew-plan.log"
@@ -67,6 +67,10 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$HOME"
+          if [[ "$RUNNER_OS" == macOS ]]; then
+            export HOMEBREW_CASK_OPTS="--appdir=$RUNNER_TEMP/etch-apps"
+            mkdir -p "$RUNNER_TEMP/etch-apps"
+          fi
           uname -sm
           python3 --version
           git --version
@@ -94,6 +98,9 @@ jobs:
             brew list --cask --versions zed
             brew list --cask --versions ghostty
             brew list --formula --versions tmux
+            for cask in rectangle alt-tab monitorcontrol firefox google-chrome; do
+              brew list --cask --versions "$cask"
+            done
             test -L "$HOME/.config/zed/settings.json"
             test "$(readlink "$HOME/.config/zed/settings.json")" = "$GITHUB_WORKSPACE/modules/zed/files/settings.json"
             test "$(readlink editors/zed)" = "../modules/zed/files"
@@ -188,7 +195,7 @@ jobs:
           EOF
           chmod +x "$RUNNER_TEMP/etch-fake-bin/tmux"
           export PATH="$RUNNER_TEMP/etch-fake-bin:$PATH"
-          ./etch plan tmux
-          ./etch apply tmux
+          ./etch plan homebrew tmux
+          ./etch apply homebrew tmux
           test "$(readlink "$HOME/.tmux.conf")" = "$GITHUB_WORKSPACE/modules/tmux/files/tmux-legacy.conf"
           grep -q 'mode-mouse on' "$HOME/.tmux.conf"

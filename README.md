@@ -4,8 +4,8 @@
 
 The migration is being reviewed in small PRs targeting `dev`. The incremental
 Etch `developer` profile currently covers Git, tmux, Ghostty, Homebrew,
-Starship, Nerd Fonts, Bash-it, Bash, Oh My Zsh, Zsh, and Zed; it does not yet replace the existing
-macOS/Linux Dotbot profiles.
+Starship, Nerd Fonts, Bash-it, Bash, Oh My Zsh, Zsh, Zed, and macOS workstation
+apps; it does not yet replace the existing macOS/Linux Dotbot profiles.
 
 ```sh
 git clone --branch dev https://github.com/rahul0705/dotfiles.git
