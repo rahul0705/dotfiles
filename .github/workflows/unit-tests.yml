@@ -75,7 +75,7 @@ jobs:
           - macos/bundler
           - macos/docker
           - macos/fonts
-          - macos/gaming
+          # macos/gaming is not in a profile; weakauras-companion is disabled in Homebrew.
           - macos/languages
           - macos/social
           - macos/starship
