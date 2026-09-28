@@ -108,7 +108,6 @@
   "[astro]": {
     "editor.defaultFormatter": "oxc.oxc-vscode",
   },
-  "docker.extension.enableComposeLanguageServer": false,
   "files.associations": {
     "*.css": "tailwindcss",
   },
