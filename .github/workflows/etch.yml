@@ -101,6 +101,7 @@ jobs:
           test ! -e "$HOME/.tmux.conf"
           test ! -e "$HOME/.vim"
           test ! -e "$HOME/.vimrc"
+          test ! -e "$HOME/.local/share/vim/site/autoload/plug.vim"
           test ! -e "$HOME/.config/starship.toml"
           test ! -e "$HOME/.local/share/fonts/NerdFonts"
           test ! -e "$HOME/.bash-it"
@@ -179,6 +180,7 @@ jobs:
           test "$(readlink "$HOME/.vimrc")" = "$GITHUB_WORKSPACE/modules/vim/files/vimrc"
           test "$(readlink editors/vim)" = "../modules/vim/files"
           plugins_dir="$HOME/.local/share/vim/plugged"
+          test -f "$HOME/.local/share/vim/site/autoload/plug.vim"
           test -f "$plugins_dir/.etch-initialized"
           for plugin in vim-signify vim-better-whitespace nerdcommenter vim-indent-guides tmuxline.vim catppuccin vim-airline vim-fugitive editorconfig-vim; do
             test -d "$plugins_dir/$plugin/.git"

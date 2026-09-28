@@ -107,9 +107,10 @@ macOS and Linux, and installs extensions through the external VS Code plugin
 when `code` is available. Linux users must install VS Code separately.
 `editors/vscode` remains a compatibility link for the Dotbot profiles.
 
-The Vim module links `~/.vim` and `~/.vimrc`, and installs nine selected plugins
-with the vendored, pinned vim-plug manager on its first apply. A marker under
-`~/.local/share/vim/plugged` skips installation on later applies. Use Vim's
+The Vim module links `~/.vim` and `~/.vimrc`, downloads vim-plug from its
+upstream install URL, and installs nine selected plugins on its first apply.
+Fresh installs follow upstream's current `plug.vim` and require network access.
+A marker under `~/.local/share/vim/plugged` skips later plugin installs. Use Vim's
 `:PlugUpdate`, `:PlugDiff`, and `:PlugClean` for manual plugin maintenance;
 Etch does not update plugins on every run. `editors/vim` remains a compatibility
 link for `./install-standalone vim` and existing Dotbot links.

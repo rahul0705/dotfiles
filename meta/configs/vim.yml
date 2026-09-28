@@ -5,6 +5,9 @@
     ~/.vim: editors/vim
     ~/.vimrc: editors/vim/vimrc
 - shell:
+    - description: Installing vim-plug
+      command: 'test -f "$HOME/.local/share/vim/site/autoload/plug.vim" || curl -fL --remove-on-error -o "$HOME/.local/share/vim/site/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+      quiet: true
     - description: Installing vim-plug plugins
       command: ./modules/vim/install-plugins.sh
       quiet: true

@@ -7,7 +7,7 @@ for quick terminal edits, with tmux status-line integration retained.
 
 | Former plugin | Decision | Reason |
 | --- | --- | --- |
-| VundleVim/Vundle.vim | Replace with vim-plug | Use one plugin manager; vendor and pin `plug.vim` in the Vim module. |
+| VundleVim/Vundle.vim | Replace with vim-plug | Use one plugin manager; download `plug.vim` from upstream during installation. |
 | mhinz/vim-signify | Keep | Git change signs are configured for this repo. |
 | tmux-plugins/vim-tmux | Remove | Current Vim provides tmux syntax and filetype support; the plugin's extra commands are not needed for quick edits. |
 | tmux-plugins/vim-tmux-focus-events | Use native Vim | [Upstream says it is obsolete](https://github.com/tmux-plugins/vim-tmux-focus-events) with Vim 8.2.2345 and newer. |
@@ -29,7 +29,7 @@ for quick terminal edits, with tmux status-line integration retained.
 The stale Vimwiki setting was removed; the unrelated `sudo-write.vim` setting
 was kept.
 
-The Vim module vendors pinned `plug.vim` and declares the nine retained plugins.
+The Vim module downloads `plug.vim` from upstream and declares the nine retained plugins.
 After the first successful Etch apply installs them, a marker skips later
 installs. Routine upgrades and removals remain manual through `:PlugUpdate`,
 `:PlugDiff`, and `:PlugClean`. Vundle and its old plugin submodules were removed

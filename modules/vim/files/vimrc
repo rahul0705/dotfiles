@@ -24,6 +24,7 @@ set hidden
 syntax on
 
 " =============== Plugin Initialization ===============
+set runtimepath^=~/.local/share/vim/site
 if filereadable(expand('~/.vim/plugins.vim'))
     source ~/.vim/plugins.vim
 endif
