@@ -23,7 +23,9 @@
   "editor.suggestSelection": "recentlyUsedByPrefix",
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
-  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "[javascript][javascriptreact][typescript][typescriptreact][json][jsonc]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+  },
   "editor.semanticHighlighting.enabled": true,
   // Fonts
   "editor.fontFamily": "'FiraCode Nerd Font Mono', 'Hack Nerd Font Mono'",
@@ -69,8 +71,6 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-    "**/package-lock.json": true,
-    "**/yarn.lock": true,
     "**/node_modules": true,
     "**/npm-debug.log": true,
     "**/*.js": { "when": "$(basename).ts" },
@@ -103,12 +103,8 @@
   "git.mergeEditor": true,
   // Gitlens
   "gitlens.codeLens.enabled": false,
-  "redhat.telemetry.enabled": true,
   "go.toolsManagement.autoUpdate": true,
   "[astro]": {
     "editor.defaultFormatter": "oxc.oxc-vscode",
-  },
-  "files.associations": {
-    "*.css": "tailwindcss",
   },
 }
