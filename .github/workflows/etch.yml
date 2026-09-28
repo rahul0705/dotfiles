@@ -53,6 +53,7 @@ jobs:
               sudo apt-get install -y tmux
             fi
             tmux -V
+          fi
       - name: Make Vim available for plugin inspection
         if: runner.os == 'Linux'
         shell: bash
