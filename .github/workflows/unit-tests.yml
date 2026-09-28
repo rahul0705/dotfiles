@@ -74,7 +74,6 @@ jobs:
           # - macos/app-store.yml # Disabled as it requires app store login
           - macos/docker
           - macos/fonts
-          # macos/gaming is not in a profile; weakauras-companion is disabled in Homebrew.
           - macos/languages
           - macos/social
           - macos/starship
