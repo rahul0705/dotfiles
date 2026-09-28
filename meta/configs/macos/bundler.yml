@@ -1,4 +1,0 @@
-- clean:
-    - '~/.bundle/config'
-- link:
-    ~/.bundle/config: tools/package/bundler/config
