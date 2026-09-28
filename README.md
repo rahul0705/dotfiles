@@ -53,15 +53,21 @@ directories: review and back up those conflicts before applying. Broad Dotbot
 cleanup is not migrated; Etch must have ownership receipts before removing links.
 Machine-local receipts live in the ignored `.etch/` directory.
 
+Etch's link defaults use `target_match: 'direct'` with `relink: True` during
+this migration. An old link such as `~/.gitconfig -> tools/vcs/git/gitconfig`
+resolves to the correct file, but its immediate target is the legacy path.
+Etch now plans to replace that symlink with one pointing directly to the
+module asset; it does not require manually unlinking it first. Review those
+changes in `./etch plan --profile developer -v` before applying. Existing
+direct links are skipped, and regular files or directories are still refused.
+This uses the behavior added for [Etch issue #85](https://github.com/rm-industries/etch/issues/85).
+
 The tmux module owns `~/.tmux` and selects `~/.tmux.conf` using the observed
 `tmux -V` version. Tmux 2.1 and newer use the modern mouse settings; older
 versions use the legacy settings. The pinned TPM checkout lives under the tmux
 module and must be initialized as shown above. `terminals/tmux` remains a
-compatibility link for existing Dotbot installations. Etch considers legacy
-links that resolve to the same files satisfied, so it leaves their literal
-targets untouched. To have Etch recreate and record ownership of those links,
-first inspect them with `ls -l ~/.tmux ~/.tmux.conf`, unlink only links that
-point to the legacy `terminals/tmux` path, then apply the tmux module. TPM's
+compatibility link for existing Dotbot installations. Direct target matching
+relinks home paths that still point through `terminals/tmux`. TPM's
 third-party plugins are still installed separately with its existing
 `~/.tmux/plugins/tpm/bin/install_plugins` command; the Etch tmux module does
 not fetch them during apply.
@@ -72,9 +78,8 @@ Starship's published installer into the default `/usr/local/bin` directory.
 The config link can be created before Starship is installed, so it needs no
 version gate. Zsh starts Starship when it is available.
 `shells/starship` remains a compatibility link
-for Dotbot. As with tmux, an old symlink that resolves through this path is
-already satisfied to Etch; inspect and unlink that symlink before applying if
-you want Etch to recreate and own it directly.
+for Dotbot. An old home link through this path is relinked directly during
+apply.
 
 The fonts module installs Hack and FiraCode Nerd Fonts. On Linux it runs Nerd
 Fonts' upstream installer for each font in the user font directory and refreshes
@@ -84,19 +89,17 @@ font files or installed casks are skipped on later applies.
 The Bash-it module clones Bash-it and runs its noninteractive setup without
 changing `~/.bashrc`. The Bash module then links the existing Bash configuration
 and requires Bash-it first. `shells/bash/bashrc` remains a compatibility link
-for Dotbot. Etch may leave an existing `~/.bashrc` link through that path in
-place if it resolves to the same file. To have Etch own the direct link,
-inspect and unlink that legacy link before applying. Local before/after rc
-files remain supported. Deprecated Base16 customization remains only in the
-original Dotbot tree and is not part of these modules.
+for Dotbot. Etch relinks an existing `~/.bashrc` through that path directly
+to the module asset. Local before/after rc files remain supported. Deprecated
+Base16 customization remains only in the original Dotbot tree and is not part
+of these modules.
 
 The Zsh module links `~/.zprofile` and `~/.zshrc` and starts Starship when
 available. The Oh My Zsh module requires Zsh, then runs the upstream installer
 noninteractively while preserving the linked rc file, and links the existing
 custom plugins and themes. `shells/zsh/zprofile`, `shells/zsh/zshrc`,
-and `shells/zsh/oh-my-zsh` remain compatibility links for Dotbot. Etch may
-consider old home links through those paths satisfied; inspect and unlink only
-those legacy links before applying if you want Etch to own direct links. Local
+and `shells/zsh/oh-my-zsh` remain compatibility links for Dotbot. Etch relinks
+old home links through those paths directly to module assets. Local
 before/after rc files remain supported.
 
 The VS Code module installs the macOS cask, links settings and keybindings on
@@ -126,9 +129,8 @@ git pull --ff-only origin dev
 Initialize the pinned submodules with the command above, then review
 `./etch plan --profile developer -v` before applying. Back up
 any regular files at Etch-owned destinations; Etch will refuse to overwrite
-them. If a legacy link already resolves to the intended file, Etch may leave
-its literal target unchanged. Inspect and unlink that link only if you want
-Etch to recreate and own it directly.
+them. Review planned relinks from legacy alias paths before applying; no
+manual unlinking is needed for those symlinks.
 
 Run the apply sequence above, including the second pass after loading Homebrew
 into the shell on a fresh Mac. A final apply should report no changes, and
