@@ -62,6 +62,15 @@ jobs:
             sudo apt-get install -y zsh
           fi
           zsh --version
+      - name: Make VS Code available for Linux extension inspection
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          if ! command -v code >/dev/null; then
+            curl -fsSL https://update.code.visualstudio.com/latest/linux-deb-x64/stable -o "$RUNNER_TEMP/code.deb"
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$RUNNER_TEMP/code.deb"
+          fi
+          code --version
       - name: Install and inspect the developer profile
         shell: bash
         env:
@@ -91,6 +100,11 @@ jobs:
           test ! -e "$HOME/.zshrc"
           test ! -e "$HOME/.config/zed/settings.json"
           test ! -e "$HOME/.config/ghostty/config"
+          if [[ "$RUNNER_OS" == macOS ]]; then
+            test ! -e "$HOME/Library/Application Support/Code/User/settings.json"
+          else
+            test ! -e "$HOME/.config/Code/User/settings.json"
+          fi
           grep -Eq 'CHANGE .*\[starship:action\[2\]\]' "$RUNNER_TEMP/etch-first-plan.log"
 
           ./etch apply --profile developer
@@ -99,6 +113,7 @@ jobs:
             brew --prefix
             brew list --cask --versions zed
             brew list --cask --versions ghostty
+            brew list --cask --versions visual-studio-code
             brew list --formula --versions tmux
             for formula in gh go nvm rustup uv node python@3.14; do
               brew list --formula --versions "$formula"
@@ -126,6 +141,20 @@ jobs:
             test ! -e "$HOME/.config/zed/settings.json"
             test ! -e "$HOME/.config/ghostty/config"
           fi
+          if [[ "$RUNNER_OS" == macOS ]]; then
+            vscode_dir="$HOME/Library/Application Support/Code/User"
+          else
+            vscode_dir="$HOME/.config/Code/User"
+          fi
+          for name in settings.json keybindings.json; do
+            test -L "$vscode_dir/$name"
+            test "$(readlink "$vscode_dir/$name")" = "$GITHUB_WORKSPACE/modules/vscode/files/$name"
+          done
+          test "$(readlink editors/vscode)" = "../modules/vscode/files"
+          code --list-extensions | tr '[:upper:]' '[:lower:]' > "$RUNNER_TEMP/etch-vscode-extensions.log"
+          for extension in oxc.oxc-vscode astro-build.astro-vscode bradlc.vscode-tailwindcss; do
+            grep -Fxq "$extension" "$RUNNER_TEMP/etch-vscode-extensions.log"
+          done
           for name in gitconfig gitignore_global gitmessage; do
             test -L "$HOME/.$name"
             test "$(readlink "$HOME/.$name")" = "$GITHUB_WORKSPACE/modules/git/files/$name"

@@ -97,6 +97,11 @@ consider old home links through those paths satisfied; inspect and unlink only
 those legacy links before applying if you want Etch to own direct links. Local
 before/after rc files remain supported.
 
+The VS Code module installs the macOS cask, links settings and keybindings on
+macOS and Linux, and installs extensions through the external VS Code plugin
+when `code` is available. Linux users must install VS Code separately.
+`editors/vscode` remains a compatibility link for the Dotbot profiles.
+
 To inspect the plan with a temporary home:
 
 ```sh
