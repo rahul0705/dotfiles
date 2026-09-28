@@ -13,7 +13,7 @@
   "editor.suggest.preview": false, // Testing value
   "editor.useTabStops": true,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": "explicit"
+    "source.organizeImports": "explicit",
   },
   "editor.multiCursorModifier": "alt",
   "editor.snippetSuggestions": "top",
@@ -23,7 +23,7 @@
   "editor.suggestSelection": "recentlyUsedByPrefix",
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.semanticHighlighting.enabled": true,
   // Fonts
   "editor.fontFamily": "'FiraCode Nerd Font Mono', 'Hack Nerd Font Mono'",
@@ -48,7 +48,7 @@
     "**/svn": true,
     "**/hg": true,
     "**/.tox": true,
-    "**/.terraform": true
+    "**/.terraform": true,
   },
   // Terminal
   "terminal.integrated.minimumContrastRatio": 1,
@@ -57,7 +57,7 @@
   "terminal.integrated.inheritEnv": false,
   "terminal.integrated.scrollback": 100000,
   "terminal.integrated.autoReplies": {
-    "[Oh My Zsh] Would you like to check for updates? [Y/n]": "Y\r"
+    "[Oh My Zsh] Would you like to check for updates? [Y/n]": "Y\r",
   },
   // Files
   "files.trimTrailingWhitespace": true,
@@ -76,7 +76,7 @@
     "**/*.js": { "when": "$(basename).ts" },
     "**/**.js": { "when": "$(basename).tsx" },
     "**/.tox": true,
-    "**/dist": true
+    "**/dist": true,
   },
   "files.watcherExclude": {
     "**/.git/objects/**": true,
@@ -89,7 +89,7 @@
     "**/.terraform/**": true,
     "**/.swagger-codegen/**": true,
     "**/.eggs/**": true,
-    "**/.pytest_cache/**": true
+    "**/.pytest_cache/**": true,
   },
   "files.eol": "\n",
   // Explorer
@@ -103,5 +103,31 @@
   "git.mergeEditor": true,
   // Gitlens
   "gitlens.codeLens.enabled": false,
-  "redhat.telemetry.enabled": true
+  "redhat.telemetry.enabled": true,
+  "go.toolsManagement.autoUpdate": true,
+  "[astro]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+  },
+  "docker.extension.enableComposeLanguageServer": false,
+  "json.schemaDownload.trustedDomains": {
+    "https://schemastore.azurewebsites.net/": true,
+    "https://raw.githubusercontent.com/microsoft/vscode/": true,
+    "https://raw.githubusercontent.com/devcontainers/spec/": true,
+    "https://www.schemastore.org/": true,
+    "https://json.schemastore.org/": true,
+    "https://json-schema.org/": true,
+    "https://developer.microsoft.com/json-schemas/": true,
+    "https://biomejs.dev": true,
+  },
+  "files.associations": {
+    "*.css": "tailwindcss",
+  },
+  "yaml.disableSchemaDetection": [
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml",
+  ],
 }
