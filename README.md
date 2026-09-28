@@ -12,6 +12,7 @@ git clone --branch dev https://github.com/rahul0705/dotfiles.git
 cd dotfiles
 git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/ghostty/files/themes/catppuccin modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting modules/oh-my-zsh/files/custom/themes/powerlevel9k modules/oh-my-zsh/files/custom/themes/powerlevel10k
 ./etch                              # preview only
+./etch validate
 ./etch plan --profile developer -v
 ./etch doctor --profile developer
 ./etch apply --profile developer --allow-sudo  # needed when Homebrew is absent
