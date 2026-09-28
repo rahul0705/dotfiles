@@ -4,10 +4,10 @@
 
 The migration is being reviewed in small PRs targeting `dev`. The Etch
 `developer` profile covers Git, tmux, Homebrew, Starship, Nerd Fonts, Bash-it,
-Bash, Zsh, Oh My Zsh, VS Code, and, on macOS, Ghostty, Zed, workstation and
-personal apps, developer tools, and Xcode. Gaming apps are opt-in. Vim remains
-on Dotbot while the [vim-plug migration](docs/vim-plugin-audit.md) is reviewed,
-so Etch has not replaced the existing macOS/Linux Dotbot profiles.
+Bash, Zsh, Oh My Zsh, Vim, VS Code, and, on macOS, Ghostty, Zed, workstation and
+personal apps, developer tools, and Xcode. Gaming apps are opt-in. The
+[Vim plugin audit](docs/vim-plugin-audit.md) records the migration decisions.
+The original macOS/Linux Dotbot profiles remain available during switch-over.
 
 ```sh
 git clone --branch dev https://github.com/rahul0705/dotfiles.git
@@ -107,6 +107,13 @@ macOS and Linux, and installs extensions through the external VS Code plugin
 when `code` is available. Linux users must install VS Code separately.
 `editors/vscode` remains a compatibility link for the Dotbot profiles.
 
+The Vim module links `~/.vim` and `~/.vimrc`, and installs nine selected plugins
+with the vendored, pinned vim-plug manager on its first apply. A marker under
+`~/.local/share/vim/plugged` skips installation on later applies. Use Vim's
+`:PlugUpdate`, `:PlugDiff`, and `:PlugClean` for manual plugin maintenance;
+Etch does not update plugins on every run. `editors/vim` remains a compatibility
+link for `./install-standalone vim` and existing Dotbot links.
+
 On macOS, the developer-tools module installs Go, Node, Python, Rustup, uv,
 NVM, GitHub CLI, and Docker Desktop. The workstation module installs Rectangle,
 AltTab, MonitorControl, Firefox, and Chrome; personal-apps installs the selected
@@ -134,10 +141,9 @@ manual unlinking is needed for those symlinks.
 
 Run the apply sequence above, including the second pass after loading Homebrew
 into the shell on a fresh Mac. A final apply should report no changes, and
-`./etch doctor --profile developer` should pass. Continue to use Dotbot only
-for deferred Vim setup; avoid running the full Dotbot profile after Etch has
-taken ownership of its links. Keep the legacy bootstrap available until Vim is
-migrated and the switch-over is verified on your machines.
+`./etch doctor --profile developer` should pass. Avoid running the full Dotbot
+profile after Etch has taken ownership of its links. Keep the legacy bootstrap
+available until the switch-over is verified on your machines.
 
 To inspect the plan with a temporary home:
 
@@ -147,12 +153,12 @@ HOME="$test_home" ./etch plan --profile developer
 ```
 
 CI runs the developer profile on Linux and macOS with Python 3.9 and 3.14. It
-inspects installed links, packages, extensions, shell startup, and the
+inspects installed links, Vim plugins, packages, extensions, shell startup, and the
 idempotent second apply. Linux starts without Starship and verifies its
 installation; CI also simulates tmux 2.0 to inspect the legacy selection.
 macOS runners already include Xcode, so CI verifies its presence but does not
-exercise a fresh Mac App Store download. Issue #81 stays open until the Vim
-migration and final switch-over evidence are complete.
+exercise a fresh Mac App Store download. Issue #81 stays open until the final
+switch-over is verified.
 
 ## Original Dotbot setup
 

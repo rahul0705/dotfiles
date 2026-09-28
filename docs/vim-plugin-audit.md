@@ -1,11 +1,11 @@
 # Vim plugin audit
 
-Issue #81 replaces Vundle with vim-plug, but does not carry every old plugin
-forward. This inventory covers all entries in `editors/vim/vundles.vim` and the
-four plugin submodules under `editors/vim/pack/`. Decisions reflect Vim's use
+Issue #81 replaced Vundle with vim-plug without carrying every old plugin
+forward. This inventory covers the former `editors/vim/vundles.vim` entries and
+four plugin submodules formerly under `editors/vim/pack/`. Decisions reflect Vim's use
 for quick terminal edits, with tmux status-line integration retained.
 
-| Current plugin | Decision | Reason |
+| Former plugin | Decision | Reason |
 | --- | --- | --- |
 | VundleVim/Vundle.vim | Replace with vim-plug | Use one plugin manager; vendor and pin `plug.vim` in the Vim module. |
 | mhinz/vim-signify | Keep | Git change signs are configured for this repo. |
@@ -26,13 +26,11 @@ for quick terminal edits, with tmux status-line integration retained.
 | tpope/vim-fugitive (submodule) | Keep via vim-plug | Retain the maintained Git commands for occasional terminal work. |
 | editorconfig/editorconfig-vim (submodule) | Keep via vim-plug | Preserve project EditorConfig behavior when editing without VS Code. |
 
-`editors/vim/settings/vimwiki.vim` configures a plugin that is not in either
-managed plugin set. Remove that stale file during the migration. Keep the
-unrelated `sudo-write.vim` setting.
+The stale Vimwiki setting was removed; the unrelated `sudo-write.vim` setting
+was kept.
 
-The implementation should vendor a pinned `plug.vim`, put the retained plugins
-under vim-plug, and remove Vundle plus the four plugin submodules after a fresh
-plugin installation succeeds. Etch should apply the Vim config and provide an
-explicit first-install step, then skip plugin installation on later applies.
-Routine upgrades and removals stay manual through `:PlugUpdate`, `:PlugDiff`,
-and `:PlugClean`, rather than running on every Etch apply.
+The Vim module vendors pinned `plug.vim` and declares the nine retained plugins.
+After the first successful Etch apply installs them, a marker skips later
+installs. Routine upgrades and removals remain manual through `:PlugUpdate`,
+`:PlugDiff`, and `:PlugClean`. Vundle and its old plugin submodules were removed
+after an isolated first and second Etch apply verified the replacement.
