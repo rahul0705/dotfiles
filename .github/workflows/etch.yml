@@ -120,6 +120,8 @@ jobs:
             done
             brew list --cask --versions docker-desktop
             brew list --formula --versions mas
+            test -d /Applications/Xcode.app
+            xcodebuild -version
             for cask in 1password stats spotify obsidian notion google-drive obs tailscale-app discord whatsapp; do
               brew list --cask --versions "$cask"
             done
