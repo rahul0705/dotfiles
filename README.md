@@ -6,8 +6,8 @@ The migration is being reviewed in small PRs targeting `dev`. The Etch
 `developer` profile covers Git, tmux, Homebrew, Starship, Nerd Fonts, Bash-it,
 Bash, Zsh, Oh My Zsh, VS Code, and, on macOS, Ghostty, Zed, workstation and
 personal apps, developer tools, and Xcode. Gaming apps are opt-in. Vim remains
-on Dotbot while its plugin manager is reconsidered, so Etch has not replaced
-the existing macOS/Linux Dotbot profiles.
+on Dotbot while the [vim-plug migration](docs/vim-plugin-audit.md) is reviewed,
+so Etch has not replaced the existing macOS/Linux Dotbot profiles.
 
 ```sh
 git clone --branch dev https://github.com/rahul0705/dotfiles.git
@@ -152,7 +152,7 @@ idempotent second apply. Linux starts without Starship and verifies its
 installation; CI also simulates tmux 2.0 to inspect the legacy selection.
 macOS runners already include Xcode, so CI verifies its presence but does not
 exercise a fresh Mac App Store download. Issue #81 stays open until the Vim
-decision and final switch-over evidence are complete.
+migration and final switch-over evidence are complete.
 
 ## Original Dotbot setup
 
