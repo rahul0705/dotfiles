@@ -5,7 +5,11 @@
     editorconfig.editorconfig:
       status: install
     # Code Formatter
-    esbenp.prettier-vscode:
+    oxc.oxc-vscode:
+      status: install
+    astro-build.astro-vscode:
+      status: install
+    bradlc.vscode-tailwindcss:
       status: install
     # Code Spell Checker
     streetsidesoftware.code-spell-checker:
@@ -33,9 +37,6 @@
       status: install
     # Image Paste Support
     mushan.vscode-paste-image:
-      status: install
-    # Autocomplete
-    GitHub.copilot:
       status: install
     # Remote development
     ms-vscode-remote.vscode-remote-extensionpack:

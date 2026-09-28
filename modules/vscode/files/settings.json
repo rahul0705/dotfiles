@@ -13,7 +13,7 @@
   "editor.suggest.preview": false, // Testing value
   "editor.useTabStops": true,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": "explicit"
+    "source.organizeImports": "explicit",
   },
   "editor.multiCursorModifier": "alt",
   "editor.snippetSuggestions": "top",
@@ -23,7 +23,9 @@
   "editor.suggestSelection": "recentlyUsedByPrefix",
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript][javascriptreact][typescript][typescriptreact][json][jsonc]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+  },
   "editor.semanticHighlighting.enabled": true,
   // Fonts
   "editor.fontFamily": "'FiraCode Nerd Font Mono', 'Hack Nerd Font Mono'",
@@ -48,7 +50,7 @@
     "**/svn": true,
     "**/hg": true,
     "**/.tox": true,
-    "**/.terraform": true
+    "**/.terraform": true,
   },
   // Terminal
   "terminal.integrated.minimumContrastRatio": 1,
@@ -57,7 +59,7 @@
   "terminal.integrated.inheritEnv": false,
   "terminal.integrated.scrollback": 100000,
   "terminal.integrated.autoReplies": {
-    "[Oh My Zsh] Would you like to check for updates? [Y/n]": "Y\r"
+    "[Oh My Zsh] Would you like to check for updates? [Y/n]": "Y\r",
   },
   // Files
   "files.trimTrailingWhitespace": true,
@@ -69,14 +71,12 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-    "**/package-lock.json": true,
-    "**/yarn.lock": true,
     "**/node_modules": true,
     "**/npm-debug.log": true,
     "**/*.js": { "when": "$(basename).ts" },
     "**/**.js": { "when": "$(basename).tsx" },
     "**/.tox": true,
-    "**/dist": true
+    "**/dist": true,
   },
   "files.watcherExclude": {
     "**/.git/objects/**": true,
@@ -89,7 +89,7 @@
     "**/.terraform/**": true,
     "**/.swagger-codegen/**": true,
     "**/.eggs/**": true,
-    "**/.pytest_cache/**": true
+    "**/.pytest_cache/**": true,
   },
   "files.eol": "\n",
   // Explorer
@@ -103,5 +103,8 @@
   "git.mergeEditor": true,
   // Gitlens
   "gitlens.codeLens.enabled": false,
-  "redhat.telemetry.enabled": true
+  "go.toolsManagement.autoUpdate": true,
+  "[astro]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+  },
 }
