@@ -2,10 +2,12 @@
 
 ## Etch migration (issue #81)
 
-The migration is being reviewed in small PRs targeting `dev`. The incremental
-Etch `developer` profile currently covers Git, tmux, Ghostty, Homebrew,
-Starship, Nerd Fonts, Bash-it, Bash, Oh My Zsh, Zsh, Zed, and macOS workstation
-apps; it does not yet replace the existing macOS/Linux Dotbot profiles.
+The migration is being reviewed in small PRs targeting `dev`. The Etch
+`developer` profile covers Git, tmux, Homebrew, Starship, Nerd Fonts, Bash-it,
+Bash, Zsh, Oh My Zsh, VS Code, and, on macOS, Ghostty, Zed, workstation and
+personal apps, developer tools, and Xcode. Gaming apps are opt-in. Vim remains
+on Dotbot while its plugin manager is reconsidered, so Etch has not replaced
+the existing macOS/Linux Dotbot profiles.
 
 ```sh
 git clone --branch dev https://github.com/rahul0705/dotfiles.git
@@ -51,15 +53,21 @@ directories: review and back up those conflicts before applying. Broad Dotbot
 cleanup is not migrated; Etch must have ownership receipts before removing links.
 Machine-local receipts live in the ignored `.etch/` directory.
 
+Etch's link defaults use `target_match: 'direct'` with `relink: True` during
+this migration. An old link such as `~/.gitconfig -> tools/vcs/git/gitconfig`
+resolves to the correct file, but its immediate target is the legacy path.
+Etch now plans to replace that symlink with one pointing directly to the
+module asset; it does not require manually unlinking it first. Review those
+changes in `./etch plan --profile developer -v` before applying. Existing
+direct links are skipped, and regular files or directories are still refused.
+This uses the behavior added for [Etch issue #85](https://github.com/rm-industries/etch/issues/85).
+
 The tmux module owns `~/.tmux` and selects `~/.tmux.conf` using the observed
 `tmux -V` version. Tmux 2.1 and newer use the modern mouse settings; older
 versions use the legacy settings. The pinned TPM checkout lives under the tmux
 module and must be initialized as shown above. `terminals/tmux` remains a
-compatibility link for existing Dotbot installations. Etch considers legacy
-links that resolve to the same files satisfied, so it leaves their literal
-targets untouched. To have Etch recreate and record ownership of those links,
-first inspect them with `ls -l ~/.tmux ~/.tmux.conf`, unlink only links that
-point to the legacy `terminals/tmux` path, then apply the tmux module. TPM's
+compatibility link for existing Dotbot installations. Direct target matching
+relinks home paths that still point through `terminals/tmux`. TPM's
 third-party plugins are still installed separately with its existing
 `~/.tmux/plugins/tpm/bin/install_plugins` command; the Etch tmux module does
 not fetch them during apply.
@@ -68,11 +76,10 @@ The Starship module owns `~/.config/starship.toml`. On macOS it uses the
 explicit Homebrew plugin to install the formula if missing; on Linux it runs
 Starship's published installer into the default `/usr/local/bin` directory.
 The config link can be created before Starship is installed, so it needs no
-version gate. Shell setup will be handled in a later slice.
+version gate. Zsh starts Starship when it is available.
 `shells/starship` remains a compatibility link
-for Dotbot. As with tmux, an old symlink that resolves through this path is
-already satisfied to Etch; inspect and unlink that symlink before applying if
-you want Etch to recreate and own it directly.
+for Dotbot. An old home link through this path is relinked directly during
+apply.
 
 The fonts module installs Hack and FiraCode Nerd Fonts. On Linux it runs Nerd
 Fonts' upstream installer for each font in the user font directory and refreshes
@@ -82,25 +89,55 @@ font files or installed casks are skipped on later applies.
 The Bash-it module clones Bash-it and runs its noninteractive setup without
 changing `~/.bashrc`. The Bash module then links the existing Bash configuration
 and requires Bash-it first. `shells/bash/bashrc` remains a compatibility link
-for Dotbot. Etch may leave an existing `~/.bashrc` link through that path in
-place if it resolves to the same file. To have Etch own the direct link,
-inspect and unlink that legacy link before applying. Local before/after rc
-files remain supported. Deprecated Base16 customization remains only in the
-original Dotbot tree and is not part of these modules.
+for Dotbot. Etch relinks an existing `~/.bashrc` through that path directly
+to the module asset. Local before/after rc files remain supported. Deprecated
+Base16 customization remains only in the original Dotbot tree and is not part
+of these modules.
 
 The Zsh module links `~/.zprofile` and `~/.zshrc` and starts Starship when
 available. The Oh My Zsh module requires Zsh, then runs the upstream installer
 noninteractively while preserving the linked rc file, and links the existing
 custom plugins and themes. `shells/zsh/zprofile`, `shells/zsh/zshrc`,
-and `shells/zsh/oh-my-zsh` remain compatibility links for Dotbot. Etch may
-consider old home links through those paths satisfied; inspect and unlink only
-those legacy links before applying if you want Etch to own direct links. Local
+and `shells/zsh/oh-my-zsh` remain compatibility links for Dotbot. Etch relinks
+old home links through those paths directly to module assets. Local
 before/after rc files remain supported.
 
 The VS Code module installs the macOS cask, links settings and keybindings on
 macOS and Linux, and installs extensions through the external VS Code plugin
 when `code` is available. Linux users must install VS Code separately.
 `editors/vscode` remains a compatibility link for the Dotbot profiles.
+
+On macOS, the developer-tools module installs Go, Node, Python, Rustup, uv,
+NVM, GitHub CLI, and Docker Desktop. The workstation module installs Rectangle,
+AltTab, MonitorControl, Firefox, and Chrome; personal-apps installs the selected
+personal casks. Ghostty and Zed each own their config links. The Xcode module
+installs `mas`, then requests Xcode from the Mac App Store only if
+`/Applications/Xcode.app` is absent. A fresh download requires a signed-in
+Mac App Store account. The opt-in `gaming` module installs the supported gaming
+casks with `./etch apply homebrew gaming`; it is not part of `developer`.
+
+### Switching an existing checkout
+
+Update an existing checkout to `dev`:
+
+```sh
+git fetch origin dev
+git switch dev
+git pull --ff-only origin dev
+```
+
+Initialize the pinned submodules with the command above, then review
+`./etch plan --profile developer -v` before applying. Back up
+any regular files at Etch-owned destinations; Etch will refuse to overwrite
+them. Review planned relinks from legacy alias paths before applying; no
+manual unlinking is needed for those symlinks.
+
+Run the apply sequence above, including the second pass after loading Homebrew
+into the shell on a fresh Mac. A final apply should report no changes, and
+`./etch doctor --profile developer` should pass. Continue to use Dotbot only
+for deferred Vim setup; avoid running the full Dotbot profile after Etch has
+taken ownership of its links. Keep the legacy bootstrap available until Vim is
+migrated and the switch-over is verified on your machines.
 
 To inspect the plan with a temporary home:
 
@@ -109,18 +146,13 @@ test_home=$(mktemp -d)
 HOME="$test_home" ./etch plan --profile developer
 ```
 
-The Git slice passed on macOS 27.0, arm64, with Python 3.14.7 in temporary
-homes, and its CI checks passed on Linux and macOS with Python 3.9 and 3.14.
-The expanded CI runs Etch with Git, tmux, Starship, fonts and Bash-it on those
-runners, inspects their installed links, Bash and Zsh startup, binaries and font packages, and confirms the
-second apply makes no changes. Linux starts without Starship, checks the
-deferred config link in the initial plan, and installs the current release.
-It simulates tmux 2.0 to inspect the legacy selection; it does not run an old
-tmux binary or install third-party TPM plugins.
-
-Subsequent review slices will cover the remaining modules, platform profiles
-and real platform evidence.
-Issue #81 stays open until those acceptance criteria are verified.
+CI runs the developer profile on Linux and macOS with Python 3.9 and 3.14. It
+inspects installed links, packages, extensions, shell startup, and the
+idempotent second apply. Linux starts without Starship and verifies its
+installation; CI also simulates tmux 2.0 to inspect the legacy selection.
+macOS runners already include Xcode, so CI verifies its presence but does not
+exercise a fresh Mac App Store download. Issue #81 stays open until the Vim
+decision and final switch-over evidence are complete.
 
 ## Original Dotbot setup
 
