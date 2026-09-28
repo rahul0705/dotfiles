@@ -1,9 +1,6 @@
 - brew:
     - mas # CLI for the Mac App Store
-    - yt-dlp # command line video downloader
-    - gallery-dl # command line gallery downloader
 - cask:
-    - the-unarchiver # Decompressing utility
     - stats # shows mac stats
     - spotify # Music streaming
     - 1password # Password manager
@@ -11,4 +8,4 @@
     - google-drive # Google Drive client
     - notion # Notes
     - obs # Streaming
-    - tailscale # Overlay VPN network
+    - tailscale-app # Overlay VPN network
