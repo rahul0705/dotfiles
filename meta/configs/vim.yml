@@ -1,10 +1,3 @@
-- clean:
-    - '~/.vim'
-    - '~/.vimrc'
-- link:
-    ~/.vim: editors/vim
-    ~/.vimrc: editors/vim/vimrc
 - shell:
-    - description: Installing Vundle plugins
-      command: vim +PluginInstall +qall
-      quiet: true
+    - description: Installing Vim with Etch
+      command: ./etch apply vim

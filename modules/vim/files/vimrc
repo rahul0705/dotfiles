@@ -23,13 +23,17 @@ set hidden
 "turn on syntax highlighting
 syntax on
 
-" =============== Vundle Initialization ===============
-" This loads all the plugins specified in ~/.vim/vundles.vim
-" Use Vundle plugin to manage all other plugins
-if filereadable(expand("~/.vim/vundles.vim"))
-    source ~/.vim/vundles.vim
+" =============== Plugin Initialization ===============
+set runtimepath^=~/.local/share/vim/site
+if filereadable(expand('~/.vim/plugins.vim'))
+    source ~/.vim/plugins.vim
 endif
-au BufNewFile,BufRead *.vundle set filetype=vim
+
+augroup numbertoggle
+    autocmd!
+    autocmd InsertEnter * setlocal norelativenumber
+    autocmd InsertLeave * setlocal relativenumber
+augroup END
 
 " ================ Persistent Undo ==================
 " Keep undo history across sessions, by storing in file.
