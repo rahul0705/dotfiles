@@ -19,6 +19,9 @@ updates:
     commit-message:
       prefix: chore
 
+    assignees:
+      - rahul0705
+
     labels:
       - dependencies
       - github_actions
@@ -44,6 +47,9 @@ updates:
 
     commit-message:
       prefix: chore
+
+    assignees:
+      - rahul0705
 
     labels:
       - dependencies
