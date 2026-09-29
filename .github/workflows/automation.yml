@@ -4,12 +4,14 @@ name: Repository Automation Validation
 on: # yamllint disable-line rule:truthy
   pull_request:
     branches:
-      - master
+      - dev
+      - main
     paths:
       - ".github/**"
   push:
     branches:
-      - "**"
+      - dev
+      - main
     paths:
       - ".github/**"
 

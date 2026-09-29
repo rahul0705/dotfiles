@@ -19,9 +19,12 @@ updates:
     commit-message:
       prefix: chore
 
+    assignees:
+      - rahul0705
+
     labels:
       - dependencies
-      - github-actions
+      - github_actions
 
     groups:
       github-actions:
@@ -45,11 +48,13 @@ updates:
     commit-message:
       prefix: chore
 
+    assignees:
+      - rahul0705
+
     labels:
       - dependencies
       - submodules
 
-    groups:
-      github-actions:
-        patterns:
-          - "*"
+    # Etch is the only submodule whose updates this CI migration covers.
+    allow:
+      - dependency-name: vendor/etch
