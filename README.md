@@ -157,12 +157,13 @@ test_home=$(mktemp -d)
 HOME="$test_home" ./etch plan --profile developer
 ```
 
-CI runs the developer profile on Linux and macOS with Python 3.9 and 3.14. It
-inspects installed links, Vim plugins, packages, extensions, shell startup, and the
-idempotent second apply. Linux starts without Starship and verifies its
-installation; CI also simulates tmux 2.0 to inspect the legacy selection.
-macOS runners already include Xcode, so CI verifies its presence but does not
-exercise a fresh Mac App Store download.
+CI validates, plans, and applies the developer profile in an isolated home on
+Ubuntu and macOS with Python 3.9 and the latest stable 3.x. Linux CI installs
+Vim, tmux, Zsh, and VS Code first because their Linux packages are user-managed;
+the profile manages their configuration and extensions. A weekly run checks for
+upstream dependency drift even without a dotfiles change. The opt-in gaming
+module is outside this profile. macOS runners include Xcode, so CI does not
+exercise a fresh Mac App Store download or an interactive GUI session.
 
 ## Original Dotbot setup
 
