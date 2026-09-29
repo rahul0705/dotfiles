@@ -1,13 +1,12 @@
 # Dotfiles
 
-## Etch migration (issue #81)
+## Etch developer profile
 
-The migration is being reviewed in small PRs targeting `dev`. The Etch
-`developer` profile covers Git, tmux, Homebrew, Starship, Nerd Fonts, Bash-it,
-Bash, Zsh, Oh My Zsh, Vim, VS Code, and, on macOS, Ghostty, Zed, workstation and
+The Etch `developer` profile covers Git, tmux, Homebrew, Starship, Nerd Fonts,
+Bash-it, Bash, Zsh, Oh My Zsh, Vim, VS Code, and, on macOS, Ghostty, Zed, workstation and
 personal apps, developer tools, and Xcode. Gaming apps are opt-in. The
 [Vim plugin audit](docs/vim-plugin-audit.md) records the migration decisions.
-The original macOS/Linux Dotbot profiles remain available during switch-over.
+The original macOS/Linux Dotbot profiles remain available for compatibility.
 
 ```sh
 git clone --branch dev https://github.com/rahul0705/dotfiles.git
@@ -148,8 +147,8 @@ manual unlinking is needed for those symlinks.
 Run the apply sequence above, including the second pass after loading Homebrew
 into the shell on a fresh Mac. A final apply should report no changes, and
 `./etch doctor --profile developer` should pass. Avoid running the full Dotbot
-profile after Etch has taken ownership of its links. Keep the legacy bootstrap
-available until the switch-over is verified on your machines.
+profile after Etch has taken ownership of its links. The legacy bootstrap
+remains available for compatibility.
 
 To inspect the plan with a temporary home:
 
@@ -163,8 +162,7 @@ inspects installed links, Vim plugins, packages, extensions, shell startup, and 
 idempotent second apply. Linux starts without Starship and verifies its
 installation; CI also simulates tmux 2.0 to inspect the legacy selection.
 macOS runners already include Xcode, so CI verifies its presence but does not
-exercise a fresh Mac App Store download. Issue #81 stays open until the final
-switch-over is verified.
+exercise a fresh Mac App Store download.
 
 ## Original Dotbot setup
 
