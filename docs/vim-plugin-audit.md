@@ -29,7 +29,8 @@ for quick terminal edits, with tmux status-line integration retained.
 The stale Vimwiki setting was removed; the unrelated `sudo-write.vim` setting
 was kept.
 
-The Vim module downloads `plug.vim` from upstream and declares the nine retained plugins.
+The Vim module uses Etch's managed `download` action for upstream `plug.vim`
+and declares the nine retained plugins.
 After the first successful Etch apply installs them, a marker skips later
 installs. Routine upgrades and removals remain manual through `:PlugUpdate`,
 `:PlugDiff`, and `:PlugClean`. Vundle and its old plugin submodules were removed

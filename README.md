@@ -107,13 +107,18 @@ macOS and Linux, and installs extensions through the external VS Code plugin
 when `code` is available. Linux users must install VS Code separately.
 `editors/vscode` remains a compatibility link for the Dotbot profiles.
 
-The Vim module links `~/.vim` and `~/.vimrc`, downloads vim-plug from its
-upstream install URL, and installs nine selected plugins on its first apply.
+The Vim module links `~/.vim` and `~/.vimrc`, uses Etch's managed `download`
+action to place vim-plug from upstream, and installs nine selected plugins on
+its first apply.
 Fresh installs follow upstream's current `plug.vim` and require network access.
 A marker under `~/.local/share/vim/plugged` skips later plugin installs. Use Vim's
 `:PlugUpdate`, `:PlugDiff`, and `:PlugClean` for manual plugin maintenance;
-Etch does not update plugins on every run. `editors/vim` remains a compatibility
-link for `./install-standalone vim` and existing Dotbot links.
+Etch does not update plugins on every run. `./install-standalone vim` delegates
+to the Etch module; `editors/vim` remains a compatibility link for existing
+Dotbot links. If an earlier migration run downloaded `plug.vim` with `curl`,
+Etch will refuse to adopt that unmanaged file. Confirm the file at
+`~/.local/share/vim/site/autoload/plug.vim` is the earlier vim-plug download,
+remove that file, then reapply the Vim module so Etch can own the new download.
 
 On macOS, the developer-tools module installs Go, Node, Python, Rustup, uv,
 NVM, GitHub CLI, and Docker Desktop. The workstation module installs Rectangle,
