@@ -1,3 +1,0 @@
-- shell:
-    - description: Installing Vim with Etch
-      command: ./etch apply vim

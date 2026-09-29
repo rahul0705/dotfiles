@@ -1,4 +1,0 @@
-- shell:
-    - description: Installing XCode
-      command: mas install 497799835
-      quiet: true

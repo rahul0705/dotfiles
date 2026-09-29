@@ -1,4 +1,0 @@
-- cask:
-    - rectangle # Move and resize windows using keyboard shortcuts or snap areas
-    - alt-tab # Windows-like alt-tab
-    - monitorcontrol # Lets you control your monitor OSD with your keyboard
