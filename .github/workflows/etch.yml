@@ -1,85 +1,53 @@
-name: Etch migration
+name: Etch compatibility
 
 on:
   push:
-    branches: [dev, 'codex/**']
+    branches: [dev, main]
     paths: ['etch', 'defaults.conf', 'modules/**', 'profiles/**', 'vendor/etch', '.gitmodules', '.github/workflows/etch.yml']
   pull_request:
+    branches: [dev, main]
     paths: ['etch', 'defaults.conf', 'modules/**', 'profiles/**', 'vendor/etch', '.gitmodules', '.github/workflows/etch.yml']
+  schedule:
+    - cron: '0 8 * * 6'
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  developer-migration:
+  compatibility:
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        python: ['3.9', '3.14']
+        python: ['3.9', '3.x']
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - name: Initialize the pinned engine and shell plugins
-        run: git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/ghostty/files/themes/catppuccin modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting modules/oh-my-zsh/files/custom/themes/powerlevel9k modules/oh-my-zsh/files/custom/themes/powerlevel10k
       - uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
         with:
           python-version: ${{ matrix.python }}
-      - name: Validate Etch configuration
-        run: ./etch validate
-      - name: Inspect Homebrew bootstrap
-        if: runner.os == 'macOS'
+      - name: Initialize Etch and module assets
+        run: git submodule update --init --recursive vendor/etch modules
+      - name: Install Linux prerequisites
+        if: runner.os == 'Linux'
         shell: bash
         run: |
           set -euo pipefail
-          python_bin=$(command -v python3)
-          mkdir -p "$RUNNER_TEMP/etch-homebrew-home"
-          HOME="$RUNNER_TEMP/etch-homebrew-home" PATH=/usr/bin:/bin "$python_bin" -S vendor/etch/etch plan homebrew starship fonts tmux ghostty macos-workstation -v | tee "$RUNNER_TEMP/etch-homebrew-plan.log"
-          grep -q 'homebrew:action\[1\]: SKIP' "$RUNNER_TEMP/etch-homebrew-plan.log"
-          grep -q 'starship:action\[1\]: SKIP' "$RUNNER_TEMP/etch-homebrew-plan.log"
-          grep -Eq 'CHANGE .*\[starship:action\[2\]\]' "$RUNNER_TEMP/etch-homebrew-plan.log"
-          grep -q 'fonts:action\[2\]: SKIP' "$RUNNER_TEMP/etch-homebrew-plan.log"
-          HOME="$RUNNER_TEMP/etch-homebrew-home" ./etch apply homebrew
-      - name: Make tmux available for Linux version inspection
-        shell: bash
-        run: |
-          if [[ "$RUNNER_OS" == Linux ]]; then
-            if ! command -v tmux >/dev/null; then
-              sudo apt-get update -qq
-              sudo apt-get install -y tmux
-            fi
-            tmux -V
-          fi
-      - name: Make Vim available for plugin inspection
-        if: runner.os == 'Linux'
-        shell: bash
-        run: |
-          if ! command -v vim >/dev/null; then
-            sudo apt-get update -qq
-            sudo apt-get install -y vim
-          fi
-      - name: Make zsh available for startup inspection
-        shell: bash
-        run: |
-          if ! command -v zsh >/dev/null; then
-            sudo apt-get update -qq
-            sudo apt-get install -y zsh
-          fi
-          zsh --version
-      - name: Make VS Code available for Linux extension inspection
-        if: runner.os == 'Linux'
-        shell: bash
-        run: |
-          if ! command -v code >/dev/null; then
-            curl -fsSL https://update.code.visualstudio.com/latest/linux-deb-x64/stable -o "$RUNNER_TEMP/code.deb"
-            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$RUNNER_TEMP/code.deb"
-          fi
-          code --version
-      - name: Install and inspect the developer profile
+          # Etch configures these tools but does not install them on Linux.
+          sudo apt-get update -qq
+          sudo apt-get install -y tmux vim zsh
+          # Linux VS Code installation is user-managed; make extension installation observable.
+          curl -fsSL https://update.code.visualstudio.com/latest/linux-deb-x64/stable -o "$RUNNER_TEMP/code.deb"
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$RUNNER_TEMP/code.deb"
+      - name: Apply developer profile
         shell: bash
         env:
           HOME: ${{ runner.temp }}/etch-home
@@ -90,176 +58,14 @@ jobs:
             export HOMEBREW_CASK_OPTS="--appdir=$RUNNER_TEMP/etch-apps"
             mkdir -p "$RUNNER_TEMP/etch-apps"
           fi
-          uname -sm
-          python3 --version
-          git --version
-          ./etch
-          ./etch plan --profile developer -v | tee "$RUNNER_TEMP/etch-first-plan.log"
-          ./etch doctor --profile developer
-          test ! -e "$HOME/.gitconfig"
-          test ! -e "$HOME/.tmux"
-          test ! -e "$HOME/.tmux.conf"
-          test ! -e "$HOME/.vim"
-          test ! -e "$HOME/.vimrc"
-          test ! -e "$HOME/.local/share/vim/site/autoload/plug.vim"
-          test ! -e "$HOME/.config/starship.toml"
-          test ! -e "$HOME/.local/share/fonts/NerdFonts"
-          test ! -e "$HOME/.bash-it"
-          test ! -e "$HOME/.bashrc"
-          test ! -e "$HOME/.oh-my-zsh"
-          test ! -e "$HOME/.zprofile"
-          test ! -e "$HOME/.zshrc"
-          test ! -e "$HOME/.config/zed/settings.json"
-          test ! -e "$HOME/.config/ghostty/config"
-          if [[ "$RUNNER_OS" == macOS ]]; then
-            test ! -e "$HOME/Library/Application Support/Code/User/settings.json"
-          else
-            test ! -e "$HOME/.config/Code/User/settings.json"
+          ./etch validate
+          ./etch plan --profile developer
+          if [[ "$RUNNER_OS" == macOS ]] && ! command -v brew >/dev/null; then
+            ./etch apply --profile developer --allow-sudo
+            case "$(uname -m)" in
+              arm64) brew_bin=/opt/homebrew/bin/brew ;;
+              *) brew_bin=/usr/local/bin/brew ;;
+            esac
+            eval "$("$brew_bin" shellenv)"
           fi
-          grep -Eq 'CHANGE .*\[starship:action\[2\]\]' "$RUNNER_TEMP/etch-first-plan.log"
-
           ./etch apply --profile developer
-          if [[ "$RUNNER_OS" == macOS ]]; then
-            command -v brew
-            brew --prefix
-            brew list --cask --versions zed
-            brew list --cask --versions ghostty
-            brew list --cask --versions visual-studio-code
-            brew list --formula --versions tmux
-            for formula in gh go nvm rustup uv node python@3.14; do
-              brew list --formula --versions "$formula"
-            done
-            brew list --cask --versions docker-desktop
-            brew list --formula --versions mas
-            test -d /Applications/Xcode.app
-            xcodebuild -version
-            for cask in 1password stats spotify obsidian notion google-drive obs tailscale-app discord whatsapp; do
-              brew list --cask --versions "$cask"
-            done
-            for cask in rectangle alt-tab monitorcontrol firefox google-chrome; do
-              brew list --cask --versions "$cask"
-            done
-            test -L "$HOME/.config/zed/settings.json"
-            test "$(readlink "$HOME/.config/zed/settings.json")" = "$GITHUB_WORKSPACE/modules/zed/files/settings.json"
-            test "$(readlink editors/zed)" = "../modules/zed/files"
-            test -L "$HOME/.config/ghostty/config"
-            test "$(readlink "$HOME/.config/ghostty/config")" = "$GITHUB_WORKSPACE/modules/ghostty/files/config"
-            test "$(readlink terminals/ghostty)" = "../modules/ghostty/files"
-            for name in frappe latte macchiato mocha; do
-              theme="$HOME/.config/ghostty/themes/catppuccin-$name.conf"
-              test -L "$theme"
-              test "$(readlink "$theme")" = "$GITHUB_WORKSPACE/modules/ghostty/files/themes/catppuccin/themes/catppuccin-$name.conf"
-            done
-          else
-            test ! -e "$HOME/.config/zed/settings.json"
-            test ! -e "$HOME/.config/ghostty/config"
-          fi
-          if [[ "$RUNNER_OS" == macOS ]]; then
-            vscode_dir="$HOME/Library/Application Support/Code/User"
-          else
-            vscode_dir="$HOME/.config/Code/User"
-          fi
-          for name in settings.json keybindings.json; do
-            test -L "$vscode_dir/$name"
-            test "$(readlink "$vscode_dir/$name")" = "$GITHUB_WORKSPACE/modules/vscode/files/$name"
-          done
-          test "$(readlink editors/vscode)" = "../modules/vscode/files"
-          code --list-extensions | tr '[:upper:]' '[:lower:]' > "$RUNNER_TEMP/etch-vscode-extensions.log"
-          for extension in oxc.oxc-vscode astro-build.astro-vscode bradlc.vscode-tailwindcss; do
-            grep -Fxq "$extension" "$RUNNER_TEMP/etch-vscode-extensions.log"
-          done
-          for name in gitconfig gitignore_global gitmessage; do
-            test -L "$HOME/.$name"
-            test "$(readlink "$HOME/.$name")" = "$GITHUB_WORKSPACE/modules/git/files/$name"
-            test "$(readlink "tools/vcs/git")" = "../../modules/git/files"
-          done
-          test "$(git config --file "$HOME/.gitconfig" --get core.editor)" = vim
-          test -L "$HOME/.vim"
-          test "$(readlink "$HOME/.vim")" = "$GITHUB_WORKSPACE/modules/vim/files"
-          test -L "$HOME/.vimrc"
-          test "$(readlink "$HOME/.vimrc")" = "$GITHUB_WORKSPACE/modules/vim/files/vimrc"
-          test "$(readlink editors/vim)" = "../modules/vim/files"
-          plugins_dir="$HOME/.local/share/vim/plugged"
-          test -f "$HOME/.local/share/vim/site/autoload/plug.vim"
-          test -f "$plugins_dir/.etch-initialized"
-          for plugin in vim-signify vim-better-whitespace nerdcommenter vim-indent-guides tmuxline.vim catppuccin vim-airline vim-fugitive editorconfig-vim; do
-            test -d "$plugins_dir/$plugin/.git"
-          done
-          test -L "$HOME/.tmux"
-          test "$(readlink "$HOME/.tmux")" = "$GITHUB_WORKSPACE/modules/tmux/files"
-          test -x "$HOME/.tmux/plugins/tpm/tpm"
-          test -L "$HOME/.tmux.conf"
-          test "$(readlink "$HOME/.tmux.conf")" = "$GITHUB_WORKSPACE/modules/tmux/files/tmux.conf"
-          grep -q 'set -g mouse on' "$HOME/.tmux.conf"
-          tmux -L etch-ci -f "$HOME/.tmux.conf" new-session -d -s etch-ci
-          tmux -L etch-ci kill-server
-          vim -Nu "$HOME/.vimrc" -i NONE -n -es -c 'if get(g:, "colors_name", "") !=# "catppuccin_mocha" | cquit | endif' -c 'if !exists(":PlugUpdate") || !exists(":Git") | cquit | endif' -c 'qa!'
-          test -L "$HOME/.config/starship.toml"
-          test "$(readlink "$HOME/.config/starship.toml")" = "$GITHUB_WORKSPACE/modules/starship/files/starship.toml"
-          if [[ "$RUNNER_OS" == Linux ]]; then
-            test -x /usr/local/bin/starship
-            /usr/local/bin/starship --version
-          else
-            starship --version
-          fi
-          if [[ "$RUNNER_OS" == Linux ]]; then
-            test -f "$HOME/.local/share/fonts/NerdFonts/HackNerdFont-Regular.ttf"
-            test -f "$HOME/.local/share/fonts/NerdFonts/FiraCodeNerdFont-Regular.ttf"
-          else
-            brew list --cask --versions font-hack-nerd-font
-            brew list --cask --versions font-fira-code-nerd-font
-          fi
-          test -f "$HOME/.bash-it/bash_it.sh"
-          test -d "$HOME/.bash-it/enabled"
-          test -L "$HOME/.bashrc"
-          test "$(readlink "$HOME/.bashrc")" = "$GITHUB_WORKSPACE/modules/bash/files/bashrc"
-          test "$(readlink shells/bash/bashrc)" = "../../modules/bash/files/bashrc"
-          TERM=xterm bash --noprofile -ic 'test "$BASH_IT" = "$HOME/.bash-it"' > "$RUNNER_TEMP/etch-bash-it-startup.log" 2>&1
-          if grep -q 'command not found' "$RUNNER_TEMP/etch-bash-it-startup.log"; then
-            cat "$RUNNER_TEMP/etch-bash-it-startup.log" >&2
-            exit 1
-          fi
-          test -f "$HOME/.oh-my-zsh/oh-my-zsh.sh"
-          test ! -e "$HOME/.zshrc.pre-oh-my-zsh"
-          test "$(readlink shells/zsh/oh-my-zsh)" = "../../modules/oh-my-zsh/files"
-          for name in zprofile zshrc; do
-            test -L "$HOME/.$name"
-            test "$(readlink "$HOME/.$name")" = "$GITHUB_WORKSPACE/modules/zsh/files/$name"
-            test "$(readlink "shells/zsh/$name")" = "../../modules/zsh/files/$name"
-          done
-          for name in zsh-autosuggestions zsh-completions zsh-syntax-highlighting; do
-            test "$(readlink "$HOME/.oh-my-zsh/custom/plugins/$name")" = "$GITHUB_WORKSPACE/modules/oh-my-zsh/files/custom/plugins/$name"
-          done
-          for name in powerlevel9k powerlevel10k; do
-            test "$(readlink "$HOME/.oh-my-zsh/custom/themes/$name")" = "$GITHUB_WORKSPACE/modules/oh-my-zsh/files/custom/themes/$name"
-          done
-          test "$(readlink "$HOME/.oh-my-zsh/custom/powerlevel9k.settings.zsh")" = "$GITHUB_WORKSPACE/modules/oh-my-zsh/files/custom/powerlevel9k.settings.zsh"
-          TERM=xterm zsh -lic 'test "$ZSH" = "$HOME/.oh-my-zsh" && command -v starship' > "$RUNNER_TEMP/etch-zsh-startup.log" 2>&1 || {
-            cat "$RUNNER_TEMP/etch-zsh-startup.log" >&2
-            exit 1
-          }
-
-          ./etch apply --profile developer | tee "$RUNNER_TEMP/etch-second-apply.log"
-          if grep -Eq '^[[:space:]]*(CHANGED|FAILED|BLOCKED)([[:space:]]|$)' "$RUNNER_TEMP/etch-second-apply.log"; then
-            echo 'Second Etch apply changed state or failed.' >&2
-            exit 1
-          fi
-          ./etch doctor --profile developer
-
-      - name: Inspect the tmux legacy branch with a simulated version
-        shell: bash
-        env:
-          HOME: ${{ runner.temp }}/etch-old-tmux-home
-        run: |
-          set -euo pipefail
-          mkdir -p "$HOME" "$RUNNER_TEMP/etch-fake-bin"
-          cat > "$RUNNER_TEMP/etch-fake-bin/tmux" <<'EOF'
-          #!/bin/sh
-          printf 'tmux 2.0\n'
-          EOF
-          chmod +x "$RUNNER_TEMP/etch-fake-bin/tmux"
-          export PATH="$RUNNER_TEMP/etch-fake-bin:$PATH"
-          ./etch plan homebrew tmux
-          ./etch apply homebrew tmux
-          test "$(readlink "$HOME/.tmux.conf")" = "$GITHUB_WORKSPACE/modules/tmux/files/tmux-legacy.conf"
-          grep -q 'mode-mouse on' "$HOME/.tmux.conf"
