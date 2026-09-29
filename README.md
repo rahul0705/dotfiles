@@ -6,7 +6,6 @@ The Etch `developer` profile covers Git, tmux, Homebrew, Starship, Nerd Fonts,
 Bash-it, Bash, Zsh, Oh My Zsh, Vim, VS Code, and, on macOS, Ghostty, Zed, workstation and
 personal apps, developer tools, and Xcode. Gaming apps are opt-in. The
 [Vim plugin audit](docs/vim-plugin-audit.md) records the migration decisions.
-The original macOS/Linux Dotbot profiles remain available for compatibility.
 
 ```sh
 git clone --branch dev https://github.com/rahul0705/dotfiles.git
@@ -44,12 +43,11 @@ the developer profile again to install those packages. Existing Homebrew
 installations are left alone.
 
 The Git module owns `.gitconfig`, `.gitignore_global`, and `.gitmessage`.
-`tools/vcs/git` remains a compatibility link, so existing home links and Dotbot's
-`install-profile` / `install-standalone git` continue to use the same files.
+`tools/vcs/git` remains a temporary alias for existing home links.
 Etch creates missing parent directories and may replace different symlinks,
 matching the old link defaults. It refuses to overwrite regular files or
-directories: review and back up those conflicts before applying. Broad Dotbot
-cleanup is not migrated; Etch must have ownership receipts before removing links.
+directories: review and back up those conflicts before applying. Etch does not
+remove links it has not taken ownership of.
 Machine-local receipts live in the ignored `.etch/` directory.
 
 Etch's link defaults use `target_match: 'direct'` with `relink: True` during
@@ -65,20 +63,19 @@ The tmux module owns `~/.tmux` and selects `~/.tmux.conf` using the observed
 `tmux -V` version. Tmux 2.1 and newer use the modern mouse settings; older
 versions use the legacy settings. The pinned TPM checkout lives under the tmux
 module and must be initialized as shown above. `terminals/tmux` remains a
-compatibility link for existing Dotbot installations. Direct target matching
-relinks home paths that still point through `terminals/tmux`. TPM's
-third-party plugins are still installed separately with its existing
-`~/.tmux/plugins/tpm/bin/install_plugins` command; the Etch tmux module does
-not fetch them during apply.
+temporary alias for existing home links. Direct target matching relinks home
+paths that still point through `terminals/tmux`. Etch runs TPM's installer on
+the first apply when tmux is available. TPM installs the plugins listed in
+`tmux.conf`; use `~/.tmux/plugins/tpm/bin/install_plugins` after adding plugins
+or to repair a partial installation.
 
 The Starship module owns `~/.config/starship.toml`. On macOS it uses the
 explicit Homebrew plugin to install the formula if missing; on Linux it runs
 Starship's published installer into the default `/usr/local/bin` directory.
 The config link can be created before Starship is installed, so it needs no
 version gate. Zsh starts Starship when it is available.
-`shells/starship` remains a compatibility link
-for Dotbot. An old home link through this path is relinked directly during
-apply.
+`shells/starship` remains a temporary alias. Etch relinks old home links
+through it directly during apply.
 
 The fonts module installs Hack and FiraCode Nerd Fonts. On Linux it runs Nerd
 Fonts' upstream installer for each font in the user font directory and refreshes
@@ -88,23 +85,22 @@ font files or installed casks are skipped on later applies.
 The Bash-it module clones Bash-it and runs its noninteractive setup without
 changing `~/.bashrc`. The Bash module then links the existing Bash configuration
 and requires Bash-it first. `shells/bash/bashrc` remains a compatibility link
-for Dotbot. Etch relinks an existing `~/.bashrc` through that path directly
-to the module asset. Local before/after rc files remain supported. Deprecated
-Base16 customization remains only in the original Dotbot tree and is not part
-of these modules.
+for older home links. Etch relinks an existing `~/.bashrc` through that path
+directly to the module asset. Local before/after rc files remain supported.
+Deprecated Base16 customization is no longer managed.
 
 The Zsh module links `~/.zprofile` and `~/.zshrc` and starts Starship when
 available. The Oh My Zsh module requires Zsh, then runs the upstream installer
 noninteractively while preserving the linked rc file, and links the existing
 custom plugins and themes. `shells/zsh/zprofile`, `shells/zsh/zshrc`,
-and `shells/zsh/oh-my-zsh` remain compatibility links for Dotbot. Etch relinks
+and `shells/zsh/oh-my-zsh` remain temporary aliases. Etch relinks
 old home links through those paths directly to module assets. Local
 before/after rc files remain supported.
 
 The VS Code module installs the macOS cask, links settings and keybindings on
 macOS and Linux, and installs extensions through the external VS Code plugin
 when `code` is available. Linux users must install VS Code separately.
-`editors/vscode` remains a compatibility link for the Dotbot profiles.
+`editors/vscode` remains a temporary alias for existing home links.
 
 The Vim module links `~/.vim` and `~/.vimrc`, uses Etch's managed `download`
 action to place vim-plug from upstream, and installs nine selected plugins on
@@ -112,9 +108,9 @@ its first apply.
 Fresh installs follow upstream's current `plug.vim` and require network access.
 A marker under `~/.local/share/vim/plugged` skips later plugin installs. Use Vim's
 `:PlugUpdate`, `:PlugDiff`, and `:PlugClean` for manual plugin maintenance;
-Etch does not update plugins on every run. `./install-standalone vim` delegates
-to the Etch module; `editors/vim` remains a compatibility link for existing
-Dotbot links. If an earlier migration run downloaded `plug.vim` with `curl`,
+Etch does not update plugins on every run. `editors/vim` remains a temporary
+alias for existing home links. If an earlier migration run downloaded
+`plug.vim` with `curl`,
 Etch will refuse to adopt that unmanaged file. Confirm the file at
 `~/.local/share/vim/site/autoload/plug.vim` is the earlier vim-plug download,
 remove that file, then reapply the Vim module so Etch can own the new download.
@@ -146,9 +142,7 @@ manual unlinking is needed for those symlinks.
 
 Run the apply sequence above, including the second pass after loading Homebrew
 into the shell on a fresh Mac. A final apply should report no changes, and
-`./etch doctor --profile developer` should pass. Avoid running the full Dotbot
-profile after Etch has taken ownership of its links. The legacy bootstrap
-remains available for compatibility.
+`./etch doctor --profile developer` should pass.
 
 To inspect the plan with a temporary home:
 
@@ -165,47 +159,7 @@ upstream dependency drift even without a dotfiles change. The opt-in gaming
 module is outside this profile. macOS runners include Xcode, so CI does not
 exercise a fresh Mac App Store download or an interactive GUI session.
 
-## Original Dotbot setup
-
-This is a template repository for bootstrapping your dotfiles with [Dotbot][dotbot].
-
-To get started, you can [fork][fork] this repository (and probably delete this
-README and rename your version to something like just `dotfiles`).
-
-In general, you should be using symbolic links for everything, and using git
-submodules whenever possible.
-
-To keep submodules at their proper versions, you could include something like
-`git submodule update --init --recursive` in your `install.conf.yaml`.
-
-To upgrade your submodules to their latest versions, you could periodically run
-`git submodule update --init --remote`.
-
-## Inspiration
-
-If you're looking for inspiration for how to structure your dotfiles or what
-kinds of things you can include, you could take a look at some repos using
-Dotbot.
-
-If you're using Dotbot and you'd like to include a link to your dotfiles here
-as an inspiration to others, please submit a pull request.
-
 ## License
 
 This software is hereby released into the public domain. That means you can do
 whatever you want with it without restriction. See `LICENSE.md` for details.
-
-That being said, I would appreciate it if you could maintain a link back to
-Dotbot (or this repository) to help other people discover Dotbot.
-
-[dotbot]: https://github.com/anishathalye/dotbot
-[fork]: https://github.com/anishathalye/dotfiles_template/fork
-[anishathalye_dotfiles]: https://github.com/anishathalye/dotfiles
-[csivanich_dotfiles]: https://github.com/csivanich/dotfiles
-[m45t3r_dotfiles]: https://github.com/m45t3r/dotfiles
-[alexwh_dotfiles]: https://github.com/alexwh/dotfiles
-[azd325_dotfiles]: https://github.com/Azd325/dotfiles
-[bluekeys_dotfiles]: https://github.com/bluekeys/.dotfiles
-[wazery_dotfiles]: https://github.com/wazery/dotfiles
-[thirtythreeforty_dotfiles]: https://github.com/thirtythreeforty/dotfiles
-[dotbot-users]: https://github.com/anishathalye/dotbot/wiki/Users
