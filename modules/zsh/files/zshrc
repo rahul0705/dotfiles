@@ -51,6 +51,10 @@ fi
 # Initialize starship for zsh when installed
 if command -v starship >/dev/null 2>&1; then
     eval "$(starship init zsh)"
+
+    # Match Zsh's multiline continuation prompt to the Starship input prompt,
+    # omitting the angled terminator so continued input remains aligned.
+    PS2='%K{#b4befe}%F{#11111b} ❯ %k%f  '
 fi
 
 # Allow local customizations in the ~/.zshrc_after_local file
