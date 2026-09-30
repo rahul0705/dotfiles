@@ -153,7 +153,7 @@ format = '[](fg:mauve)[ 󱎫 $duration ]($style)[](fg:mauve)'
 [aws]
 symbol = ''
 style = 'bg:teal fg:crust'
-format = '[](fg:teal)[ $symbol( $profile)( \\[$duration\\]) ]($style)[](fg:teal)'
+format = '[](fg:teal)[ $symbol( $profile)( \[$duration\]) ]($style)[](fg:teal)'
 
 [azure]
 symbol = ''
