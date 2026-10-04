@@ -1,3 +1,5 @@
+root = true
+
 [*]
 charset = utf-8
 trim_trailing_whitespace = true
@@ -7,11 +9,10 @@ indent_style = space
 indent_size = 4
 max_line_length = 120
 
-[*.md]
+[*.{md,yml,yaml,json,jsonc}]
 indent_size = 2
 
-[*.yml]
+# Etch's canonical configuration format uses two spaces and a 120-column limit.
+[*.conf]
 indent_size = 2
-
-[*/vscode/*.json]
-indent_size = 2
+max_line_length = 120

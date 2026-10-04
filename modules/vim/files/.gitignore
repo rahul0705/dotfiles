@@ -1,0 +1,2 @@
+# ~/.vim points at this directory; keep persistent undo history machine-local.
+/backups/

@@ -43,28 +43,16 @@ the developer profile again to install those packages. Existing Homebrew
 installations are left alone.
 
 The Git module owns `.gitconfig`, `.gitignore_global`, and `.gitmessage`.
-`tools/vcs/git` remains a temporary alias for existing home links.
 Etch creates missing parent directories and may replace different symlinks,
-matching the old link defaults. It refuses to overwrite regular files or
-directories: review and back up those conflicts before applying. Etch does not
-remove links it has not taken ownership of.
+using `target_match: 'direct'` with `relink: True`. It refuses to overwrite
+regular files or directories: review and back up those conflicts before
+applying. Etch does not remove links it has not taken ownership of.
 Machine-local receipts live in the ignored `.etch/` directory.
-
-Etch's link defaults use `target_match: 'direct'` with `relink: True` during
-this migration. An old link such as `~/.gitconfig -> tools/vcs/git/gitconfig`
-resolves to the correct file, but its immediate target is the legacy path.
-Etch now plans to replace that symlink with one pointing directly to the
-module asset; it does not require manually unlinking it first. Review those
-changes in `./etch plan --profile developer -v` before applying. Existing
-direct links are skipped, and regular files or directories are still refused.
-This uses the behavior added for [Etch issue #85](https://github.com/rm-industries/etch/issues/85).
 
 The tmux module owns `~/.tmux` and selects `~/.tmux.conf` using the observed
 `tmux -V` version. Tmux 2.1 and newer use the modern mouse settings; older
 versions use the legacy settings. The pinned TPM checkout lives under the tmux
-module and must be initialized as shown above. `terminals/tmux` remains a
-temporary alias for existing home links. Direct target matching relinks home
-paths that still point through `terminals/tmux`. Etch runs TPM's installer on
+module and must be initialized as shown above. Etch runs TPM's installer on
 the first apply when tmux is available. TPM installs the plugins listed in
 `tmux.conf`; use `~/.tmux/plugins/tpm/bin/install_plugins` after adding plugins
 or to repair a partial installation.
@@ -74,8 +62,6 @@ explicit Homebrew plugin to install the formula if missing; on Linux it runs
 Starship's published installer into the default `/usr/local/bin` directory.
 The config link can be created before Starship is installed, so it needs no
 version gate. Zsh starts Starship when it is available.
-`shells/starship` remains a temporary alias. Etch relinks old home links
-through it directly during apply.
 
 The fonts module installs Hack and FiraCode Nerd Fonts. On Linux it runs Nerd
 Fonts' upstream installer for each font in the user font directory and refreshes
@@ -84,23 +70,17 @@ font files or installed casks are skipped on later applies.
 
 The Bash-it module clones Bash-it and runs its noninteractive setup without
 changing `~/.bashrc`. The Bash module then links the existing Bash configuration
-and requires Bash-it first. `shells/bash/bashrc` remains a compatibility link
-for older home links. Etch relinks an existing `~/.bashrc` through that path
-directly to the module asset. Local before/after rc files remain supported.
+and requires Bash-it first. Local before/after rc files remain supported.
 Deprecated Base16 customization is no longer managed.
 
 The Zsh module links `~/.zprofile` and `~/.zshrc` and starts Starship when
 available. The Oh My Zsh module requires Zsh, then runs the upstream installer
 noninteractively while preserving the linked rc file, and links the existing
-custom plugins and themes. `shells/zsh/zprofile`, `shells/zsh/zshrc`,
-and `shells/zsh/oh-my-zsh` remain temporary aliases. Etch relinks
-old home links through those paths directly to module assets. Local
-before/after rc files remain supported.
+custom plugins and themes. Local before/after rc files remain supported.
 
 The VS Code module installs the macOS cask, links settings and keybindings on
 macOS and Linux, and installs extensions through the external VS Code plugin
 when `code` is available. Linux users must install VS Code separately.
-`editors/vscode` remains a temporary alias for existing home links.
 
 The Vim module links `~/.vim` and `~/.vimrc`, uses Etch's managed `download`
 action to place vim-plug from upstream, and installs nine selected plugins on
@@ -108,10 +88,9 @@ its first apply.
 Fresh installs follow upstream's current `plug.vim` and require network access.
 A marker under `~/.local/share/vim/plugged` skips later plugin installs. Use Vim's
 `:PlugUpdate`, `:PlugDiff`, and `:PlugClean` for manual plugin maintenance;
-Etch does not update plugins on every run. `editors/vim` remains a temporary
-alias for existing home links. If an earlier migration run downloaded
-`plug.vim` with `curl`,
-Etch will refuse to adopt that unmanaged file. Confirm the file at
+Etch does not update plugins on every run. If an earlier migration run
+downloaded `plug.vim` with `curl`, Etch will refuse to adopt that unmanaged
+file. Confirm the file at
 `~/.local/share/vim/site/autoload/plug.vim` is the earlier vim-plug download,
 remove that file, then reapply the Vim module so Etch can own the new download.
 
@@ -137,8 +116,14 @@ git pull --ff-only origin main
 Initialize the pinned submodules with the command above, then review
 `./etch plan --profile developer -v` before applying. Back up
 any regular files at Etch-owned destinations; Etch will refuse to overwrite
-them. Review planned relinks from legacy alias paths before applying; no
-manual unlinking is needed for those symlinks.
+them.
+
+The old `editors/`, `shells/`, `terminals/`, and `tools/vcs/git` compatibility
+aliases have been removed; configuration assets now live under `modules/`.
+Home symlinks from a Dotbot-era checkout may become dangling after updating.
+Review the plan, then apply the developer profile to replace them with direct
+module links. Etch can relink dangling symlinks without manually unlinking them;
+regular files and directories still require a backup and explicit handling.
 
 Run the apply sequence above, including the second pass after loading Homebrew
 into the shell on a fresh Mac. A final apply should report no changes, and
