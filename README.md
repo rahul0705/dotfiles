@@ -8,7 +8,7 @@ personal apps, developer tools, and Xcode. Gaming apps are opt-in. The
 [Vim plugin audit](docs/vim-plugin-audit.md) records the migration decisions.
 
 ```sh
-git clone --branch dev https://github.com/rahul0705/dotfiles.git
+git clone https://github.com/rahul0705/dotfiles.git
 cd dotfiles
 git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/ghostty/files/themes/catppuccin modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting modules/oh-my-zsh/files/custom/themes/powerlevel9k modules/oh-my-zsh/files/custom/themes/powerlevel10k
 ./etch                              # preview only
@@ -126,12 +126,12 @@ casks with `./etch apply homebrew gaming`; it is not part of `developer`.
 
 ### Switching an existing checkout
 
-Update an existing checkout to `dev`:
+Update an existing checkout to `main`:
 
 ```sh
-git fetch origin dev
-git switch dev
-git pull --ff-only origin dev
+git fetch origin main
+git switch main
+git pull --ff-only origin main
 ```
 
 Initialize the pinned submodules with the command above, then review
