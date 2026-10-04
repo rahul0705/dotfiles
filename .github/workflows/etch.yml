@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - main
-    paths: ['etch', 'defaults.conf', 'modules/**', 'profiles/**', 'vendor/etch', '.gitmodules', '.github/workflows/etch.yml']
   pull_request:
     branches:
       - main
-    paths: ['etch', 'defaults.conf', 'modules/**', 'profiles/**', 'vendor/etch', '.gitmodules', '.github/workflows/etch.yml']
   schedule:
     - cron: '0 8 * * 6'
   workflow_dispatch:
