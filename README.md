@@ -96,7 +96,8 @@ remove that file, then reapply the Vim module so Etch can own the new download.
 
 On macOS, the developer-tools module installs Go, Node, Python, Rustup, uv,
 NVM, GitHub CLI, and Docker Desktop. The workstation module installs Rectangle,
-AltTab, MonitorControl, Firefox, and Chrome; personal-apps installs the selected
+AltTab, MonitorControl, Firefox, and Chrome, plus Vorssaint on Apple silicon
+(macOS 14 or later); personal-apps installs the selected
 personal casks. Ghostty and Zed each own their config links. The Xcode module
 installs `mas`, then requests Xcode from the Mac App Store only if
 `/Applications/Xcode.app` is absent. A fresh download requires a signed-in
