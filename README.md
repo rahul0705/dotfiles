@@ -3,7 +3,7 @@
 ## Etch developer profile
 
 The Etch `developer` profile covers Git, tmux, Homebrew, Starship, Nerd Fonts,
-Bash-it, Bash, Zsh, Oh My Zsh, Vim, VS Code, and, on macOS, Ghostty, Zed, workstation and
+Bash-it, Bash, Zsh, Oh My Zsh, Vim, VS Code, Codex guidance, and, on macOS, Ghostty, Zed, workstation and
 personal apps, developer tools, and Xcode. Gaming apps are opt-in. The
 [Vim plugin audit](docs/vim-plugin-audit.md) records the migration decisions.
 
@@ -149,3 +149,23 @@ exercise a fresh Mac App Store download or an interactive GUI session.
 
 This software is hereby released into the public domain. That means you can do
 whatever you want with it without restriction. See `LICENSE.md` for details.
+
+## Codex configuration
+
+The `codex` module links global working preferences to `~/.codex/AGENTS.md`
+and a portable named profile to `~/.codex/dotfiles.config.toml`. It is included
+in the developer profile and can also be applied with `./etch apply codex`.
+Codex installation is user-managed. Global guidance applies to new Codex sessions;
+select the optional settings with `codex --profile dotfiles`.
+
+Existing regular files are not overwritten. Before the first apply, review and
+back up a conflicting `~/.codex/AGENTS.md` or `dotfiles.config.toml`, then move
+it out of the destination. Retain any personal guidance you still need. If
+Headroom manages RTK instructions, let Headroom restore its generated block
+after applying; those machine-specific instructions are not stored here.
+An existing `AGENTS.override.md` takes precedence over the managed guidance.
+
+The module leaves `config.toml`, project trust, MCP servers, plugins, hooks,
+approval rules, credentials, sessions, and caches local. No custom skills are
+bundled. See the official [guidance documentation](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
+and [configuration precedence](https://learn.chatgpt.com/docs/config-file/config-basic).
