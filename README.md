@@ -149,3 +149,11 @@ exercise a fresh Mac App Store download or an interactive GUI session.
 
 This software is hereby released into the public domain. That means you can do
 whatever you want with it without restriction. See `LICENSE.md` for details.
+
+## Finder preferences
+
+The macOS-only `finder` module manages filename extensions, path/status bars,
+hidden-file visibility, and Finder metadata on network/removable volumes using
+Etch's native preferences plugin. It is included in the developer profile.
+See [Finder preferences](docs/finder-preferences.md) for inspected values,
+desired defaults, application commands, and manual Finder refresh instructions.
