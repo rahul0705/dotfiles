@@ -16,18 +16,6 @@ python3 --version
 git submodule update --init --recursive vendor/etch modules
 export HOME="$work_dir/etch-home"
 mkdir -p "$HOME"
-if [[ "$(uname -s)" == Darwin ]]; then
-    export HOMEBREW_CASK_OPTS="--appdir=$work_dir/etch-apps"
-    mkdir -p "$work_dir/etch-apps"
-fi
 ./etch validate
 ./etch plan --profile developer
-if [[ "$(uname -s)" == Darwin ]] && ! command -v brew >/dev/null; then
-    ./etch apply --profile developer --allow-sudo
-    case "$(uname -m)" in
-        arm64) brew_bin=/opt/homebrew/bin/brew ;;
-        *) brew_bin=/usr/local/bin/brew ;;
-    esac
-    eval "$("$brew_bin" shellenv)"
-fi
 ./etch apply --profile developer

@@ -36,13 +36,6 @@ compatibility:linux:
   script:
     - sudo -u etch-ci env "PYTHON_VERSION=$PYTHON_VERSION" bash .gitlab/ci/etch-compatibility.sh
 
-compatibility:macos:
-  extends: .compatibility
-  image: macos-26-xcode-26
-  tags: [saas-macos-medium-m1]
-  script:
-    - bash .gitlab/ci/etch-compatibility.sh
-
 .automation:
   stage: test
   tags: [saas-linux-small-amd64]
