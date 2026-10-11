@@ -149,3 +149,9 @@ exercise a fresh Mac App Store download or an interactive GUI session.
 
 This software is hereby released into the public domain. That means you can do
 whatever you want with it without restriction. See `LICENSE.md` for details.
+
+## GitLab CI
+
+[GitLab CI](docs/gitlab-ci.md) mirrors the Linux portion of the GitHub compatibility matrix and
+workflow linters on the Free tier. macOS coverage remains on GitHub. See the setup notes for the weekly
+schedule, and GitHub-specific security checks that remain on GitHub.
