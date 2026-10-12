@@ -78,7 +78,7 @@ If `CODEX_HOME` is set, look for `AGENTS.local.md` there instead.
 ## Environment
 
 - Prefer `rg` for file and text searches when available.
-- If standalone RTK is available, use `"$HOME/.local/bin/rtk"` or `rtk` on PATH to compact routine status, logs, builds, and test output.
+- If standalone RTK is available, use `rtk` on PATH to compact routine status, logs, builds, and test output.
 - Read and search code being edited with raw commands; also run `git diff --check` raw to preserve whitespace diagnostics.
 - When Serena is available, read its initial instructions and activate the current project before using its semantic tools.
 - Use Codebase Memory for repository indexing and structural queries when available; use Serena for precise symbol navigation and editing.

@@ -164,7 +164,7 @@ it out of the destination. Retain any personal guidance you still need.
 An existing `AGENTS.override.md` takes precedence over the managed guidance.
 
 Dependabot proposes updates for all repository submodules, including the
-Ponytail, Caveman, and Serena sources.
+Ponytail and Caveman sources.
 These track upstream branch commits rather than only tagged releases; review
 and merge the update PRs to advance the pins.
 
@@ -182,15 +182,15 @@ The core skills are available in new sessions on macOS; they are not forcibly ac
 Their upstream licenses remain in the pinned source checkouts.
 
 The guidance file is deployed on both macOS and Linux. Skill links, the named
-profile, Serena source link, RTK, and Codebase Memory are macOS-only. This module
+profile, uv, RTK, Serena, and Codebase Memory are macOS-only. This module
 installs no tools on Linux. On macOS, uv comes from Homebrew, matching
 developer-tools; both modules can ensure the same formula is present without
-creating separate installations. RTK uses a pinned, SHA-256-verified installer.
-uv installs pinned Codebase Memory in an isolated tool environment; its first
+creating separate installations. RTK also comes from Homebrew.
+uv installs Serena and Codebase Memory in isolated tool environments; Codebase Memory’s first
 launch downloads and verifies the matching native release. Existing binaries
 satisfying presence checks are preserved rather than upgraded automatically.
 The Codebase Memory package avoids its upstream install command, which edits
-shell profiles and stops active sessions. The guidance uses `~/.local/bin/rtk`
+shell profiles and stops active sessions. The guidance uses `rtk` on PATH
 when available. Add `~/.local/bin` to PATH to invoke standalone tools by name.
 
 Create `~/.codex/AGENTS.local.md` for machine-specific guidance, analogous to
@@ -210,10 +210,20 @@ global defaults; repository guidance overrides both. With a custom `CODEX_HOME`,
 put the local file there. Restart the session after changing guidance.
 
 Select `codex --profile dotfiles` to load the managed Serena and Codebase Memory
-MCP definitions. Serena starts through uvx from the pinned submodule linked at
-`~/.local/share/codex/serena`; its
-first launch downloads dependencies and can take longer. In the desktop app,
+MCP definitions. Serena starts from the executable installed by uv, using the
+upstream-recommended Python 3.13 environment. In the desktop app,
 activate the working repository explicitly if the process starts elsewhere.
+Upgrade the installed tools explicitly:
+
+```sh
+brew upgrade uv rtk
+uv tool upgrade serena-agent codebase-memory-mcp
+```
+
+Etch ensures presence rather than upgrading on each apply. New uv installations
+use the current package releases; skill source updates remain reviewable
+Dependabot PRs. Restart agent sessions after upgrading MCP tools.
+
 The profile's definitions replace same-named server launch settings for that
 profile while preserving the base `config.toml`. The module does not unregister
 old servers or remove an existing installation of another manager.
