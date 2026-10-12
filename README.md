@@ -169,3 +169,20 @@ The module leaves `config.toml`, project trust, MCP servers, plugins, hooks,
 approval rules, credentials, sessions, and caches local. No custom skills are
 bundled. See the official [guidance documentation](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
 and [configuration precedence](https://learn.chatgpt.com/docs/config-file/config-basic).
+
+### Codex guidance sources
+
+The global guidance distills these engineering articles into task-proportional
+defaults. Repository guidance takes precedence. The links are kept here rather
+than in the loaded agents file; routine tasks do not require website access.
+
+- [Code Reviews](https://www.rahulmohandas.com/blog/2018-10-08-peer-reviews/)
+- [Did You Fix the Bug—or Just Move It?](https://www.rahulmohandas.com/blog/2026-08-20-did-you-fix-the-bug/)
+- [Duplication Is Cheaper Than the Wrong Abstraction](https://www.rahulmohandas.com/blog/2026-08-17-duplication-vs-coupling/)
+- [The Best Code Is Sometimes the Code You Don't Write](https://www.rahulmohandas.com/blog/2026-09-14-the-best-code-you-dont-write/)
+- [Make the Wrong Thing Hard to Do](https://www.rahulmohandas.com/blog/2026-09-30-make-the-wrong-thing-hard-to-do/)
+
+Commit guidance follows the repository's conventions and configured Git
+`commit.template` first. This project's template is managed by the Git module
+in [gitmessage](modules/git/files/gitmessage); other repositories need not share
+its path or format.

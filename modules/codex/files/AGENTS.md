@@ -1,24 +1,71 @@
-# Working preferences
+# Global working defaults
 
-- Read the repository's guidance and follow its existing conventions. Understand the intended outcome and surrounding code before changing or reviewing it.
-- Make the smallest complete change. Challenge whether new configuration, dependencies, or abstractions are needed; prefer existing capabilities and remove obsolete complexity. Preserve necessary validation, security, and failure handling.
-- Share code when it represents the same rule and should evolve together. Similar-looking code alone does not justify coupling independent concepts.
-- Prefer clear interfaces, sensible defaults, and automated checks that prevent realistic mistakes. Scale guardrails to the likelihood and impact of failure; avoid layers for hypothetical misuse.
-- When debugging, reproduce the failure where practical and isolate which change fixes its cause. Remove unsuccessful experiments. If causality cannot be established, explain the uncertainty and any retained workaround.
-- Keep unrelated local changes intact. Never commit credentials, machine-local state, or generated caches.
-- Work in small, coherent, reviewable pull requests. Explain the problem, resulting behavior, important tradeoffs, and verification. Leave merging to me unless I explicitly ask you to merge.
-- Run relevant formatting, validation, and tests before presenting a change. Test intended behavior and realistic failure modes, including integration boundaries when affected; scale evidence to risk and state what you did not verify.
-- Review behavior, design, and consequential risks before style. Let tooling handle mechanical checks. Explain findings with concrete impact and evidence; distinguish blocking concerns from optional suggestions and personal preferences.
-- After review feedback changes the implementation, assess the complete resulting change and rerun affected checks. Keep documentation aligned with the final behavior.
-- Continue authorized work without repeatedly asking for confirmation. Ask when a missing decision materially changes the result.
-- Explain outcomes and tradeoffs concisely, using plain language.
+Apply these defaults to coding tasks. Repository and directory-level `AGENTS.md`
+instructions take precedence on conflict. Use PR and commit rules only when the
+project uses those workflows. Scale the process to the task's risk.
 
-## Sources
+## Scope and design
 
-These preferences distill my engineering articles. Apply judgment rather than treating them as a checklist for every change. Consult the linked articles when deeper context is useful; website access is not required for routine tasks.
+- Read applicable repository guidance and the code being changed, including callers.
+- Before non-trivial changes, state the intended outcome and scope in one or two sentences.
+- Make the smallest complete change that solves the task.
+- Prefer existing capabilities over new configuration, dependencies, or abstractions.
+- Preserve necessary validation, security, and failure handling.
+- Share code when it represents the same rule and should evolve together, not merely similar syntax.
+- Prefer clear interfaces and sensible defaults that prevent realistic mistakes.
+- Keep guardrails proportionate to the likelihood and impact of failure.
+- Mention unrelated bugs or cleanup opportunities; do not fix them in the same change without authorization.
 
-- [Code Reviews](https://www.rahulmohandas.com/blog/2018-10-08-peer-reviews/)
-- [Did You Fix the Bug—or Just Move It?](https://www.rahulmohandas.com/blog/2026-08-20-did-you-fix-the-bug/)
-- [Duplication Is Cheaper Than the Wrong Abstraction](https://www.rahulmohandas.com/blog/2026-08-17-duplication-vs-coupling/)
-- [The Best Code Is Sometimes the Code You Don't Write](https://www.rahulmohandas.com/blog/2026-09-14-the-best-code-you-dont-write/)
-- [Make the Wrong Thing Hard to Do](https://www.rahulmohandas.com/blog/2026-09-30-make-the-wrong-thing-hard-to-do/)
+## Debugging
+
+- Reproduce the failure where practical and isolate which change addresses its cause.
+- Remove unsuccessful experiments before submitting the fix.
+- Explain uncertainty about causality and any workaround retained because isolation was impractical.
+
+## Testing and verification
+
+- Run relevant formatting, validation, and tests before presenting a change.
+- Test intended behavior, meaningful boundaries, and realistic failure modes.
+- Check integration boundaries when the change affects how components work together.
+- Match verification effort to risk; avoid tests that merely mirror implementation details.
+- After review feedback, assess the complete resulting change and rerun affected checks.
+- Keep documentation aligned with the final behavior.
+
+## Review and commits
+
+- Keep changes small, coherent, and independently reviewable.
+- Follow the repository's commit conventions and configured `commit.template` when present.
+- Otherwise use Conventional Commits, an imperative subject, and one logical change per commit.
+- Explain the problem, resulting behavior, important tradeoffs, and verification in PR descriptions.
+- Review behavior, design, and consequential risks before style; let tooling handle mechanical checks.
+- Support findings with concrete impact and evidence.
+- Distinguish blocking concerns from optional suggestions and personal preferences.
+- Leave merging to me unless I explicitly ask you to merge.
+
+## Git safety and permissions
+
+- Preserve unrelated local changes and commits.
+- Never force-push or rewrite shared history.
+- Do not amend commits you did not create.
+- Ask before `reset --hard`, deleting branches, or discarding user work.
+- Obtain explicit authorization before deleting user data, destructive migrations, production or shared-infrastructure changes, or publishing externally.
+- Authorization already given for that action counts; routine edits and removal of obsolete tracked code within the agreed scope do not need repeated confirmation.
+- Continue authorized work; ask when a missing decision materially changes the result.
+
+## Secrets and dependencies
+
+- Read `.env`, credential, or private-key files only when necessary for the task; prefer inspecting variable names or redacted values.
+- Never print secrets or include sensitive data in commits, logs, PR descriptions, or external requests.
+- Keep credentials, machine-local state, and generated caches out of version control.
+- Add a dependency only when existing project or platform capabilities cannot reasonably meet the need.
+- Follow repository version-pinning and lockfile conventions; avoid unpinned remote code execution.
+- Routine package installation and network access needed for authorized work do not require another confirmation.
+- Ask before sending private code or data to a new external service or installing software outside the task's scope.
+
+## Environment and communication
+
+- Prefer `rg` for file and text searches when available.
+- Check the OS and shell before choosing commands; do not assume GNU flags on macOS.
+- Use the project's existing tools and package manager rather than assuming Homebrew or a particular shell.
+- Explain outcomes and tradeoffs concisely in plain language.
+- Distinguish verified results from inferences and assumptions; state what remains unverified.
