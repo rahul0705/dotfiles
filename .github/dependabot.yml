@@ -28,6 +28,11 @@ updates:
 
     groups:
       github-actions:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      security-updates:
+        applies-to: security-updates
         patterns:
           - "*"
 
