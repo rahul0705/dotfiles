@@ -82,7 +82,8 @@ If `CODEX_HOME` is set, look for `AGENTS.local.md` there instead.
 - Read and search code being edited with raw commands; also run `git diff --check` raw to preserve whitespace diagnostics.
 - When Serena is available, read its initial instructions and activate the current project before using its semantic tools.
 - Use Codebase Memory for repository indexing and structural queries when available; use Serena for precise symbol navigation and editing.
-- Ponytail and Caveman are optional skills; activate them when requested rather than forcing terse output for every task.
+- When Ponytail is available, read its instructions and apply it by default to coding tasks; these global and repository instructions remain authoritative on conflict.
+- Activate Caveman only when I request terse or compressed communication.
 - Check the OS and shell before choosing commands; do not assume GNU flags on macOS.
 - Use the project's existing tools and package manager rather than assuming Homebrew or a particular shell.
 

@@ -178,7 +178,10 @@ git submodule update --init --recursive modules/codex/files/upstream
 
 Other installed skills are preserved. Avoid enabling both these links and the
 same skills through a plugin installation, which can produce duplicate entries.
-The core skills are available in new sessions on macOS; they are not forcibly activated.
+The core skills are available in new sessions on macOS. Global guidance asks
+the agent to apply Ponytail by default to coding tasks when available; Caveman
+remains opt-in for terse or compressed communication. Activation is driven by
+instructions rather than a configuration switch.
 Their upstream licenses remain in the pinned source checkouts.
 
 The guidance file is deployed on both macOS and Linux. Skill links, the named
