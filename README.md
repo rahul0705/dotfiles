@@ -156,14 +156,15 @@ The `codex` module links global working preferences to `~/.codex/AGENTS.md`
 and a portable named profile to `~/.codex/dotfiles.config.toml`. It is included
 in the developer profile and can also be applied with `./etch apply codex`.
 Codex installation is user-managed. Global guidance applies to new Codex sessions;
-select the optional settings with `codex --profile dotfiles`.
+select the optional macOS settings with `codex --profile dotfiles`.
 
 Existing regular files are not overwritten. Before the first apply, review and
 back up a conflicting `~/.codex/AGENTS.md` or `dotfiles.config.toml`, then move
 it out of the destination. Retain any personal guidance you still need.
 An existing `AGENTS.override.md` takes precedence over the managed guidance.
 
-Dependabot proposes updates for the Ponytail, Caveman, and Serena submodules.
+Dependabot proposes updates for all repository submodules, including the
+Ponytail, Caveman, and Serena sources.
 These track upstream branch commits rather than only tagged releases; review
 and merge the update PRs to advance the pins.
 
@@ -177,21 +178,36 @@ git submodule update --init --recursive modules/codex/files/upstream
 
 Other installed skills are preserved. Avoid enabling both these links and the
 same skills through a plugin installation, which can produce duplicate entries.
-The core skills are available in new sessions; they are not forcibly activated.
+The core skills are available in new sessions on macOS; they are not forcibly activated.
 Their upstream licenses remain in the pinned source checkouts.
 
-On macOS, uv is installed with Homebrew, matching developer-tools; both modules
-can ensure the same formula is present without creating separate installations.
-On Linux, Etch's installer provider installs standalone uv. RTK uses the installer
-on both platforms. uv installs the pinned
-Codebase Memory package into its own tool environment.
-Installer scripts are pinned and checked with SHA-256; RTK release downloads
-are pinned too. The Codebase Memory package downloads and checksum-verifies
-its matching native release on first launch. Existing installations satisfying the presence
-checks are preserved; updating these pins does not upgrade an existing binary.
-The Codebase Memory package avoids its upstream install command, which also
-edits shell profiles and stops active sessions. uv does not modify shell profiles. The guidance uses `~/.local/bin/rtk` directly. Add `~/.local/bin` to PATH if
-you also want to invoke these tools by name in your shell.
+The guidance file is deployed on both macOS and Linux. Skill links, the named
+profile, Serena source link, RTK, and Codebase Memory are macOS-only. This module
+installs no tools on Linux. On macOS, uv comes from Homebrew, matching
+developer-tools; both modules can ensure the same formula is present without
+creating separate installations. RTK uses a pinned, SHA-256-verified installer.
+uv installs pinned Codebase Memory in an isolated tool environment; its first
+launch downloads and verifies the matching native release. Existing binaries
+satisfying presence checks are preserved rather than upgraded automatically.
+The Codebase Memory package avoids its upstream install command, which edits
+shell profiles and stops active sessions. The guidance uses `~/.local/bin/rtk`
+when available. Add `~/.local/bin` to PATH to invoke standalone tools by name.
+
+Create `~/.codex/AGENTS.local.md` for machine-specific guidance, analogous to
+the optional Bash/Zsh local customization files. Etch never creates, links,
+changes, or commits this file; it lives outside the repository. For example:
+
+```markdown
+# Local preferences
+
+- Follow my employer's package-installation policy on this machine.
+```
+
+The managed guidance asks the agent to read that file when present. This is an
+instruction to the agent, not a native Markdown include: Codex does not
+implicitly concatenate `AGENTS.local.md`. Local preferences override managed
+global defaults; repository guidance overrides both. With a custom `CODEX_HOME`,
+put the local file there. Restart the session after changing guidance.
 
 Select `codex --profile dotfiles` to load the managed Serena and Codebase Memory
 MCP definitions. Serena starts through uvx from the pinned submodule linked at

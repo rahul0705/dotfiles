@@ -54,9 +54,3 @@ updates:
     labels:
       - dependencies
       - submodules
-
-    allow:
-      - dependency-name: vendor/etch
-      - dependency-name: modules/codex/files/upstream/ponytail
-      - dependency-name: modules/codex/files/upstream/caveman
-      - dependency-name: modules/codex/files/upstream/serena

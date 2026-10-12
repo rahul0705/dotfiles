@@ -4,6 +4,11 @@ Apply these defaults to coding tasks. Repository and directory-level `AGENTS.md`
 instructions take precedence on conflict. Use PR and commit rules only when the
 project uses those workflows. Scale the process to the task's risk.
 
+Before starting a task, read `~/.codex/AGENTS.local.md` if it exists. That
+user-managed file adds machine-specific preferences and takes precedence over
+these global defaults; repository guidance still takes precedence over both.
+If `CODEX_HOME` is set, look for `AGENTS.local.md` there instead.
+
 ## Approach
 
 - Read applicable repository guidance and the code being changed, including callers.
@@ -73,7 +78,7 @@ project uses those workflows. Scale the process to the task's risk.
 ## Environment
 
 - Prefer `rg` for file and text searches when available.
-- Use `"$HOME/.local/bin/rtk"` to compact routine status, logs, builds, and test output; fall back to standalone `rtk` on PATH when needed.
+- If standalone RTK is available, use `"$HOME/.local/bin/rtk"` or `rtk` on PATH to compact routine status, logs, builds, and test output.
 - Read and search code being edited with raw commands; also run `git diff --check` raw to preserve whitespace diagnostics.
 - When Serena is available, read its initial instructions and activate the current project before using its semantic tools.
 - Use Codebase Memory for repository indexing and structural queries when available; use Serena for precise symbol navigation and editing.
