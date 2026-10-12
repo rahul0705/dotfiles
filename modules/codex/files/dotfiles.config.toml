@@ -1,2 +1,12 @@
 # Select with: codex --profile dotfiles
 personality = "pragmatic"
+
+[mcp_servers.serena]
+command = "sh"
+args = ["-c", 'PATH="$HOME/.local/bin:$PATH" exec uvx --from git+https://github.com/oraios/serena@26fc4cec4f99493dcd63c822f5f394744669bfb8 serena start-mcp-server --project-from-cwd --context codex --open-web-dashboard False']
+startup_timeout_sec = 180
+
+[mcp_servers.codebase-memory]
+command = "sh"
+args = ["-c", 'exec "$HOME/.local/bin/codebase-memory-mcp"']
+startup_timeout_sec = 180

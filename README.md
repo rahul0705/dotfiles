@@ -160,14 +160,43 @@ select the optional settings with `codex --profile dotfiles`.
 
 Existing regular files are not overwritten. Before the first apply, review and
 back up a conflicting `~/.codex/AGENTS.md` or `dotfiles.config.toml`, then move
-it out of the destination. Retain any personal guidance you still need. If
-Headroom manages RTK instructions, let Headroom restore its generated block
-after applying; those machine-specific instructions are not stored here.
+it out of the destination. Retain any personal guidance you still need.
 An existing `AGENTS.override.md` takes precedence over the managed guidance.
 
-The module leaves `config.toml`, project trust, MCP servers, plugins, hooks,
-approval rules, credentials, sessions, and caches local. No custom skills are
-bundled. See the official [guidance documentation](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
+The module links individually pinned upstream Ponytail and Caveman skills to
+`~/.agents/skills/`. Initialize their sources with:
+
+```sh
+git submodule update --init --recursive modules/codex/files/upstream
+./etch apply codex
+```
+
+Other installed skills are preserved. Avoid enabling both these links and the
+same skills through a plugin installation, which can produce duplicate entries.
+The core skills are available in new sessions; they are not forcibly activated.
+Their upstream licenses remain in the pinned source checkouts.
+
+Etch's installer provider installs standalone uv and RTK. uv installs the pinned
+Codebase Memory package into its own tool environment.
+Installer scripts are pinned and checked with SHA-256; RTK release downloads
+are pinned too. The Codebase Memory package downloads and checksum-verifies
+its matching native release on first launch. Existing installations satisfying the presence
+checks are preserved; updating these pins does not upgrade an existing binary.
+The Codebase Memory package avoids its upstream install command, which also
+edits shell profiles and stops active sessions. uv does not modify shell profiles. The guidance uses `~/.local/bin/rtk` directly. Add `~/.local/bin` to PATH if
+you also want to invoke these tools by name in your shell.
+
+Select `codex --profile dotfiles` to load the managed Serena and Codebase Memory
+MCP definitions. Serena starts through uvx at a pinned source revision; its
+first launch downloads dependencies and can take longer. In the desktop app,
+activate the working repository explicitly if the process starts elsewhere.
+The profile's definitions replace same-named server launch settings for that
+profile while preserving the base `config.toml`. The module does not unregister
+old servers or remove an existing installation of another manager.
+
+Project trust, other MCP servers, plugins, hooks, approval rules, credentials,
+sessions, and caches stay local. See the official
+[guidance documentation](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
 and [configuration precedence](https://learn.chatgpt.com/docs/config-file/config-basic).
 
 ### Codex guidance sources

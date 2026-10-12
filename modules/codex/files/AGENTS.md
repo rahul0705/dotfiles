@@ -73,6 +73,11 @@ project uses those workflows. Scale the process to the task's risk.
 ## Environment
 
 - Prefer `rg` for file and text searches when available.
+- Use `"$HOME/.local/bin/rtk"` to compact routine status, logs, builds, and test output; fall back to standalone `rtk` on PATH when needed.
+- Read and search code being edited with raw commands; also run `git diff --check` raw to preserve whitespace diagnostics.
+- When Serena is available, read its initial instructions and activate the current project before using its semantic tools.
+- Use Codebase Memory for repository indexing and structural queries when available; use Serena for precise symbol navigation and editing.
+- Ponytail and Caveman are optional skills; activate them when requested rather than forcing terse output for every task.
 - Check the OS and shell before choosing commands; do not assume GNU flags on macOS.
 - Use the project's existing tools and package manager rather than assuming Homebrew or a particular shell.
 
