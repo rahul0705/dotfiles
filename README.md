@@ -3,14 +3,14 @@
 ## Etch developer profile
 
 The Etch `developer` profile covers Git, tmux, Homebrew, Starship, Nerd Fonts,
-Bash-it, Bash, Zsh, Oh My Zsh, Vim, VS Code, and, on macOS, Ghostty, Zed, workstation and
+Bash-it, Bash, Zsh, Oh My Zsh, Vim, VS Code, Codex guidance, and, on macOS, Ghostty, Zed, workstation and
 personal apps, developer tools, and Xcode. Gaming apps are opt-in. The
 [Vim plugin audit](docs/vim-plugin-audit.md) records the migration decisions.
 
 ```sh
 git clone https://github.com/rahul0705/dotfiles.git
 cd dotfiles
-git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/ghostty/files/themes/catppuccin modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting modules/oh-my-zsh/files/custom/themes/powerlevel9k modules/oh-my-zsh/files/custom/themes/powerlevel10k
+git submodule update --init --recursive modules/codex/files/upstream vendor/etch modules/tmux/files/plugins/tpm modules/ghostty/files/themes/catppuccin modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting modules/oh-my-zsh/files/custom/themes/powerlevel9k modules/oh-my-zsh/files/custom/themes/powerlevel10k
 ./etch                              # preview only
 ./etch validate
 ./etch plan --profile developer -v
@@ -149,6 +149,109 @@ exercise a fresh Mac App Store download or an interactive GUI session.
 
 This software is hereby released into the public domain. That means you can do
 whatever you want with it without restriction. See `LICENSE.md` for details.
+
+## Codex configuration
+
+The `codex` module links global working preferences to `~/.codex/AGENTS.md`
+and a portable named profile to `~/.codex/dotfiles.config.toml`. It is included
+in the developer profile and can also be applied with `./etch apply codex`.
+Codex installation is user-managed. Global guidance applies to new Codex sessions;
+select the optional macOS settings with `codex --profile dotfiles`.
+
+Existing regular files are not overwritten. Before the first apply, review and
+back up a conflicting `~/.codex/AGENTS.md` or `dotfiles.config.toml`, then move
+it out of the destination. Retain any personal guidance you still need.
+An existing `AGENTS.override.md` takes precedence over the managed guidance.
+
+Dependabot proposes updates for all repository submodules, including the
+Ponytail and Caveman sources.
+These track upstream branch commits rather than only tagged releases; review
+and merge the update PRs to advance the pins.
+
+The module links individually pinned upstream Ponytail and Caveman skills to
+`~/.agents/skills/`. Initialize their sources with:
+
+```sh
+git submodule update --init --recursive modules/codex/files/upstream
+./etch apply codex
+```
+
+Other installed skills are preserved. Avoid enabling both these links and the
+same skills through a plugin installation, which can produce duplicate entries.
+The core skills are available in new sessions on macOS. Global guidance asks
+the agent to apply Ponytail by default to coding tasks when available; Caveman
+remains opt-in for terse or compressed communication. Activation is driven by
+instructions rather than a configuration switch.
+Their upstream licenses remain in the pinned source checkouts.
+
+The guidance file is deployed on both macOS and Linux. Skill links, the named
+profile, uv, RTK, Serena, and Codebase Memory are macOS-only. This module
+installs no tools on Linux. On macOS, uv comes from Homebrew, matching
+developer-tools; both modules can ensure the same formula is present without
+creating separate installations. RTK also comes from Homebrew.
+uv installs Serena and Codebase Memory in isolated tool environments; Codebase Memory’s first
+launch downloads and verifies the matching native release. Existing binaries
+satisfying presence checks are preserved rather than upgraded automatically.
+The Codebase Memory package avoids its upstream install command, which edits
+shell profiles and stops active sessions. The guidance uses `rtk` on PATH
+when available. Add `~/.local/bin` to PATH to invoke standalone tools by name.
+
+Create `~/.codex/AGENTS.local.md` for machine-specific guidance, analogous to
+the optional Bash/Zsh local customization files. Etch never creates, links,
+changes, or commits this file; it lives outside the repository. For example:
+
+```markdown
+# Local preferences
+
+- Follow my employer's package-installation policy on this machine.
+```
+
+The managed guidance asks the agent to read that file when present. This is an
+instruction to the agent, not a native Markdown include: Codex does not
+implicitly concatenate `AGENTS.local.md`. Local preferences override managed
+global defaults; repository guidance overrides both. With a custom `CODEX_HOME`,
+put the local file there. Restart the session after changing guidance.
+
+Select `codex --profile dotfiles` to load the managed Serena and Codebase Memory
+MCP definitions. Serena starts from the executable installed by uv, using the
+upstream-recommended Python 3.13 environment. In the desktop app,
+activate the working repository explicitly if the process starts elsewhere.
+Upgrade the installed tools explicitly:
+
+```sh
+brew upgrade uv rtk
+uv tool upgrade serena-agent codebase-memory-mcp
+```
+
+Etch ensures presence rather than upgrading on each apply. New uv installations
+use the current package releases; skill source updates remain reviewable
+Dependabot PRs. Restart agent sessions after upgrading MCP tools.
+
+The profile's definitions replace same-named server launch settings for that
+profile while preserving the base `config.toml`. The module does not unregister
+old servers or remove an existing installation of another manager.
+
+Project trust, other MCP servers, plugins, hooks, approval rules, credentials,
+sessions, and caches stay local. See the official
+[guidance documentation](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
+and [configuration precedence](https://learn.chatgpt.com/docs/config-file/config-basic).
+
+### Codex guidance sources
+
+The global guidance distills these engineering articles into task-proportional
+defaults. Repository guidance takes precedence. The links are kept here rather
+than in the loaded agents file; routine tasks do not require website access.
+
+- [Code Reviews](https://www.rahulmohandas.com/blog/2018-10-08-peer-reviews/)
+- [Did You Fix the Bug—or Just Move It?](https://www.rahulmohandas.com/blog/2026-08-20-did-you-fix-the-bug/)
+- [Duplication Is Cheaper Than the Wrong Abstraction](https://www.rahulmohandas.com/blog/2026-08-17-duplication-vs-coupling/)
+- [The Best Code Is Sometimes the Code You Don't Write](https://www.rahulmohandas.com/blog/2026-09-14-the-best-code-you-dont-write/)
+- [Make the Wrong Thing Hard to Do](https://www.rahulmohandas.com/blog/2026-09-30-make-the-wrong-thing-hard-to-do/)
+
+Commit guidance follows the repository's conventions and configured Git
+`commit.template` first. This project's template is managed by the Git module
+in [gitmessage](modules/git/files/gitmessage); other repositories need not share
+its path or format.
 
 ## GitLab CI
 
