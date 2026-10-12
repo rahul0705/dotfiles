@@ -1,0 +1,62 @@
+workflow:
+  auto_cancel:
+    on_new_commit: interruptible
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+
+stages: [test]
+
+default:
+  interruptible: true
+
+.compatibility:
+  stage: test
+  timeout: 30m
+  parallel:
+    matrix:
+      - PYTHON_VERSION: ['3.9', '3']
+
+compatibility:linux:
+  extends: .compatibility
+  image: ubuntu:24.04
+  tags: [saas-linux-medium-amd64]
+  before_script:
+    - apt-get update -qq
+    - apt-get install -y ca-certificates curl git sudo tmux vim zsh xz-utils
+    - curl -fsSL https://update.code.visualstudio.com/latest/linux-deb-x64/stable -o /tmp/code.deb
+    - DEBIAN_FRONTEND=noninteractive apt-get install -y /tmp/code.deb
+    # VS Code refuses extension installation as root. Match GitHub's regular user.
+    - useradd --create-home --shell /bin/bash etch-ci
+    - 'printf "etch-ci ALL=(ALL) NOPASSWD: ALL\n" > /etc/sudoers.d/etch-ci'
+    - chmod 440 /etc/sudoers.d/etch-ci
+    - chown -R etch-ci:etch-ci "$CI_PROJECT_DIR"
+  script:
+    - sudo -u etch-ci env "PYTHON_VERSION=$PYTHON_VERSION" bash .gitlab/ci/etch-compatibility.sh
+
+.automation:
+  stage: test
+  tags: [saas-linux-small-amd64]
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes: ['.github/**/*', '.gitlab-ci.yml', '.gitlab/**/*']
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      changes: ['.github/**/*', '.gitlab-ci.yml', '.gitlab/**/*']
+
+actionlint:
+  extends: .automation
+  image:
+    name: rhysd/actionlint:1.7.12
+    entrypoint: ['']
+  script:
+    - actionlint
+
+zizmor:
+  extends: .automation
+  image: python:3-slim-bookworm
+  before_script:
+    - pip install --disable-pip-version-check zizmor==1.30.1
+  script:
+    - zizmor --offline --no-progress .github/workflows

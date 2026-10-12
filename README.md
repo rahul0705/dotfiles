@@ -252,3 +252,9 @@ Commit guidance follows the repository's conventions and configured Git
 `commit.template` first. This project's template is managed by the Git module
 in [gitmessage](modules/git/files/gitmessage); other repositories need not share
 its path or format.
+
+## GitLab CI
+
+[GitLab CI](docs/gitlab-ci.md) mirrors the Linux portion of the GitHub compatibility matrix and
+workflow linters on the Free tier. macOS coverage remains on GitHub. See the setup notes for the weekly
+schedule, and GitHub-specific security checks that remain on GitHub.
