@@ -10,7 +10,7 @@ personal apps, developer tools, and Xcode. Gaming apps are opt-in. The
 ```sh
 git clone https://github.com/rahul0705/dotfiles.git
 cd dotfiles
-git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/ghostty/files/themes/catppuccin modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting modules/oh-my-zsh/files/custom/themes/powerlevel9k modules/oh-my-zsh/files/custom/themes/powerlevel10k
+git submodule update --init --recursive modules/codex/files/upstream vendor/etch modules/tmux/files/plugins/tpm modules/ghostty/files/themes/catppuccin modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting modules/oh-my-zsh/files/custom/themes/powerlevel9k modules/oh-my-zsh/files/custom/themes/powerlevel10k
 ./etch                              # preview only
 ./etch validate
 ./etch plan --profile developer -v
@@ -163,6 +163,10 @@ back up a conflicting `~/.codex/AGENTS.md` or `dotfiles.config.toml`, then move
 it out of the destination. Retain any personal guidance you still need.
 An existing `AGENTS.override.md` takes precedence over the managed guidance.
 
+Dependabot proposes updates for the Ponytail, Caveman, and Serena submodules.
+These track upstream branch commits rather than only tagged releases; review
+and merge the update PRs to advance the pins.
+
 The module links individually pinned upstream Ponytail and Caveman skills to
 `~/.agents/skills/`. Initialize their sources with:
 
@@ -176,7 +180,10 @@ same skills through a plugin installation, which can produce duplicate entries.
 The core skills are available in new sessions; they are not forcibly activated.
 Their upstream licenses remain in the pinned source checkouts.
 
-Etch's installer provider installs standalone uv and RTK. uv installs the pinned
+On macOS, uv is installed with Homebrew, matching developer-tools; both modules
+can ensure the same formula is present without creating separate installations.
+On Linux, Etch's installer provider installs standalone uv. RTK uses the installer
+on both platforms. uv installs the pinned
 Codebase Memory package into its own tool environment.
 Installer scripts are pinned and checked with SHA-256; RTK release downloads
 are pinned too. The Codebase Memory package downloads and checksum-verifies
@@ -187,7 +194,8 @@ edits shell profiles and stops active sessions. uv does not modify shell profile
 you also want to invoke these tools by name in your shell.
 
 Select `codex --profile dotfiles` to load the managed Serena and Codebase Memory
-MCP definitions. Serena starts through uvx at a pinned source revision; its
+MCP definitions. Serena starts through uvx from the pinned submodule linked at
+`~/.local/share/codex/serena`; its
 first launch downloads dependencies and can take longer. In the desktop app,
 activate the working repository explicitly if the process starts elsewhere.
 The profile's definitions replace same-named server launch settings for that

@@ -28,3 +28,6 @@
 [submodule "modules/codex/files/upstream/caveman"]
 	path = modules/codex/files/upstream/caveman
 	url = https://github.com/JuliusBrussee/caveman.git
+[submodule "modules/codex/files/upstream/serena"]
+	path = modules/codex/files/upstream/serena
+	url = https://github.com/oraios/serena.git
