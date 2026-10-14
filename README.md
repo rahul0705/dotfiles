@@ -3,14 +3,14 @@
 ## Etch developer profile
 
 The Etch `developer` profile covers Git, tmux, Homebrew, Starship, Nerd Fonts,
-Bash-it, Bash, Zsh, Oh My Zsh, Vim, VS Code, Codex guidance, and, on macOS, Ghostty, Zed, workstation and
+Bash, Oh My Bash, Zsh, Oh My Zsh, Vim, VS Code, Codex guidance, and, on macOS, Ghostty, Zed, workstation and
 personal apps, developer tools, and Xcode. Gaming apps are opt-in. The
 [Vim plugin audit](docs/vim-plugin-audit.md) records the migration decisions.
 
 ```sh
 git clone https://github.com/rahul0705/dotfiles.git
 cd dotfiles
-git submodule update --init --recursive modules/codex/files/upstream vendor/etch modules/tmux/files/plugins/tpm modules/ghostty/files/themes/catppuccin modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting modules/oh-my-zsh/files/custom/themes/powerlevel9k modules/oh-my-zsh/files/custom/themes/powerlevel10k
+git submodule update --init --recursive modules/codex/files/upstream vendor/etch modules/tmux/files/plugins/tpm modules/ghostty/files/themes/catppuccin modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting
 ./etch                              # preview only
 ./etch validate
 ./etch plan --profile developer -v
@@ -61,22 +61,28 @@ The Starship module owns `~/.config/starship.toml`. On macOS it uses the
 explicit Homebrew plugin to install the formula if missing; on Linux it runs
 Starship's published installer into the default `/usr/local/bin` directory.
 The config link can be created before Starship is installed, so it needs no
-version gate. Zsh starts Starship when it is available.
+version gate. Bash and Zsh start Starship when it is available.
 
 The fonts module installs Hack and FiraCode Nerd Fonts. On Linux it runs Nerd
 Fonts' upstream installer for each font in the user font directory and refreshes
 the font cache; on macOS it installs the existing Homebrew font casks. Existing
 font files or installed casks are skipped on later applies.
 
-The Bash-it module clones Bash-it and runs its noninteractive setup without
-changing `~/.bashrc`. The Bash module then links the existing Bash configuration
-and requires Bash-it first. Local before/after rc files remain supported.
-Deprecated Base16 customization is no longer managed.
+The shell-common module deploys portable PATH, Homebrew, Cargo, and NVM setup to
+`~/.config/shell/environment.sh`, sourced by Bash and Zsh. Shell-specific prompt
+initialization, plugins, completions, and keybindings stay in the respective rc files.
 
-The Zsh module links `~/.zprofile` and `~/.zshrc` and starts Starship when
-available. The Oh My Zsh module requires Zsh, then runs the upstream installer
-noninteractively while preserving the linked rc file, and links the existing
-custom plugins and themes. Local before/after rc files remain supported.
+The Bash module deploys `~/.bashrc` independently of its framework. Oh My Bash
+requires Bash and uses the upstream installer's user-local prefix mode to install
+under `~/.local/share/oh-my-bash` without replacing the managed rc file.
+Bash and Zsh use Starship when available and preserve their local before/after hooks.
+Bash-it is no longer managed or loaded; existing `~/.bash-it` data is left intact.
+
+The Zsh module deploys `~/.zprofile` and `~/.zshrc`. Oh My Zsh requires Zsh,
+installs noninteractively while preserving the linked rc file, and links the
+suggestion, completion, and syntax-highlighting plugins. Powerlevel9k/10k and
+Base16 are no longer managed. Existing theme links in the home directory can be
+removed manually; Etch does not delete retired configuration or user data.
 
 The VS Code module installs the macOS cask, links settings and keybindings on
 macOS and Linux, and installs extensions through the external VS Code plugin

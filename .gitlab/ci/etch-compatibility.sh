@@ -19,6 +19,9 @@ mkdir -p "$HOME"
 ./etch validate
 ./etch plan --profile developer
 ./etch apply --profile developer
+# Inspect the installed shell environment, not just the configuration links.
+TERM=xterm-256color bash -ic 'test -f "$OSH/oh-my-bash.sh" && test "$STARSHIP_SHELL" = bash && command -v etch >/dev/null'
+TERM=xterm-256color zsh -ic 'test -f "$ZSH/oh-my-zsh.sh" && test "$STARSHIP_SHELL" = zsh && command -v etch >/dev/null'
 # Verify user-local launcher invocation outside the checkout.
 cd "$work_dir"
 "$HOME/.local/bin/etch" validate

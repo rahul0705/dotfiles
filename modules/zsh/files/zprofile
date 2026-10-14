@@ -1,27 +1,8 @@
-check_homebrew () {
-    local _os="$(uname)"
+# Login shells also need user-local tools and Homebrew before interactive startup.
+if [ -f "$HOME/.config/shell/environment.sh" ]; then
+    . "$HOME/.config/shell/environment.sh"
+fi
 
-    if [ "${_os}" = "Darwin" ]; then
-        local _homebrew_prefix
-        local _arch="$(uname -m)"
-
-        if [ "${_arch}" = "x86_64" ]; then
-            _homebrew_prefix="/usr/local"
-            eval "$(/usr/local/bin/brew shellenv)"
-        elif [ "${_arch}" = "arm64" ]; then
-            _homebrew_prefix="/opt/homebrew"
-            eval "$(/opt/homebrew/bin/brew shellenv)"
-        fi
-
-        if [ -f $_homebrew_prefix/bin/brew ]; then
-            eval "$($_homebrew_prefix/bin/brew shellenv)"
-
-            # Use the $HOMEBREW_PREFIX defined by the eval
-            fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
-        fi
-    fi
-}
-
-fpath=($HOME/.zsh/completion $fpath)
-
-check_homebrew
+if (( ! ${fpath[(Ie)$HOME/.zsh/completion]} )); then
+    fpath=("$HOME/.zsh/completion" $fpath)
+fi
