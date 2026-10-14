@@ -85,6 +85,7 @@ before Etch can create its link; Etch will not overwrite them. Oh My Bash
 requires Bash and clones the official framework into its default `~/.oh-my-bash`
 directory. Upstream's installer lacks a keep-bashrc flag, so cloning avoids replacing
 the managed rc file without a restore script or a non-default installation prefix.
+The clone retains the upstream installer's non-group/world-writable permissions.
 Bash installs `bash-completion@2` through Homebrew on macOS; Homebrew brings in
 modern Bash as its dependency. Completion initialization is skipped on Bash below
 4.2, so `/bin/bash` on macOS remains usable. To get the extra completions, start the
