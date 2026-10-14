@@ -72,7 +72,16 @@ The shell-common module deploys portable PATH, Homebrew, Cargo, and NVM setup to
 `~/.config/shell/environment.sh`, sourced by Bash and Zsh. Shell-specific prompt
 initialization, plugins, completions, and keybindings stay in the respective rc files.
 
-The Bash module deploys `~/.bashrc` independently of its framework. Oh My Bash
+The shared file uses the user configuration directory convention, but neither shell
+loads `~/.config/shell` automatically: the managed startup files source it explicitly.
+We do not create a custom directory-scanning loader or modify `/etc/profile.d`.
+
+The Bash module deploys `~/.bashrc` and `~/.bash_profile` independently of its framework.
+The login profile preserves an existing `~/.profile`, loads the shared environment,
+and starts `.bashrc` for interactive login sessions without double-loading it.
+Use `~/.bash_profile_before_local` and `~/.bash_profile_after_local` for local login
+customizations. Existing regular `.bash_profile` files must be backed up or migrated
+before Etch can create its link; Etch will not overwrite them. Oh My Bash
 requires Bash and uses the upstream installer's user-local prefix mode to install
 under `~/.local/share/oh-my-bash` without replacing the managed rc file.
 Bash and Zsh use Starship when available and preserve their local before/after hooks.

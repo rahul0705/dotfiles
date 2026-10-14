@@ -4,7 +4,7 @@ if [ -f "$HOME/.zshrc_before_local" ]; then
 fi
 
 if [ -f "$HOME/.config/shell/environment.sh" ]; then
-    . "$HOME/.config/shell/environment.sh"
+    source "$HOME/.config/shell/environment.sh"
 fi
 
 # Add Homebrew completions before Oh My Zsh runs compinit, including non-login shells.
@@ -23,10 +23,17 @@ zstyle ':omz:update' mode auto
 # Timestamp in history command output format
 HIST_STAMPS="yyyy-mm-dd"
 
+# Register extra definitions before Oh My Zsh initializes completion.
+# Upstream advises against loading zsh-completions as a standard plugin.
+_shell_completions="${ZSH_CUSTOM:-$ZSH/custom}/plugins/zsh-completions/src"
+if [ -d "$_shell_completions" ] && (( ! ${fpath[(Ie)$_shell_completions]} )); then
+    fpath=("$_shell_completions" $fpath)
+fi
+unset _shell_completions
+
 plugins=(
     git
     zsh-autosuggestions
-    zsh-completions
     zsh-syntax-highlighting
 )
 

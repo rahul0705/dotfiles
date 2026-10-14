@@ -1,6 +1,6 @@
 # Login shells also need user-local tools and Homebrew before interactive startup.
 if [ -f "$HOME/.config/shell/environment.sh" ]; then
-    . "$HOME/.config/shell/environment.sh"
+    source "$HOME/.config/shell/environment.sh"
 fi
 
 if (( ! ${fpath[(Ie)$HOME/.zsh/completion]} )); then

@@ -1,0 +1,28 @@
+# Keep machine-specific login settings outside the managed configuration.
+if [ -f "$HOME/.bash_profile_before_local" ]; then
+    source "$HOME/.bash_profile_before_local"
+fi
+
+# Preserve the login environment Bash previously read when no .bash_profile existed.
+# Some distro-provided .profile files also load .bashrc; record that to avoid a double load.
+unset _DOTFILES_BASHRC_LOADED
+if [ -f "$HOME/.profile" ]; then
+    source "$HOME/.profile"
+fi
+
+if [ -f "$HOME/.config/shell/environment.sh" ]; then
+    source "$HOME/.config/shell/environment.sh"
+fi
+
+case $- in
+    *i*)
+        if [ -z "${_DOTFILES_BASHRC_LOADED:-}" ] && [ -f "$HOME/.bashrc" ]; then
+            source "$HOME/.bashrc"
+        fi
+        ;;
+esac
+unset _DOTFILES_BASHRC_LOADED
+
+if [ -f "$HOME/.bash_profile_after_local" ]; then
+    source "$HOME/.bash_profile_after_local"
+fi

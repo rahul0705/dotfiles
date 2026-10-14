@@ -1,15 +1,17 @@
 # Allow machine-local overrides without tracking them in the repository.
 if [ -f "$HOME/.bashrc_before_local" ]; then
-    . "$HOME/.bashrc_before_local"
+    source "$HOME/.bashrc_before_local"
 fi
 
 case $- in
     *i*) ;;
     *) return ;;
 esac
+# Let the login profile avoid sourcing this twice if a distro's ~/.profile loads it.
+_DOTFILES_BASHRC_LOADED=1
 
 if [ -f "$HOME/.config/shell/environment.sh" ]; then
-    . "$HOME/.config/shell/environment.sh"
+    source "$HOME/.config/shell/environment.sh"
 fi
 
 export OSH="$HOME/.local/share/oh-my-bash"
@@ -22,7 +24,7 @@ completions=(git ssh)
 aliases=()
 plugins=(git)
 if [ -f "$OSH/oh-my-bash.sh" ]; then
-    . "$OSH/oh-my-bash.sh"
+    source "$OSH/oh-my-bash.sh"
 fi
 
 unset MAILCHECK
@@ -31,5 +33,5 @@ if command -v starship >/dev/null 2>&1; then
 fi
 
 if [ -f "$HOME/.bashrc_after_local" ]; then
-    . "$HOME/.bashrc_after_local"
+    source "$HOME/.bashrc_after_local"
 fi
