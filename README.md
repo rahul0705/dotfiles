@@ -72,8 +72,7 @@ fzf tools are reused, and conflicting destination paths are not overwritten.
 Both shells source one shared integration file for Ctrl-R history search, Ctrl-T
 file selection, and Alt-C directory selection. Local after-hooks can override
 these bindings. Versions older than 0.48 stay usable as CLI tools but skip the
-combined shell integration. The Linux release version is set in the module's
-install command; Homebrew handles macOS upgrades. Existing installed binaries
+combined shell integration. The Linux release version is set in `modules/fzf/install-fzf.sh`; Homebrew handles macOS upgrades. Existing installed binaries
 are preserved on repeat applies.
 
 The fonts module installs Hack and FiraCode Nerd Fonts. On Linux it runs Nerd
