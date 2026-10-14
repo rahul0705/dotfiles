@@ -9,6 +9,13 @@ case $- in
         *) return;;
 esac
 
+# uv installs tool executables here; keep them available without system-wide installs.
+# Avoid duplicate entries when this file is sourced more than once.
+case ":${PATH}:" in
+    *":$HOME/.local/bin:"*) ;;
+    *) export PATH="$HOME/.local/bin:$PATH" ;;
+esac
+
 # Path to the bash it configuration
 export BASH_IT="$HOME/.bash-it"
 

@@ -266,3 +266,33 @@ its path or format.
 [GitLab CI](docs/gitlab-ci.md) mirrors the Linux portion of the GitHub compatibility matrix and
 workflow linters on the Free tier. macOS coverage remains on GitHub. See the setup notes for the weekly
 schedule, and GitHub-specific security checks that remain on GitHub.
+
+## User-local tool PATH
+
+The managed Bash and Zsh rc files add `~/.local/bin` to PATH without duplicates.
+This exposes uv-installed tools such as Serena and Codebase Memory, and any
+future tools installed there. Open a new interactive shell after applying the
+shell module, or source `~/.bashrc` / `~/.zshrc` in the matching shell. Restart
+apps separately if they inherited an older PATH; desktop app PATH inheritance
+is not controlled by shell rc files. Existing before/after local customizations
+remain available.
+
+Deploying either Bash or Zsh also applies the `etch` module, which links the
+repository-owned launcher to `~/.local/bin/etch`. This is a user-local command;
+no system directory or entire checkout is added to PATH. The launcher follows
+symlinks to select this checkout even when invoked from another directory.
+Existing regular-file conflicts are refused rather than overwritten.
+
+```sh
+./etch plan etch
+./etch apply etch
+# In a new managed shell, from any directory:
+etch validate
+```
+
+A bare `etch` still previews the developer profile. The launcher uses POSIX
+shell and ordinary `readlink`, including relative symlink targets; it refuses
+dangling links and chains exceeding 40 links. This adopts the engine capability
+and launcher behavior tracked in [Etch #149](https://github.com/rm-industries/etch/issues/149).
+Other template consumers can opt into user-local exposure independently of any
+shell deployment; this repository supplies its own Bash/Zsh PATH configuration.
