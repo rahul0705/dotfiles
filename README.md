@@ -82,8 +82,15 @@ and starts `.bashrc` for interactive login sessions without double-loading it.
 Use `~/.bash_profile_before_local` and `~/.bash_profile_after_local` for local login
 customizations. Existing regular `.bash_profile` files must be backed up or migrated
 before Etch can create its link; Etch will not overwrite them. Oh My Bash
-requires Bash and uses the upstream installer's user-local prefix mode to install
-under `~/.local/share/oh-my-bash` without replacing the managed rc file.
+requires Bash and clones the official framework into its default `~/.oh-my-bash`
+directory. Upstream's installer lacks a keep-bashrc flag, so cloning avoids replacing
+the managed rc file without a restore script or a non-default installation prefix.
+Bash installs `bash-completion@2` through Homebrew on macOS; Homebrew brings in
+modern Bash as its dependency. Completion initialization is skipped on Bash below
+4.2, so `/bin/bash` on macOS remains usable. To get the extra completions, start the
+Homebrew Bash (`bash` after Homebrew's bin directory is on PATH). We do not change
+your login shell. Linux users should install their distro's `bash-completion`
+package, as our CI prerequisites do.
 Bash and Zsh use Starship when available and preserve their local before/after hooks.
 Bash-it is no longer managed or loaded; existing `~/.bash-it` data is left intact.
 
