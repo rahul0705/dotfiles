@@ -69,9 +69,6 @@ jobs:
             eval "$("$brew_bin" shellenv)"
           fi
           ./etch apply --profile developer --timings
-          # Temporary measurement: compare an unchanged apply on the same runner.
-          echo "Repeat apply timing (same runner/home):"
-          ./etch apply --profile developer --timings
           # Verify user-local launcher invocation outside the checkout.
           (
             cd "$RUNNER_TEMP"
