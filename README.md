@@ -63,17 +63,23 @@ Starship's published installer into the default `/usr/local/bin` directory.
 The config link can be created before Starship is installed, so it needs no
 version gate. Bash and Zsh start Starship when it is available.
 
-The fzf module installs through Homebrew on macOS. On Linux, when fzf is not
-already on PATH, it downloads the configured upstream release archive and places
-the executable directly in `~/.local/bin/fzf`. The Linux install requires curl,
+The fzf module installs through Homebrew on macOS. On Linux it manages
+`~/.local/bin/fzf`, resolving GitHub's latest release and downloading its archive.
+If that managed binary is absent, an existing fzf elsewhere on PATH is reused. The Linux install requires curl,
 tar, and standard filesystem utilities; no Git checkout, Go build, package-manager,
 or sudo access is needed. AMD64 and ARM64 release binaries are supported. Existing
 fzf tools are reused, and conflicting destination paths are not overwritten.
 Both shells source one shared integration file for Ctrl-R history search, Ctrl-T
 file selection, and Alt-C directory selection. Local after-hooks can override
 these bindings. Versions older than 0.48 stay usable as CLI tools but skip the
-combined shell integration. The Linux release version is set in `modules/fzf/install-fzf.sh`; Homebrew handles macOS upgrades. Existing installed binaries
-are preserved on repeat applies.
+combined shell integration. Each Linux apply checks for the latest release, skips
+binary downloads when the installed version matches, and verifies a staged
+replacement before atomically replacing the old binary. Temporary archives are
+removed on success or failure; a failed update preserves the installed binary.
+Homebrew handles macOS upgrades. Updates occur only when Etch is run, with no
+background updater. Linux update checks require network access; failures are
+reported rather than silently ignored. Etch's generic script provider reports
+execution even when the script finds that the installed version is current.
 
 The fonts module installs Hack and FiraCode Nerd Fonts. On Linux it runs Nerd
 Fonts' upstream installer for each font in the user font directory and refreshes
