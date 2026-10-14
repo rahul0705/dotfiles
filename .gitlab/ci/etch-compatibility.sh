@@ -19,3 +19,6 @@ mkdir -p "$HOME"
 ./etch validate
 ./etch plan --profile developer
 ./etch apply --profile developer
+# Verify user-local launcher invocation outside the checkout.
+cd "$work_dir"
+"$HOME/.local/bin/etch" validate

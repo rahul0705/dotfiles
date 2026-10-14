@@ -277,8 +277,22 @@ apps separately if they inherited an older PATH; desktop app PATH inheritance
 is not controlled by shell rc files. Existing before/after local customizations
 remain available.
 
-Etch is still invoked through the checkout's `./etch` launcher. Linking that
-launcher directly into `~/.local/bin` is not yet supported: it locates the
-checkout through its invocation path, and the link provider only accepts
-module-owned assets. [#139](https://github.com/rahul0705/dotfiles/issues/139)
-tracks optional user-local Etch exposure and template guidance separately.
+Deploying either Bash or Zsh also applies the `etch` module, which links the
+repository-owned launcher to `~/.local/bin/etch`. This is a user-local command;
+no system directory or entire checkout is added to PATH. The launcher follows
+symlinks to select this checkout even when invoked from another directory.
+Existing regular-file conflicts are refused rather than overwritten.
+
+```sh
+./etch plan etch
+./etch apply etch
+# In a new managed shell, from any directory:
+etch validate
+```
+
+A bare `etch` still previews the developer profile. The launcher uses POSIX
+shell and ordinary `readlink`, including relative symlink targets; it refuses
+dangling links and chains exceeding 40 links. This adopts the engine capability
+and launcher behavior tracked in [Etch #149](https://github.com/rm-industries/etch/issues/149).
+Other template consumers can opt into user-local exposure independently of any
+shell deployment; this repository supplies its own Bash/Zsh PATH configuration.
