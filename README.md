@@ -120,7 +120,9 @@ macOS, Linux, and Windows. Windows uses the standard
 `~/AppData/Roaming/Code/User` location; redirected APPDATA locations require a
 corresponding path change. Mac task shortcuts retain Cmd; Windows/Linux use Ctrl.
 Extension installation runs through the external provider on macOS/Linux when
-`code` is available. Linux and Windows application installation is user-managed;
+`code` is available, with two additional attempts for recognized temporary
+Marketplace failures (429/502/503/504). Other errors still fail immediately.
+Linux and Windows application installation is user-managed;
 Windows extension installation is not yet qualified by the provider.
 
 For initial Windows testing, run from the dotfiles checkout in PowerShell:
