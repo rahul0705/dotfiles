@@ -114,9 +114,25 @@ suggestion, completion, and syntax-highlighting plugins. Powerlevel9k/10k and
 Base16 are no longer managed. Existing theme links in the home directory can be
 removed manually; Etch does not delete retired configuration or user data.
 
-The VS Code module installs the macOS cask, links settings and keybindings on
-macOS and Linux, and installs extensions through the external VS Code plugin
-when `code` is available. Linux users must install VS Code separately.
+The VS Code module installs the macOS cask and links settings/keybindings on
+macOS, Linux, and Windows. Windows uses the standard
+`~/AppData/Roaming/Code/User` location; redirected APPDATA locations require a
+corresponding path change. Mac task shortcuts retain Cmd; Windows/Linux use Ctrl.
+Extension installation runs through the external provider on macOS/Linux when
+`code` is available. Linux and Windows application installation is user-managed;
+Windows extension installation is not yet qualified by the provider.
+
+For initial Windows testing, run from the dotfiles checkout in PowerShell:
+
+```powershell
+python -S vendor/etch/etch plan vscode
+python -S vendor/etch/etch apply vscode
+```
+
+Use this module alone; the developer profile is not Windows-qualified. File links
+require Windows Developer Mode or symbolic-link privileges. Back up/migrate
+existing regular settings/keybindings files before applying; Etch will not replace
+them automatically. The POSIX `./etch` launcher is not used for native Windows.
 
 The Vim module links `~/.vim` and `~/.vimrc`, uses Etch's managed `download`
 action to place vim-plug from upstream, and installs nine selected plugins on
