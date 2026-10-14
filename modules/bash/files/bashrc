@@ -41,6 +41,10 @@ if (( BASH_VERSINFO[0] > 4 || (BASH_VERSINFO[0] == 4 && BASH_VERSINFO[1] >= 2) )
 fi
 
 unset MAILCHECK
+if [ -f "$HOME/.config/shell/fzf.sh" ]; then
+    source "$HOME/.config/shell/fzf.sh"
+fi
+
 if command -v starship >/dev/null 2>&1; then
     eval "$(starship init bash)"
 fi

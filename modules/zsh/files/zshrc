@@ -50,6 +50,10 @@ bindkey "^g" backward-word
 
 zstyle ':completion:*' menu select
 
+if [ -f "$HOME/.config/shell/fzf.sh" ]; then
+    source "$HOME/.config/shell/fzf.sh"
+fi
+
 # Initialize starship for zsh when installed
 if command -v starship >/dev/null 2>&1; then
     eval "$(starship init zsh)"
