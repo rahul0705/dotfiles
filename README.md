@@ -64,17 +64,17 @@ The config link can be created before Starship is installed, so it needs no
 version gate. Bash and Zsh start Starship when it is available.
 
 The fzf module installs through Homebrew on macOS. On Linux, when fzf is not
-already on PATH, it clones upstream into `~/.local/share/fzf`, runs upstream's
-`install --bin`, and exposes the binary through `~/.local/bin/fzf`. This requires
-Git and access to upstream release downloads, but no system package-manager or
-sudo access. The checkout is supporting data; the executable uses our existing
-user-local bin directory. Conflicting destination paths are not overwritten.
+already on PATH, it downloads the configured upstream release archive and places
+the executable directly in `~/.local/bin/fzf`. The Linux install requires curl,
+tar, and standard filesystem utilities; no Git checkout, Go build, package-manager,
+or sudo access is needed. AMD64 and ARM64 release binaries are supported. Existing
+fzf tools are reused, and conflicting destination paths are not overwritten.
 Both shells source one shared integration file for Ctrl-R history search, Ctrl-T
 file selection, and Alt-C directory selection. Local after-hooks can override
-these bindings. Existing fzf binaries are reused; versions older than 0.48 stay
-usable as CLI tools but skip the combined shell integration.
-For manual Linux upgrades, run `git -C ~/.local/share/fzf pull --ff-only`, followed
-by `~/.local/share/fzf/install --bin`. Homebrew handles macOS upgrades.
+these bindings. Versions older than 0.48 stay usable as CLI tools but skip the
+combined shell integration. The Linux release version is set in the module's
+install command; Homebrew handles macOS upgrades. Existing installed binaries
+are preserved on repeat applies.
 
 The fonts module installs Hack and FiraCode Nerd Fonts. On Linux it runs Nerd
 Fonts' upstream installer for each font in the user font directory and refreshes
