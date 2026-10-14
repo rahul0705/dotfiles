@@ -266,3 +266,19 @@ its path or format.
 [GitLab CI](docs/gitlab-ci.md) mirrors the Linux portion of the GitHub compatibility matrix and
 workflow linters on the Free tier. macOS coverage remains on GitHub. See the setup notes for the weekly
 schedule, and GitHub-specific security checks that remain on GitHub.
+
+## User-local tool PATH
+
+The managed Bash and Zsh rc files add `~/.local/bin` to PATH without duplicates.
+This exposes uv-installed tools such as Serena and Codebase Memory, and any
+future tools installed there. Open a new interactive shell after applying the
+shell module, or source `~/.bashrc` / `~/.zshrc` in the matching shell. Restart
+apps separately if they inherited an older PATH; desktop app PATH inheritance
+is not controlled by shell rc files. Existing before/after local customizations
+remain available.
+
+Etch is still invoked through the checkout's `./etch` launcher. Linking that
+launcher directly into `~/.local/bin` is not yet supported: it locates the
+checkout through its invocation path, and the link provider only accepts
+module-owned assets. [#139](https://github.com/rahul0705/dotfiles/issues/139)
+tracks optional user-local Etch exposure and template guidance separately.
