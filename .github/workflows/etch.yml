@@ -59,16 +59,19 @@ jobs:
             mkdir -p "$RUNNER_TEMP/etch-apps"
           fi
           ./etch validate
-          ./etch plan --profile developer
+          ./etch plan --profile developer --timings
           if [[ "$RUNNER_OS" == macOS ]] && ! command -v brew >/dev/null; then
-            ./etch apply --profile developer --allow-sudo
+            ./etch apply --profile developer --allow-sudo --timings
             case "$(uname -m)" in
               arm64) brew_bin=/opt/homebrew/bin/brew ;;
               *) brew_bin=/usr/local/bin/brew ;;
             esac
             eval "$("$brew_bin" shellenv)"
           fi
-          ./etch apply --profile developer
+          ./etch apply --profile developer --timings
+          # Compare checks on the same disposable runner after installation.
+          echo "Repeat apply timing (same runner/home):"
+          ./etch apply --profile developer --timings
           # Verify user-local launcher invocation outside the checkout.
           (
             cd "$RUNNER_TEMP"
