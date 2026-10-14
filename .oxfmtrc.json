@@ -5,7 +5,6 @@
     "vendor/**",
     "modules/tmux/files/plugins/**",
     "modules/oh-my-zsh/files/custom/plugins/**",
-    "modules/oh-my-zsh/files/custom/themes/**",
     "modules/ghostty/files/themes/**"
   ]
 }

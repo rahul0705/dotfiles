@@ -3,14 +3,14 @@
 ## Etch developer profile
 
 The Etch `developer` profile covers Git, tmux, Homebrew, Starship, Nerd Fonts,
-Bash-it, Bash, Zsh, Oh My Zsh, Vim, VS Code, Codex guidance, and, on macOS, Ghostty, Zed, workstation and
+Bash, Oh My Bash, Zsh, Oh My Zsh, Vim, VS Code, Codex guidance, and, on macOS, Ghostty, Zed, workstation and
 personal apps, developer tools, and Xcode. Gaming apps are opt-in. The
 [Vim plugin audit](docs/vim-plugin-audit.md) records the migration decisions.
 
 ```sh
 git clone https://github.com/rahul0705/dotfiles.git
 cd dotfiles
-git submodule update --init --recursive modules/codex/files/upstream vendor/etch modules/tmux/files/plugins/tpm modules/ghostty/files/themes/catppuccin modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting modules/oh-my-zsh/files/custom/themes/powerlevel9k modules/oh-my-zsh/files/custom/themes/powerlevel10k
+git submodule update --init --recursive modules/codex/files/upstream vendor/etch modules/tmux/files/plugins/tpm modules/ghostty/files/themes/catppuccin modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting
 ./etch                              # preview only
 ./etch validate
 ./etch plan --profile developer -v
@@ -61,26 +61,81 @@ The Starship module owns `~/.config/starship.toml`. On macOS it uses the
 explicit Homebrew plugin to install the formula if missing; on Linux it runs
 Starship's published installer into the default `/usr/local/bin` directory.
 The config link can be created before Starship is installed, so it needs no
-version gate. Zsh starts Starship when it is available.
+version gate. Bash and Zsh start Starship when it is available.
+
+The fzf module installs through Homebrew on macOS. On Linux, a fresh install
+resolves GitHub's latest release and downloads the executable to `~/.local/bin/fzf`.
+Existing fzf tools are reused. Presence checks let Etch skip installation entirely
+on later applies, without a network check or an executed-script result.
+The Linux installer requires curl, tar, and standard filesystem utilities; no Git
+checkout, Go build, package-manager, or sudo access is needed. AMD64 and ARM64
+release binaries are supported. Downloads are verified before installation, temporary
+archives are cleaned up, and conflicting destination paths are not overwritten.
+Both shells source one shared integration file for Ctrl-R history search, Ctrl-T
+file selection, and Alt-C directory selection. Local after-hooks can override
+these bindings. Versions older than 0.48 stay usable as CLI tools but skip the
+combined shell integration. Automatic Linux upgrades are outside this module's
+scope; Homebrew handles macOS upgrades.
 
 The fonts module installs Hack and FiraCode Nerd Fonts. On Linux it runs Nerd
 Fonts' upstream installer for each font in the user font directory and refreshes
 the font cache; on macOS it installs the existing Homebrew font casks. Existing
 font files or installed casks are skipped on later applies.
 
-The Bash-it module clones Bash-it and runs its noninteractive setup without
-changing `~/.bashrc`. The Bash module then links the existing Bash configuration
-and requires Bash-it first. Local before/after rc files remain supported.
-Deprecated Base16 customization is no longer managed.
+The shell-common module deploys portable PATH, Homebrew, Cargo, and NVM setup to
+`~/.config/shell/environment.sh`, sourced by Bash and Zsh. Shell-specific prompt
+initialization, plugins, completions, and keybindings stay in the respective rc files.
 
-The Zsh module links `~/.zprofile` and `~/.zshrc` and starts Starship when
-available. The Oh My Zsh module requires Zsh, then runs the upstream installer
-noninteractively while preserving the linked rc file, and links the existing
-custom plugins and themes. Local before/after rc files remain supported.
+The shared file uses the user configuration directory convention, but neither shell
+loads `~/.config/shell` automatically: the managed startup files source it explicitly.
+We do not create a custom directory-scanning loader or modify `/etc/profile.d`.
 
-The VS Code module installs the macOS cask, links settings and keybindings on
-macOS and Linux, and installs extensions through the external VS Code plugin
-when `code` is available. Linux users must install VS Code separately.
+The Bash module deploys `~/.bashrc` and `~/.bash_profile` independently of its framework.
+The login profile preserves an existing `~/.profile`, loads the shared environment,
+and starts `.bashrc` for interactive login sessions without double-loading it.
+Use `~/.bash_profile_before_local` and `~/.bash_profile_after_local` for local login
+customizations. Existing regular `.bash_profile` files must be backed up or migrated
+before Etch can create its link; Etch will not overwrite them. Oh My Bash
+requires Bash and clones the official framework into its default `~/.oh-my-bash`
+directory. Upstream's installer lacks a keep-bashrc flag, so cloning avoids replacing
+the managed rc file without a restore script or a non-default installation prefix.
+The clone retains the upstream installer's non-group/world-writable permissions.
+Bash installs `bash-completion@2` through Homebrew on macOS; Homebrew brings in
+modern Bash as its dependency. Completion initialization is skipped on Bash below
+4.2, so `/bin/bash` on macOS remains usable. To get the extra completions, start the
+Homebrew Bash (`bash` after Homebrew's bin directory is on PATH). We do not change
+your login shell. Linux users should install their distro's `bash-completion`
+package, as our CI prerequisites do.
+Bash and Zsh use Starship when available and preserve their local before/after hooks.
+Bash-it is no longer managed or loaded; existing `~/.bash-it` data is left intact.
+
+The Zsh module deploys `~/.zprofile` and `~/.zshrc`. Oh My Zsh requires Zsh,
+installs noninteractively while preserving the linked rc file, and links the
+suggestion, completion, and syntax-highlighting plugins. Powerlevel9k/10k and
+Base16 are no longer managed. Existing theme links in the home directory can be
+removed manually; Etch does not delete retired configuration or user data.
+
+The VS Code module installs the macOS cask and links settings/keybindings on
+macOS, Linux, and Windows. Windows uses the standard
+`~/AppData/Roaming/Code/User` location; redirected APPDATA locations require a
+corresponding path change. Mac task shortcuts retain Cmd; Windows/Linux use Ctrl.
+Extension installation runs through the external provider on macOS/Linux when
+`code` is available, with two additional attempts for recognized temporary
+Marketplace failures (429/502/503/504). Other errors still fail immediately.
+Linux and Windows application installation is user-managed;
+Windows extension installation is not yet qualified by the provider.
+
+For initial Windows testing, run from the dotfiles checkout in PowerShell:
+
+```powershell
+python -S vendor/etch/etch plan vscode
+python -S vendor/etch/etch apply vscode
+```
+
+Use this module alone; the developer profile is not Windows-qualified. File links
+require Windows Developer Mode or symbolic-link privileges. Back up/migrate
+existing regular settings/keybindings files before applying; Etch will not replace
+them automatically. The POSIX `./etch` launcher is not used for native Windows.
 
 The Vim module links `~/.vim` and `~/.vimrc`, uses Etch's managed `download`
 action to place vim-plug from upstream, and installs nine selected plugins on

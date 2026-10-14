@@ -43,7 +43,7 @@ jobs:
           set -euo pipefail
           # Etch configures these tools but does not install them on Linux.
           sudo apt-get update -qq
-          sudo apt-get install -y tmux vim zsh
+          sudo apt-get install -y tmux vim zsh bash-completion
           # Linux VS Code installation is user-managed; make extension installation observable.
           curl -fsSL https://update.code.visualstudio.com/latest/linux-deb-x64/stable -o "$RUNNER_TEMP/code.deb"
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$RUNNER_TEMP/code.deb"
@@ -69,6 +69,9 @@ jobs:
             eval "$("$brew_bin" shellenv)"
           fi
           ./etch apply --profile developer --timings
+          # Inspect the installed shell environment, not just the configuration links.
+          TERM=xterm-256color bash -lic 'test -f "$OSH/oh-my-bash.sh" && test "$STARSHIP_SHELL" = bash && command -v etch >/dev/null'
+          TERM=xterm-256color zsh -lic 'test -f "$ZSH/oh-my-zsh.sh" && test "$STARSHIP_SHELL" = zsh && command -v etch >/dev/null'
           # Verify user-local launcher invocation outside the checkout.
           (
             cd "$RUNNER_TEMP"

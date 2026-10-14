@@ -7,15 +7,9 @@
 [submodule "modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions"]
 	path = modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
-[submodule "modules/oh-my-zsh/files/custom/themes/powerlevel9k"]
-	path = modules/oh-my-zsh/files/custom/themes/powerlevel9k
-	url = https://github.com/bhilburn/powerlevel9k.git
 [submodule "modules/tmux/files/plugins/tpm"]
 	path = modules/tmux/files/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
-[submodule "modules/oh-my-zsh/files/custom/themes/powerlevel10k"]
-	path = modules/oh-my-zsh/files/custom/themes/powerlevel10k
-	url = https://github.com/romkatv/powerlevel10k.git
 [submodule "modules/ghostty/files/themes/catppuccin"]
 	path = modules/ghostty/files/themes/catppuccin
 	url = https://github.com/catppuccin/ghostty.git

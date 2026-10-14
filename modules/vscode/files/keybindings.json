@@ -2,11 +2,23 @@
   // Run test tasks
   {
     "key": "shift+cmd+i",
-    "command": "workbench.action.tasks.test"
+    "command": "workbench.action.tasks.test",
+    "when": "isMac"
+  },
+  {
+    "key": "shift+ctrl+i",
+    "command": "workbench.action.tasks.test",
+    "when": "!isMac"
   },
   // Run Task
   {
     "key": "shift+cmd+r",
-    "command": "workbench.action.tasks.runTask"
+    "command": "workbench.action.tasks.runTask",
+    "when": "isMac"
+  },
+  {
+    "key": "shift+ctrl+r",
+    "command": "workbench.action.tasks.runTask",
+    "when": "!isMac"
   }
 ]
