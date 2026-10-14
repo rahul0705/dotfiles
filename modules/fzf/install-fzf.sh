@@ -2,15 +2,16 @@
 set -eu
 
 destination="$HOME/.local/bin/fzf"
-# Reuse a system/user-provided tool; only update the binary at our managed location.
-if [ ! -e "$destination" ] && [ ! -L "$destination" ] && command -v fzf >/dev/null 2>&1; then
+# Install only when absent; preserve existing tools even when invoked outside Etch.
+if command -v fzf >/dev/null 2>&1; then
     exit 0
 fi
 if [ -e "$destination" ] || [ -L "$destination" ]; then
-    if [ -L "$destination" ] || [ ! -f "$destination" ] || [ ! -x "$destination" ]; then
-        printf 'Refusing to replace conflicting ~/.local/bin/fzf\n' >&2
-        exit 1
+    if [ ! -L "$destination" ] && [ -f "$destination" ] && [ -x "$destination" ]; then
+        exit 0
     fi
+    printf 'Refusing to replace conflicting ~/.local/bin/fzf\n' >&2
+    exit 1
 fi
 
 case "$(uname -m)" in
@@ -28,18 +29,9 @@ if ! printf '%s\n' "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
     printf 'Could not resolve the latest fzf release\n' >&2
     exit 1
 fi
-if [ -x "$destination" ]; then
-    installed=$(FZF_DEFAULT_OPTS= "$destination" --version)
-    if [ "${installed%% *}" = "$version" ]; then
-        printf 'fzf %s is already installed\n' "$version"
-        exit 0
-    fi
-fi
-
-# Stage on the destination filesystem so replacement is atomic. Keep the old binary
-# until download, extraction and version verification all succeed; clean the archive on exit.
+# Verify in a temporary directory before placing the binary at its final path.
 mkdir -p "$HOME/.local/bin"
-work_dir=$(mktemp -d "$HOME/.local/bin/.fzf-update.XXXXXX")
+work_dir=$(mktemp -d "$HOME/.local/bin/.fzf-install.XXXXXX")
 trap 'rm -rf "$work_dir"' EXIT
 trap 'exit 1' HUP INT TERM
 curl -fsSL --connect-timeout 10 --max-time 120 \
