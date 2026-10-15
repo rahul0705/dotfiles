@@ -226,8 +226,10 @@ back up a conflicting `~/.codex/AGENTS.md` or `dotfiles.config.toml`, then move
 it out of the destination. Retain any personal guidance you still need.
 An existing `AGENTS.override.md` takes precedence over the managed guidance.
 
-On macOS, the module registers native Codex marketplaces and installs these
-plugins when the user-managed `codex` CLI is on PATH (0.154.0 or newer):
+The module registers native Codex marketplaces and installs these plugins on
+macOS, Linux, and Windows when the user-managed `codex` CLI is on PATH
+(0.154.0 or newer). On Windows, expose the native `codex.exe`; the provider
+does not execute `codex.cmd` or `codex.bat` wrappers:
 
 | Marketplace source | Native plugin selector |
 | --- | --- |
@@ -278,9 +280,10 @@ installed plugin. Use Codex's plugin settings to review available updates.
 Dependabot continues updating Git submodules such as Etch; native skill packages
 are managed by Codex rather than Dependabot. Their licenses remain upstream.
 
-The guidance file is deployed on both macOS and Linux. Native plugins, the named
-profile, uv, RTK, Serena, and Codebase Memory are macOS-only. This module
-installs no tools on Linux. On macOS, uv comes from Homebrew, matching
+The guidance file is deployed on macOS, Linux, and Windows. The named profile,
+uv, RTK, Serena, and Codebase Memory remain macOS-only. On Linux and Windows,
+this module installs native Codex plugins but does not install the CLI or MCP
+tools. On macOS, uv comes from Homebrew, matching
 developer-tools; both modules can ensure the same formula is present without
 creating separate installations. RTK also comes from Homebrew.
 uv installs Serena and Codebase Memory in isolated tool environments; Codebase Memory’s first
