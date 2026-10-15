@@ -16,9 +16,3 @@
 [submodule "vendor/etch"]
 	path = vendor/etch
 	url = https://github.com/rm-industries/etch.git
-[submodule "modules/codex/files/upstream/ponytail"]
-	path = modules/codex/files/upstream/ponytail
-	url = https://github.com/DietrichGebert/ponytail.git
-[submodule "modules/codex/files/upstream/caveman"]
-	path = modules/codex/files/upstream/caveman
-	url = https://github.com/JuliusBrussee/caveman.git
