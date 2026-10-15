@@ -10,7 +10,7 @@ personal apps, developer tools, and Xcode. Gaming apps are opt-in. The
 ```sh
 git clone https://github.com/rahul0705/dotfiles.git
 cd dotfiles
-git submodule update --init --recursive modules/codex/files/upstream vendor/etch modules/tmux/files/plugins/tpm modules/ghostty/files/themes/catppuccin modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting
+git submodule update --init --recursive vendor/etch modules/tmux/files/plugins/tpm modules/ghostty/files/themes/catppuccin modules/oh-my-zsh/files/custom/plugins/zsh-autosuggestions modules/oh-my-zsh/files/custom/plugins/zsh-completions modules/oh-my-zsh/files/custom/plugins/zsh-syntax-highlighting
 ./etch                              # preview only
 ./etch validate
 ./etch plan --profile developer -v
@@ -217,7 +217,7 @@ desired defaults, application commands, and manual Finder refresh instructions.
 
 The `codex` module links global working preferences to `~/.codex/AGENTS.md`
 and a portable named profile to `~/.codex/dotfiles.config.toml`. It is included
-in the developer profile and can also be applied with `./etch apply codex`.
+in the developer profile and can also be applied with `./etch apply homebrew codex`.
 Codex installation is user-managed. Global guidance applies to new Codex sessions;
 select the optional macOS settings with `codex --profile dotfiles`.
 
@@ -226,28 +226,59 @@ back up a conflicting `~/.codex/AGENTS.md` or `dotfiles.config.toml`, then move
 it out of the destination. Retain any personal guidance you still need.
 An existing `AGENTS.override.md` takes precedence over the managed guidance.
 
-Dependabot proposes updates for all repository submodules, including the
-Ponytail and Caveman sources.
-These track upstream branch commits rather than only tagged releases; review
-and merge the update PRs to advance the pins.
+On macOS, the module registers native Codex marketplaces and installs these
+plugins when the user-managed `codex` CLI is on PATH (0.154.0 or newer):
 
-The module links individually pinned upstream Ponytail and Caveman skills to
-`~/.agents/skills/`. Initialize their sources with:
+| Marketplace source | Native plugin selector |
+| --- | --- |
+| `DietrichGebert/ponytail` | `ponytail@ponytail` |
+| `JuliusBrussee/caveman` | `caveman@caveman` |
+| `mattpocock/skills` | `mattpocock-skills@mattpocock` |
+
+Etch uses Codex's native user plugin storage, honoring `CODEX_HOME` when set.
+It preserves installed versions, disabled plugins, and unrelated installations.
+It does not install Codex, enable existing disabled plugins, or upgrade plugins.
+No Claude Code installation or subscription is required. Matt Pocock's bundle
+includes `to-spec`, `to-tickets`, and `handoff`, alongside its other skills.
+Those workflows can write issues or files when invoked; installation does not
+run them or grant permission to publish anything.
+
+For an existing setup, first apply and verify native inventory:
 
 ```sh
-git submodule update --init --recursive modules/codex/files/upstream
-./etch apply codex
+./etch apply homebrew codex
+codex plugin marketplace list --json
+codex plugin list --json
 ```
 
-Other installed skills are preserved. Avoid enabling both these links and the
-same skills through a plugin installation, which can produce duplicate entries.
-The core skills are available in new sessions on macOS. Global guidance asks
-the agent to apply Ponytail by default to coding tasks when available; Caveman
-remains opt-in for terse or compressed communication. Activation is driven by
-instructions rather than a configuration switch.
-Their upstream licenses remain in the pinned source checkouts.
+Enable Ponytail and Caveman in Codex's plugin settings if previously disabled.
+After confirming native skills are available, remove only the old dotfiles-owned
+symlinks `~/.agents/skills/ponytail` and `~/.agents/skills/caveman`; do not delete
+unrelated skills or regular directories at those paths. These links are no longer
+created by Etch. The upstream skill submodules have been retired.
 
-The guidance file is deployed on both macOS and Linux. Skill links, the named
+Restart or refresh the Codex app and start a new session to reload plugins.
+The CLI and Codex desktop use the same user storage; a CLI installation alone
+does not prove that a running desktop or ChatGPT session has loaded it.
+Check that the relevant skills appear in that app before relying on them.
+Global guidance applies Ponytail by default to coding tasks when available;
+Caveman remains opt-in. Ponytail also ships native lifecycle hooks; Caveman's
+currently installed package exposes skills without Codex hooks.
+
+Manage additional plugins through native commands:
+
+```sh
+codex plugin marketplace add OWNER/REPO --json
+codex plugin add PLUGIN@MARKETPLACE --json
+codex plugin marketplace upgrade MARKETPLACE --json
+```
+
+`marketplace upgrade` refreshes the catalog; it does not promise to update an
+installed plugin. Use Codex's plugin settings to review available updates.
+Dependabot continues updating Git submodules such as Etch; native skill packages
+are managed by Codex rather than Dependabot. Their licenses remain upstream.
+
+The guidance file is deployed on both macOS and Linux. Native plugins, the named
 profile, uv, RTK, Serena, and Codebase Memory are macOS-only. This module
 installs no tools on Linux. On macOS, uv comes from Homebrew, matching
 developer-tools; both modules can ensure the same formula is present without
@@ -287,8 +318,7 @@ uv tool upgrade serena-agent codebase-memory-mcp
 ```
 
 Etch ensures presence rather than upgrading on each apply. New uv installations
-use the current package releases; skill source updates remain reviewable
-Dependabot PRs. Restart agent sessions after upgrading MCP tools.
+use the current package releases. Restart agent sessions after upgrading MCP tools.
 
 The profile's definitions replace same-named server launch settings for that
 profile while preserving the base `config.toml`. The module does not unregister
