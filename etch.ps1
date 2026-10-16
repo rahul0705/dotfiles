@@ -20,6 +20,9 @@ $engine = Join-Path $root 'vendor\etch\etch'
 if (!(Test-Path -LiteralPath $engine -PathType Leaf)) {
     throw 'Initialize Etch first: git submodule update --init vendor/etch'
 }
+if (!(Get-Command python -ErrorAction SilentlyContinue)) {
+    throw 'Etch requires Python 3.9 or newer on PATH.'
+}
 $etchArguments = $args
 if ($etchArguments.Count -eq 0) {
     $etchArguments = @('plan', '--profile', 'developer')
