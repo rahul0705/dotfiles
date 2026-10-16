@@ -118,7 +118,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Validation failed' }
           python -S vendor/etch/etch apply --profile developer
           if ($LASTEXITCODE -ne 0) { throw 'Windows developer apply failed' }
-          foreach ($unixFile in @('.vim', '.vimrc', '.tmux', '.tmux.conf', '.bashrc', '.bash_profile', '.zshrc', '.oh-my-bash', '.oh-my-zsh')) {
+          foreach ($unixFile in @('.vim', '.vimrc', '.tmux', '.tmux.conf', '.bashrc', '.bash_profile', '.zshrc', '.oh-my-bash', '.oh-my-zsh', '.config/shell/fzf.sh', '.config/starship.toml')) {
               if (Test-Path (Join-Path $env:USERPROFILE $unixFile)) {
                   throw "Unix-only file deployed: $unixFile"
               }
