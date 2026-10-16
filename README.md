@@ -1,5 +1,69 @@
 # Dotfiles
 
+## Bootstrap a new machine
+
+The bootstrap requires Git. Python 3.9+ is also required unless using
+`--no-module` (clone-only). It does not install prerequisites or elevate privileges.
+The POSIX script supports macOS/Linux; the PowerShell script supports native
+Windows PowerShell 5.1 and PowerShell 7.
+
+**Once the installers are merged to `main`**, the hosted commands are:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/rahul0705/dotfiles/main/install.sh | sh
+```
+
+```powershell
+powershell.exe -NoProfile -Command "& ([scriptblock]::Create((Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/rahul0705/dotfiles/main/install.ps1' -ErrorAction Stop)))"
+```
+
+These commands download and execute current repository code. Prefer downloading
+and reviewing the installer before running it, especially on managed machines:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/rahul0705/dotfiles/main/install.sh -o install.sh
+less install.sh
+sh install.sh --no-module
+```
+
+```powershell
+Invoke-WebRequest -UseBasicParsing -Uri 'https://raw.githubusercontent.com/rahul0705/dotfiles/main/install.ps1' -OutFile install.ps1
+Get-Content ./install.ps1
+powershell.exe -NoProfile -File ./install.ps1 --no-module
+```
+
+The scripts clone into `~/.dotfiles` and initialize all pinned submodules.
+Set `DOTFILES_DIR` to choose another destination, including paths with spaces.
+After a fresh clone, only the `etch` module is applied by default, exposing the
+user-local launcher. The developer profile is never applied automatically.
+Windows link creation requires Developer Mode or symlink privileges; execution
+policy remains in force. Open a new terminal after user PATH is configured.
+
+Use `--module NAME` to apply one different module, or `--no-module` to clone
+without running Etch. `--no-module` wins regardless of argument order. For example:
+
+```sh
+DOTFILES_DIR="$HOME/my dotfiles" sh install.sh --module git
+```
+
+```powershell
+$env:DOTFILES_DIR = Join-Path $HOME 'my dotfiles'
+powershell.exe -NoProfile -File ./install.ps1 --module git
+```
+
+An existing checkout whose origin matches this repository is a strict no-op:
+no pull, submodule update, prerequisite installation, or Etch execution occurs.
+Other occupied destinations are refused. Failed clone/submodule operations may
+leave a partial checkout; inspect and repair it manually rather than expecting a
+rerun to update it. If module application fails, the checkout is retained so you
+can resolve the error and run Etch directly. Bootstrap is not an updater.
+
+A future website page at `/dotfiles` can link to both commands, with explicit
+HTTP redirects at `/dotfiles/install.sh` and `/dotfiles/install.ps1` pointing to
+the canonical repository URLs. Those website routes are **not configured** by
+this change. The installers do not depend on a website domain or user-agent
+OS detection; Astro/hosting implementation will be handled separately.
+
 ## Etch developer profile
 
 The Etch `developer` profile covers Git, tmux, Homebrew, Starship, Nerd Fonts,

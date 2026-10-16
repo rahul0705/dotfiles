@@ -34,6 +34,8 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: ${{ matrix.python }}
+      - name: Test POSIX bootstrap installer
+        run: python .github/tests/test_installers.py
       - name: Initialize Etch and module assets
         run: git submodule update --init --recursive vendor/etch modules
       - name: Install Linux prerequisites
@@ -88,6 +90,9 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.x'
+      - name: Test Windows bootstrap installers
+        shell: pwsh
+        run: python .github/tests/test_installers.py
       - name: Apply Windows developer profile and inspect launcher
         shell: pwsh
         run: |
