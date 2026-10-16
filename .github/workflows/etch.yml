@@ -99,7 +99,8 @@ jobs:
           New-Item -ItemType Directory -Force $probe | Out-Null
           New-Item -ItemType SymbolicLink -Path (Join-Path $probe 'etch.cmd') -Target (Join-Path $PWD 'etch.cmd') | Out-Null
           New-Item -ItemType SymbolicLink -Path (Join-Path $probe 'etch.ps1') -Target (Join-Path $PWD 'etch.ps1') | Out-Null
-          New-Item -ItemType Directory -Force (Join-Path $probe 'modules') | Out-Null
+          New-Item -ItemType Directory -Force (Join-Path $probe 'modules/probe') | Out-Null
+          Set-Content -LiteralPath (Join-Path $probe 'modules/probe/module.conf') -Value "{'schema_version': 1, 'name': 'probe', 'actions': []}"
           Push-Location $env:RUNNER_TEMP
           try {
               & (Join-Path $probe 'etch.cmd') --version
