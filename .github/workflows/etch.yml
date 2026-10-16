@@ -94,6 +94,21 @@ jobs:
           $ErrorActionPreference = 'Stop'
           git submodule update --init vendor/etch
           if ($LASTEXITCODE -ne 0) { throw 'Etch initialization failed' }
+          # Exercise the batch/PowerShell launcher before the upstream validation gate.
+          $probe = Join-Path $env:RUNNER_TEMP 'etch launcher with spaces'
+          New-Item -ItemType Directory -Force $probe | Out-Null
+          New-Item -ItemType SymbolicLink -Path (Join-Path $probe 'etch.cmd') -Target (Join-Path $PWD 'etch.cmd') | Out-Null
+          New-Item -ItemType SymbolicLink -Path (Join-Path $probe 'etch.ps1') -Target (Join-Path $PWD 'etch.ps1') | Out-Null
+          New-Item -ItemType Directory -Force (Join-Path $probe 'modules') | Out-Null
+          Push-Location $env:RUNNER_TEMP
+          try {
+              & (Join-Path $probe 'etch.cmd') --version
+              if ($LASTEXITCODE -ne 0) { throw 'Batch launcher failed' }
+              & (Join-Path $probe 'etch.cmd') plan --repo $probe
+              if ($LASTEXITCODE -ne 0) { throw 'Quoted repository argument was not forwarded' }
+          } finally {
+              Pop-Location
+          }
           $env:USERPROFILE = Join-Path $env:RUNNER_TEMP 'etch-home'
           $env:HOME = $env:USERPROFILE
           $env:CODEX_HOME = Join-Path $env:USERPROFILE '.codex'
@@ -114,9 +129,9 @@ jobs:
           $env:PATH = "$bin;$env:PATH"
           Push-Location $env:RUNNER_TEMP
           try {
-              etch validate
+              etch.cmd validate
               if ($LASTEXITCODE -ne 0) { throw 'Exposed launcher failed outside checkout' }
-              etch apply --profile developer
+              etch.cmd apply --profile developer
               if ($LASTEXITCODE -ne 0) { throw 'Repeat Windows apply failed' }
           } finally {
               Pop-Location

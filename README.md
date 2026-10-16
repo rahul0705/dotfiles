@@ -387,12 +387,13 @@ Existing regular-file conflicts are refused rather than overwritten.
 etch validate
 ```
 
-On native Windows, the `etch` module links the repository's `etch.cmd` launcher
+On native Windows, the `etch` module links the repository's `etch.cmd` and `etch.ps1` launchers
 into `~/.local/bin` and adds that directory to the **user** PATH once during
 setup. Existing user PATH entries and their Registry value type are preserved; the machine PATH is untouched. Open a new terminal after the
 first apply, then run `etch validate` from any directory. Python must remain on
 PATH, and Windows Developer Mode or symlink privileges are required for links.
-The launcher resolves its symlink back to this checkout and forwards arguments;
+The small batch wrapper invokes built-in Windows PowerShell without inline Python.
+The PowerShell launcher resolves its symlink back to this checkout and forwards arguments;
 with no arguments it previews the developer profile. No shell profile is edited.
 The setup marker is `~/.local/state/etch/windows-user-path`; remove it and rerun
 the module if you later remove the directory from user PATH and want to restore it.
