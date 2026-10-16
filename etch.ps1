@@ -28,6 +28,36 @@ if ($etchArguments.Count -eq 0) {
     $etchArguments = @('plan', '--profile', 'developer')
 }
 
+
+# Probe with Python, matching the provider's unprivileged Windows symlink API.
+$symlinkProbe = @'
+import os
+import sys
+import tempfile
+from pathlib import Path
+
+try:
+    with tempfile.TemporaryDirectory(prefix='etch-symlink-check-') as temporary:
+        root = Path(temporary)
+        (root / 'file').touch()
+        (root / 'directory').mkdir()
+        for name, directory in (('file', False), ('directory', True)):
+            os.symlink(str(root / name), str(root / (name + '-link')),
+                       target_is_directory=directory)
+except OSError as exc:
+    print('Etch launcher: this session cannot create symbolic links: {}. '
+          'Enable Windows Developer Mode for non-admin use, then retry from '
+          'your normal terminal. Etch will not elevate or change system settings.'
+          .format(exc), file=sys.stderr)
+    raise SystemExit(1)
+'@
+if ($etchArguments[0] -eq 'apply' -and $etchArguments -notcontains '--help' -and $etchArguments -notcontains '-h') {
+    & python -S -c $symlinkProbe
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
+}
+
 Push-Location -LiteralPath $root
 try {
     & python -S $engine @etchArguments
