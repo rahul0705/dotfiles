@@ -143,7 +143,7 @@ python -S vendor/etch/etch apply --profile developer
 ```
 
 This configures Git, Codex guidance/plugins (when native Codex is installed),
-VS Code files, Starship configuration, and the user-local Etch launcher. It does
+VS Code files and the user-local Etch launcher. It does
 not install those applications or the macOS-only MCP tools.
 
 On macOS and Linux, the Vim module links `~/.vim` and `~/.vimrc`, uses Etch's managed `download`
