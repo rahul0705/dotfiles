@@ -77,3 +77,66 @@ jobs:
             cd "$RUNNER_TEMP"
             "$HOME/.local/bin/etch" validate
           )
+
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.x'
+      - name: Apply Windows developer profile and inspect launcher
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          git submodule update --init vendor/etch
+          if ($LASTEXITCODE -ne 0) { throw 'Etch initialization failed' }
+          # Exercise the batch/PowerShell launcher before the upstream validation gate.
+          $probe = Join-Path $env:RUNNER_TEMP 'etch launcher with spaces'
+          New-Item -ItemType Directory -Force $probe | Out-Null
+          New-Item -ItemType SymbolicLink -Path (Join-Path $probe 'etch.cmd') -Target (Join-Path $PWD 'etch.cmd') | Out-Null
+          New-Item -ItemType SymbolicLink -Path (Join-Path $probe 'etch.ps1') -Target (Join-Path $PWD 'etch.ps1') | Out-Null
+          New-Item -ItemType Directory -Force (Join-Path $probe 'modules/probe') | Out-Null
+          Set-Content -LiteralPath (Join-Path $probe 'modules/probe/module.conf') -Value "{'schema_version': 1, 'name': 'probe', 'actions': []}"
+          Push-Location $env:RUNNER_TEMP
+          try {
+              & (Join-Path $probe 'etch.cmd') --version
+              if ($LASTEXITCODE -ne 0) { throw 'Batch launcher failed' }
+              & (Join-Path $probe 'etch.cmd') plan --repo $probe
+              if ($LASTEXITCODE -ne 0) { throw 'Quoted repository argument was not forwarded' }
+          } finally {
+              Pop-Location
+          }
+          $env:USERPROFILE = Join-Path $env:RUNNER_TEMP 'etch-home'
+          $env:HOME = $env:USERPROFILE
+          $env:CODEX_HOME = Join-Path $env:USERPROFILE '.codex'
+          New-Item -ItemType Directory -Force $env:USERPROFILE | Out-Null
+          python -S vendor/etch/etch validate
+          if ($LASTEXITCODE -ne 0) { throw 'Validation failed' }
+          python -S vendor/etch/etch apply --profile developer
+          if ($LASTEXITCODE -ne 0) { throw 'Windows developer apply failed' }
+          foreach ($unixFile in @('.vim', '.vimrc', '.tmux', '.tmux.conf', '.bashrc', '.bash_profile', '.zshrc', '.oh-my-bash', '.oh-my-zsh')) {
+              if (Test-Path (Join-Path $env:USERPROFILE $unixFile)) {
+                  throw "Unix-only file deployed: $unixFile"
+              }
+          }
+          $bin = Join-Path $env:USERPROFILE '.local\bin'
+          $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
+          if (($userPath -split ';') -notcontains $bin) { throw 'Launcher directory missing from user PATH' }
+          # Simulate a new terminal without replacing the runner's process PATH.
+          $env:PATH = "$bin;$env:PATH"
+          Push-Location $env:RUNNER_TEMP
+          try {
+              etch.cmd validate
+              if ($LASTEXITCODE -ne 0) { throw 'Exposed launcher failed outside checkout' }
+              etch.cmd apply --profile developer
+              if ($LASTEXITCODE -ne 0) { throw 'Repeat Windows apply failed' }
+          } finally {
+              Pop-Location
+          }
+          if ([Environment]::GetEnvironmentVariable('Path', 'User') -cne $userPath) {
+              throw 'Repeat apply changed user PATH'
+          }

@@ -132,12 +132,21 @@ python -S vendor/etch/etch plan vscode
 python -S vendor/etch/etch apply vscode
 ```
 
-Use this module alone; the developer profile is not Windows-qualified. File links
+The developer profile skips Unix-only and macOS-only modules on native Windows. File links
 require Windows Developer Mode or symbolic-link privileges. Back up/migrate
 existing regular settings/keybindings files before applying; Etch will not replace
 them automatically. The POSIX `./etch` launcher is not used for native Windows.
+To apply the Windows-compatible parts of the developer profile:
 
-The Vim module links `~/.vim` and `~/.vimrc`, uses Etch's managed `download`
+```powershell
+python -S vendor/etch/etch apply --profile developer
+```
+
+This configures Git, Codex guidance/plugins (when native Codex is installed),
+VS Code files, Starship configuration, and the user-local Etch launcher. It does
+not install those applications or the macOS-only MCP tools.
+
+On macOS and Linux, the Vim module links `~/.vim` and `~/.vimrc`, uses Etch's managed `download`
 action to place vim-plug from upstream, and installs nine selected plugins on
 its first apply.
 Fresh installs follow upstream's current `plug.vim` and require network access.
@@ -378,7 +387,18 @@ Existing regular-file conflicts are refused rather than overwritten.
 etch validate
 ```
 
-A bare `etch` still previews the developer profile. The launcher uses POSIX
+On native Windows, the `etch` module links the repository's `etch.cmd` and `etch.ps1` launchers
+into `~/.local/bin` and adds that directory to the **user** PATH once during
+setup. Existing user PATH entries and their Registry value type are preserved; the machine PATH is untouched. Open a new terminal after the
+first apply, then run `etch validate` from any directory. Python must remain on
+PATH, and Windows Developer Mode or symlink privileges are required for links.
+The small batch wrapper invokes built-in Windows PowerShell without inline Python.
+The PowerShell launcher resolves its symlink back to this checkout and forwards arguments;
+with no arguments it previews the developer profile. No shell profile is edited.
+The setup marker is `~/.local/state/etch/windows-user-path`; remove it and rerun
+the module if you later remove the directory from user PATH and want to restore it.
+
+A bare `etch` still previews the developer profile. The Unix launcher uses POSIX
 shell and ordinary `readlink`, including relative symlink targets; it refuses
 dangling links and chains exceeding 40 links. This adopts the engine capability
 and launcher behavior tracked in [Etch #149](https://github.com/rm-industries/etch/issues/149).
