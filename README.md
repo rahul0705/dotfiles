@@ -7,10 +7,10 @@ The bootstrap requires Git. Python 3.9+ is also required unless using
 The POSIX script supports macOS/Linux; the PowerShell script supports native
 Windows PowerShell 5.1 and PowerShell 7.
 
-**Once the installers are merged to `main`**, the hosted commands are:
+The hosted commands are:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/rahul0705/dotfiles/main/install.sh | sh
+installer=$(curl -fsSL https://raw.githubusercontent.com/rahul0705/dotfiles/main/install.sh) && printf '%s\n' "$installer" | sh
 ```
 
 ```powershell
@@ -38,6 +38,12 @@ After a fresh clone, only the `etch` module is applied by default, exposing the
 user-local launcher. The developer profile is never applied automatically.
 Windows link creation requires Developer Mode or symlink privileges; execution
 policy remains in force. Open a new terminal after user PATH is configured.
+
+The installers share the template and Etch example implementation. Only the
+owner settings differ: `repository` is this repository's URL and `module` is
+`etch`. Edit these settings near the top of **both** scripts when copying them.
+Use `--repo URL` to override the configured repository for one invocation; no
+repository URL argument is needed for this checkout.
 
 Use `--module NAME` to apply one different module, or `--no-module` to clone
 without running Etch. `--no-module` wins regardless of argument order. For example:
