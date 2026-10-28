@@ -32,9 +32,9 @@ online tweak lists or configured speculatively. Locale, language, hardware, and
 machine-specific values are outside this portable preference selection.
 
 Filename-extension visibility remains owned by `finder`, even though its key
-also lives in `NSGlobalDomain`. Keyboard/text-input candidates such as automatic
-capitalization, spelling correction, smart quotes, dash/period substitution, and
-repeat behavior belong in [#100](https://github.com/rahul0705/dotfiles/issues/100).
+also lives in `NSGlobalDomain`. The [keyboard module](keyboard-preferences.md)
+owns the selected text-input helpers from [#100](https://github.com/rahul0705/dotfiles/issues/100);
+repeat timing and press-and-hold behavior remain deliberately unmanaged.
 Dock/Mission Control and screenshot settings remain in their respective modules.
 
 ## Managed setting and rationale

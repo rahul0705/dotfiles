@@ -286,6 +286,12 @@ whatever you want with it without restriction. See `LICENSE.md` for details.
 
 ## Finder preferences
 
+The macOS-only `keyboard` module preserves automatic capitalization, spelling
+correction, smart quotes/dashes, and double-space period insertion. Repeat timing
+and press-and-hold behavior remain unmanaged. See
+[Keyboard preferences](docs/keyboard-preferences.md) for inspected values,
+ownership boundaries, and verification evidence.
+
 The macOS-only `macos-global` module preserves automatic Light/Dark appearance
 switching. Other audited global preferences remain unmanaged; subsystem-owned
 settings stay in their respective modules. See
