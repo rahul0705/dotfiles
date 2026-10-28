@@ -286,6 +286,11 @@ whatever you want with it without restriction. See `LICENSE.md` for details.
 
 ## Finder preferences
 
+The macOS-only `dock` module manages auto-hide, icon size, recent applications,
+and Mission Control's automatic Spaces rearrangement. It leaves Dock application
+membership/order untouched. See [Dock preferences](docs/dock-preferences.md)
+for inspected values, types, application commands, and manual refresh instructions.
+
 The macOS-only `finder` module manages filename extensions, path/status bars,
 hidden-file visibility, and Finder metadata on network/removable volumes using
 Etch's native preferences plugin. It is included in the developer profile.
