@@ -286,6 +286,12 @@ whatever you want with it without restriction. See `LICENSE.md` for details.
 
 ## Finder preferences
 
+The macOS-only `macos-global` module preserves automatic Light/Dark appearance
+switching. Other audited global preferences remain unmanaged; subsystem-owned
+settings stay in their respective modules. See
+[Global macOS preferences](docs/global-macos-preferences.md) for the inventory,
+selection rationale, and verification evidence.
+
 The macOS-only `screenshots` module explicitly selects PNG and keeps window
 shadows enabled. It leaves the screenshot destination unmanaged. See
 [Screenshot preferences](docs/screenshot-preferences.md) for inspected keys,
