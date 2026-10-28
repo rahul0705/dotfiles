@@ -286,6 +286,11 @@ whatever you want with it without restriction. See `LICENSE.md` for details.
 
 ## Finder preferences
 
+The macOS-only `screenshots` module explicitly selects PNG and keeps window
+shadows enabled. It leaves the screenshot destination unmanaged. See
+[Screenshot preferences](docs/screenshot-preferences.md) for inspected keys,
+verification evidence, and manual refresh guidance.
+
 The macOS-only `dock` module manages auto-hide, icon size, recent applications,
 and Mission Control's automatic Spaces rearrangement. It leaves Dock application
 membership/order untouched. See [Dock preferences](docs/dock-preferences.md)
