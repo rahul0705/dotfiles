@@ -286,6 +286,11 @@ whatever you want with it without restriction. See `LICENSE.md` for details.
 
 ## Finder preferences
 
+The macOS-only `screenshots` module explicitly selects PNG and keeps window
+shadows enabled. It leaves the screenshot destination unmanaged. See
+[Screenshot preferences](docs/screenshot-preferences.md) for inspected keys,
+verification evidence, and manual refresh guidance.
+
 The macOS-only `finder` module manages filename extensions, path/status bars,
 hidden-file visibility, and Finder metadata on network/removable volumes using
 Etch's native preferences plugin. It is included in the developer profile.
