@@ -104,7 +104,7 @@ jobs:
               Install-Module Microsoft.WinGet.Client -RequiredVersion 1.29.380 -Repository PSGallery -Scope CurrentUser -Force
               Repair-WinGetPackageManager -Latest -Force
           }
-          winget source update --name winget --accept-source-agreements --disable-interactivity
+          winget show --id Starship.Starship --exact --source winget --accept-source-agreements --disable-interactivity
           if ($LASTEXITCODE -ne 0) { throw 'WinGet source initialization failed' }
       - name: Apply Windows developer profile and inspect launcher
         shell: pwsh
