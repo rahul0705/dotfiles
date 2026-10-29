@@ -133,6 +133,22 @@ Starship's published installer into the default `/usr/local/bin` directory.
 The config link can be created before Starship is installed, so it needs no
 version gate. Bash and Zsh start Starship when it is available.
 
+On Windows, the Winget plugin installs `Starship.Starship` if missing (existing
+versions are preserved). App Installer/`winget` must already be available; use
+`etch apply --profile developer --allow-sudo` to authorize potentially elevated
+package installers. Open a new terminal after installing so its PATH is refreshed.
+The `powershell` module appends a loader to each current-user, all-hosts profile
+for Windows PowerShell 5.1 and PowerShell 7, preserving existing content and using
+the Windows Documents location, including redirection. Both load the same managed
+`~/.config/powershell/profile.ps1`; optional overrides belong in the untracked
+`~/.config/powershell/profile.local.ps1`. Initialization skips Starship if it is
+not on PATH. Configure your terminal with a Nerd Font for the prompt symbols.
+
+Profile integration runs once. If you replace a PowerShell profile later, remove
+`~/.local/state/powershell/profiles-installed` and reapply the `powershell` module.
+Existing execution policies are respected; this does not install PowerShell 7 or
+change execution policy.
+
 The fzf module installs through Homebrew on macOS. On Linux, a fresh install
 resolves GitHub's latest release and downloads the executable to `~/.local/bin/fzf`.
 Existing fzf tools are reused. Presence checks let Etch skip installation entirely

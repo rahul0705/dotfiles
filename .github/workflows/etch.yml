@@ -93,6 +93,19 @@ jobs:
       - name: Test Windows bootstrap installers
         shell: pwsh
         run: python .github/tests/test_installers.py
+      - name: Test PowerShell profile preservation
+        shell: pwsh
+        run: python .github/tests/test_powershell_profiles.py
+      - name: Prepare WinGet for integration testing
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+              Install-Module Microsoft.WinGet.Client -RequiredVersion 1.29.380 -Repository PSGallery -Scope CurrentUser -Force
+              Repair-WinGetPackageManager -Latest -Force
+          }
+          winget show --id Starship.Starship --exact --source winget --accept-source-agreements --disable-interactivity
+          if ($LASTEXITCODE -ne 0) { throw 'WinGet source initialization failed' }
       - name: Apply Windows developer profile and inspect launcher
         shell: pwsh
         run: |
@@ -121,12 +134,21 @@ jobs:
           New-Item -ItemType Directory -Force $env:USERPROFILE | Out-Null
           python -S vendor/etch/etch validate
           if ($LASTEXITCODE -ne 0) { throw 'Validation failed' }
-          python -S vendor/etch/etch apply --profile developer
+          python -S vendor/etch/etch apply --profile developer --allow-sudo
           if ($LASTEXITCODE -ne 0) { throw 'Windows developer apply failed' }
-          foreach ($unixFile in @('.vim', '.vimrc', '.tmux', '.tmux.conf', '.bashrc', '.bash_profile', '.zshrc', '.oh-my-bash', '.oh-my-zsh', '.config/shell/fzf.sh', '.config/starship.toml')) {
+          foreach ($unixFile in @('.vim', '.vimrc', '.tmux', '.tmux.conf', '.bashrc', '.bash_profile', '.zshrc', '.oh-my-bash', '.oh-my-zsh', '.config/shell/fzf.sh')) {
               if (Test-Path (Join-Path $env:USERPROFILE $unixFile)) {
                   throw "Unix-only file deployed: $unixFile"
               }
+          }
+          if (-not (Test-Path (Join-Path $env:USERPROFILE '.config/starship.toml'))) {
+              throw 'Shared Starship configuration missing'
+          }
+          # MSI installation updates persistent PATH, not this existing process.
+          $env:PATH = "$env:PATH;$([Environment]::GetEnvironmentVariable('Path', 'Machine'));$([Environment]::GetEnvironmentVariable('Path', 'User'))"
+          foreach ($hostName in @('powershell.exe', 'pwsh.exe')) {
+              & $hostName -NoProfile -NonInteractive -Command '. "$env:USERPROFILE/.config/powershell/profile.ps1"; $expected = if ($PSVersionTable.PSEdition -eq "Core") { "pwsh" } else { "powershell" }; if ($env:STARSHIP_SHELL -ne $expected) { throw "Starship initialization failed" }'
+              if ($LASTEXITCODE -ne 0) { throw "Starship failed in $hostName" }
           }
           $bin = Join-Path $env:USERPROFILE '.local\bin'
           $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
@@ -137,7 +159,7 @@ jobs:
           try {
               etch.cmd validate
               if ($LASTEXITCODE -ne 0) { throw 'Exposed launcher failed outside checkout' }
-              etch.cmd apply --profile developer
+              etch.cmd apply --profile developer --allow-sudo
               if ($LASTEXITCODE -ne 0) { throw 'Repeat Windows apply failed' }
           } finally {
               Pop-Location
