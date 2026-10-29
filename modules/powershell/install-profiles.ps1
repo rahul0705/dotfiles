@@ -1,10 +1,10 @@
 param(
-    [string]$DocumentsDirectory = [Environment]::GetFolderPath('MyDocuments')
+    [string]$DocumentsDirectory = [Environment]::GetFolderPath('MyDocuments', 'DoNotVerify')
 )
 $ErrorActionPreference = 'Stop'
 if (-not $DocumentsDirectory) { throw 'Cannot locate the current user Documents directory.' }
 
-# Resolve Documents through Windows so redirected/OneDrive profiles are respected.
+# Resolve redirected Documents even before the folder exists on a fresh account.
 $loader = '. (Join-Path $env:USERPROFILE ''.config\powershell\profile.ps1'')'
 foreach ($shellDirectory in @('WindowsPowerShell', 'PowerShell')) {
     $directory = Join-Path $DocumentsDirectory $shellDirectory
