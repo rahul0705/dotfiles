@@ -147,7 +147,7 @@ jobs:
           # MSI installation updates persistent PATH, not this existing process.
           $env:PATH = "$env:PATH;$([Environment]::GetEnvironmentVariable('Path', 'Machine'));$([Environment]::GetEnvironmentVariable('Path', 'User'))"
           foreach ($hostName in @('powershell.exe', 'pwsh.exe')) {
-              & $hostName -NoProfile -NonInteractive -Command '. "$env:USERPROFILE/.config/powershell/profile.ps1"; if ($env:STARSHIP_SHELL -ne "powershell") { throw "Starship initialization failed" }'
+              & $hostName -NoProfile -NonInteractive -Command '. "$env:USERPROFILE/.config/powershell/profile.ps1"; $expected = if ($PSVersionTable.PSEdition -eq "Core") { "pwsh" } else { "powershell" }; if ($env:STARSHIP_SHELL -ne $expected) { throw "Starship initialization failed" }'
               if ($LASTEXITCODE -ne 0) { throw "Starship failed in $hostName" }
           }
           $bin = Join-Path $env:USERPROFILE '.local\bin'
