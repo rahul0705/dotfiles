@@ -70,7 +70,11 @@ jobs:
             esac
             eval "$("$brew_bin" shellenv)"
           fi
-          ./etch apply --profile developer --timings
+          # Retry once after transient failures from external package hosts.
+          if ! ./etch apply --profile developer --timings; then
+            sleep 20
+            ./etch apply --profile developer --timings
+          fi
           # Inspect the installed shell environment, not just the configuration links.
           TERM=xterm-256color bash -lic 'test -f "$OSH/oh-my-bash.sh" && test "$STARSHIP_SHELL" = bash && command -v etch >/dev/null'
           TERM=xterm-256color zsh -lic 'test -f "$ZSH/oh-my-zsh.sh" && test "$STARSHIP_SHELL" = zsh && command -v etch >/dev/null'
@@ -135,7 +139,12 @@ jobs:
           python -S vendor/etch/etch validate
           if ($LASTEXITCODE -ne 0) { throw 'Validation failed' }
           python -S vendor/etch/etch apply --profile developer --allow-sudo
-          if ($LASTEXITCODE -ne 0) { throw 'Windows developer apply failed' }
+          if ($LASTEXITCODE -ne 0) {
+              # Give transient installer download failures time to clear.
+              Start-Sleep -Seconds 20
+              python -S vendor/etch/etch apply --profile developer --allow-sudo
+              if ($LASTEXITCODE -ne 0) { throw 'Windows developer apply failed' }
+          }
           foreach ($unixFile in @('.vim', '.vimrc', '.tmux', '.tmux.conf', '.bashrc', '.bash_profile', '.zshrc', '.oh-my-bash', '.oh-my-zsh', '.config/shell/fzf.sh')) {
               if (Test-Path (Join-Path $env:USERPROFILE $unixFile)) {
                   throw "Unix-only file deployed: $unixFile"
