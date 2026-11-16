@@ -23,9 +23,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        python: ['3.9', '3.x']
-    runs-on: ${{ matrix.os }}
+        runtime:
+          - { os: ubuntu-24.04, python: '3.9' } # Python 3.9 is unavailable on Ubuntu 26.04.
+          - { os: ubuntu-latest, python: '3.10' }
+          - { os: ubuntu-latest, python: '3.x' }
+          - { os: macos-latest, python: '3.9' }
+          - { os: macos-latest, python: '3.x' }
+    runs-on: ${{ matrix.runtime.os }}
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -33,7 +37,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
-          python-version: ${{ matrix.python }}
+          python-version: ${{ matrix.runtime.python }}
       - name: Test POSIX bootstrap installer
         run: python .github/tests/test_installers.py
       - name: Initialize Etch and module assets
